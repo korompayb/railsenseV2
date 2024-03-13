@@ -148,7 +148,7 @@ def index():
               pass
               
             #email_list = load_emails()
-            #send_email(subject, body, email_list) #ha ezt a kommentet kiszeded az oldal minden megnyitaskor emailt kuldd ha van vonat. fontos ha nincs megnyitva akkor nem kuldd
+            #send_email(subject, body, email_list) #ha ezt a kommentet kiszeded az oldal minden megnyitaskor emailt kuildd ha van vonat. fontos ha nincs megnyitva akkor nem kuldd
 
             return render_template('indexuj.html', message=message, directions=[closest_train[0]], result_status=result_status, update_time=update_time)
         else:
