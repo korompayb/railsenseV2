@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="hu-HU">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weboldal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="../static/css/bootsrap.min.css">
+    
+    <style>
+        html {
+            background: rgb(34,193,195);
+            background: linear-gradient(278deg, rgb(195, 63, 34) 0%, rgba(253,187,45,1) 100%);
+            background-image: url("https://azutazo.hu/wp-content/uploads/2021/08/MÁV_Balaton.jpg");
+            background-attachment: fixed;
+            background-size: 170%;
+            background-repeat: no-repeat;
+            background-position-x: center;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }   
+
+        .container {
+            margin-top: 20%;
+            background-color: rgba(255, 255, 255, 0.17);
+            padding: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 80%;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+        }
+
+        
+
+        .main {
+            
+            border-radius: 10px;
+            height: 100%;
+            display: flex;
+            margin-left: 5px;
+        }
+
+        .sidebar{
+            position: relative;
+            border-radius: 10px;
+            margin-right: 5px;
+            float: left;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            
+        }
+
+        .panel {   
+            background-color: rgba(255, 255, 255, 0.33);
+            padding: 5px;
+            
+            border-radius: 10px;
+            display: flexbox;
+            flex-direction: row;
+        }
+
+        .right {
+            flex: 1;
+            margin: 10px;
+            display: grid;
+            gap: 5px; /* Példa távolság a két elem között */
+        }
+        .left {
+            flex: 1;
+            margin: 10px;
+            overflow: hidden;
+        }
+
+        .left img {
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        
+
+        .card {
+            background-color: #f5f5f564;
+            border-radius: 10px;
+            padding: 5px;
+            display: flex;
+        }
+
+
+
+        .card img {
+            border-radius: 10px;
+            flex: 1;
+            flex-direction: column;
+            
+        }
+
+        .card p {
+            padding-left: 5px;
+            flex: 5;
+            flex-direction: column;
+        }
+
+        .infos {
+            display: grid;
+            grid-template-columns: auto auto; /* Mindkét elem automatikus szélességet kapjon */
+            gap: 10px; /* Példa távolság a két elem között */
+        }
+
+        .sidebar button {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="window">
+            <div class="sidebar">
+                
+                    <img src="../static/favicon.ico" alt="icon" width="auto" height="auto">
+                    <button><img src="" alt="icon"></button>
+                    <button><img src="" alt="icon"></button>
+                    <button><img src="" alt="icon"></button>
+                    <button><img src="" alt="icon"></button>
+                    <button><img src="" alt="icon"></button>
+                
+                
+            </div>
+            <div class="main">
+                <div class="right">
+                    <div class="panel">
+                        <h1 id="welcome"></h1>
+                        <h2 id="date"></h2>
+                        <h3 id="location-name">Helyzet<span id="weather-icon"></span></h3>
+                        <p id="wind"></p>
+                        <p id="weather-data"></p>
+                        <div id="" class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 %}box-green {% elif result_status == 3 %}box-orange{% endif %}">
+                            <h1 style="padding-top: 10px;">{% if result_status == 1 %}Az átkelés veszélyes!{% elif result_status == 2 %}Az átkelés szabad!{% elif result_status == 3 %}Hiba: Error code 2{% endif %}</h1>
+                            <h3 id="sub-title">{% if result_status == 1 %}Vonat érkezik:{% elif result_status == 2 %}Nincs vonat a közelben!{% elif result_status == 3 %}<a href="https://forms.gle/nb49zoTMinVZVxsv5">Hiba lépett fel, kérjük lépjen kapcsolatba a fejlesztővel!</a>{% endif %}</h3>
+                            <p id="sub-p">
+                                {% if result_status == 1 %} {% if directions %}{% for direction in directions %}{{ direction }}{% endfor %}{% endif %} -irányban. {% elif result_status == 2 %}    {% if message %}{{ message }}{% endif %} {% elif result_status == 3 %}Hiba: Error code 3{% endif %}
+                                <br>
+                                {% if result_status == 1 %}{{ message }}{% elif result_status == 2 %}{% elif result_status == 3 %}Hiba: Error code 2{% endif %}
+                            </p>
+                            <p id="sub-f">Frissítve: {{ update_time }}</p>
+                            <br>
+                            <p id="sub-f"><a href="https://www.mediafire.com/folder/cfkjdvlyd92jt/RailSense_Documentation" target="">DOKUMENTÁCIÓ</a</p> 
+                        </div>        
+                    </div>
+                    </div>
+                    
+                    <div class="infos">
+                        <h2>Ez is tetszeni fog</h2>
+                    </div>
+                    <div class="card">
+                        <img src="" alt="icon" width="50px" height="50px">
+                        <p>Infoponttok csak könnyedén</p>
+                    </div>
+                    <div class="card">
+                        <img src="" alt="icon" width="50px" height="50px">
+                        <p>Infoponttok csak könnyedén</p>
+                    </div>
+                    <div class="card">
+                        <img src="" alt="icon" width="50px" height="50px">
+                        <p>Infoponttok csak könnyedén</p>
+                    </div>
+                    <div class="card">
+                        <img src="" alt="icon" width="50px" height="50px">
+                        <p>Infoponttok csak könnyedén</p>
+                    </div>
+                    <div class="card">
+                        <img src="" alt="icon" width="50px" height="50px">
+                        <p>Infoponttok csak könnyedén</p>
+                    </div>
+                </div>    
+                <div class="left">
+                    <img src="https://hirtv.hu/data/cikkek/2497/24972/cikk-2497280/shutterstock_519097594.jpg"  width="100%" height="100%">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

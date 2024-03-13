@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <title>RailSense | Home</title>
+    <meta http-equiv="refresh" content="10">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS  <meta http-equiv="refresh" content="30"> ez szuksegtelen, a fejlesztes allt kellett. az oldal minden 30. masodpercben ujratolti magat  de nem feltetlen baj hogy lefrissit-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+
+    <style>
+        /* footer box */
+        #swipeable-box {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 16%;
+            /*background-color: #f1f1f1;*/
+            transition: height 0.5s;
+            overflow: hidden;
+            box-sizing: border-box;
+            padding-top: 10px;
+            border-radius: 25px 25px 0px 0px;
+            text-align: center;
+        }
+
+        #swipeable-box::before {
+            content: "";
+            display: block;
+            height: 3px;
+            background-color: #000;
+            width: 60px;
+            margin: 0 auto 10px;
+        }
+
+        #swipeable-box.expanded {
+            height: 65%;
+        }
+
+        #swipeable-box.expanded::before {
+            margin-bottom: 20px;
+        }
+
+        .box-red {
+            background-color: #fc294974;
+        }
+
+        .box-green {
+            background-color: #15ff0034;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .box-orange {
+            background-color: #ffb74c6d;
+        }
+
+        dialog {
+            border: none;
+            border-radius: 1rem;
+            padding: 30px;
+        }
+
+        #box {
+            padding: 30px;
+            border-radius: 10px;
+            margin-left: 20%;
+            margin-right: 20%;
+            text-align: center;
+            margin-bottom: 0%;
+            margin-top: 10%;
+        }
+
+</style>
+</head>
+<body>
+    <header>
+        <div>
+            <h1 id="welcome"></h1>
+            <h2 id="date"></h2>
+        </div>
+    </header>
+    
+    <section>
+        <div class="container" style="display: flex; align-items: center; justify-content: center;"> <!-- weather-line -->
+            <h1 id="location-name">
+                Balaton
+                <span id="weather-icon"></span>
+            </h1>
+            
+        </div>
+        <div class="container">
+
+            <p id="wind"></p>
+            <p id="weather-data"></p>
+
+        </div>
+        
+    </section>
+
+    <dialog data-modal style="text-align: center;">
+        <form method="POST">
+            <input type="text" name="email" placeholder="Adja meg az e-mail címét!" style="margin-bottom: 15px; border: solid 2px #000; border-radius: 0.4rem; width: 100%; height: 40px; font-size: 25px;" />
+            <br>
+            <button class="btn btn-outline-dark" formmethod="dialog" type="submit" style="font-weight: 600; font-size: 20px; margin-right: 10px;">Mégsem</button>
+            <button class="btn btn-outline-dark" type="submit" style="font-weight: 600; font-size: 20px;">Bekapcsolás</button>
+        </form>
+    </dialog>
+
+
+    <section>
+        <div class="container" style="text-align: center; vertical-align: middle;">
+            <div style="padding-top: 2%;">
+                <!--button disabled data-open-modal type="button" class="btn btn-outline-light btn-lg" style="font-weight: 600; font-size: 20px;">Értesítések be/kikapcsolása</button-->
+              <!--a href="">
+                <button type="button" class="btn btn-outline-light btn-lg" style="font-weight: 600; font-size: 20px;">hide</button>
+            </a-->
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div id="box" class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 %}box-green {% elif result_status == 3 %}box-orange{% endif %}">
+            <div class="container">
+                <h1 style="padding-top: 10px;">{% if result_status == 1 %}Az átkelés veszélyes!{% elif result_status == 2 %}Az átkelés szabad!{% elif result_status == 3 %}Hiba: Error code 2{% endif %}</h1>
+                <h3 id="sub-title">{% if result_status == 1 %}Vonat érkezik:{% elif result_status == 2 %}Nincs vonat a közelben!{% elif result_status == 3 %}<a href="https://forms.gle/nb49zoTMinVZVxsv5">Hiba lépett fel, kérjük lépjen kapcsolatba a fejlesztővel!</a>{% endif %}</h3>
+                <p id="sub-p">
+                    {% if result_status == 1 %} {% if directions %}{% for direction in directions %}{{ direction }}{% endfor %}{% endif %} -irányban. {% elif result_status == 2 %}    {% if message %}{{ message }}{% endif %} {% elif result_status == 3 %}Hiba: Error code 3{% endif %}
+                    <br>
+                    {% if result_status == 1 %}{{ message }}{% elif result_status == 2 %}{% elif result_status == 3 %}Hiba: Error code 2{% endif %}
+                </p>
+
+                <p id="sub-f">Frissítve: {{ update_time }}</p>
+                <br>
+                <p id="sub-f"><a href="https://www.mediafire.com/folder/cfkjdvlyd92jt/RailSense_Documentation" target="">DOKUMENTÁCIÓ</a</p> 
+                                                                                                                   
+                
+                <!-- ez a lenti felnyilo doboz -->
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+        const openButton = document.querySelector("[data-open-modal]")
+        const closeButton = document.querySelector("[data-close-modal]")
+        const modal = document.querySelector("[data-modal]")
+        
+        openButton.addEventListener("click", () => {
+            modal.showModal()
+        })
+
+
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          // jelenlegi datum
+          var currentDate = new Date();
+          var options = { year: 'numeric', month: 'short', day: 'numeric' };
+          var formattedDate = currentDate.toLocaleDateString('hu-HU', options);
+    
+          // datum kiiras
+          var dateElement = document.getElementById('date');
+          dateElement.innerHTML = formattedDate;
+    
+          // udvozlo uzenet az idotol fuggoen
+          var welcomeElement = document.getElementById('welcome');
+          var currentHour = currentDate.getHours();
+          var welcomeMessage = '';
+    
+          if (currentHour >= 5 && currentHour < 12) {
+            welcomeMessage = 'Jó reggelt!';
+          } else if (currentHour >= 12 && currentHour < 18) {
+            welcomeMessage = 'Szép napot!';
+          } else {
+            welcomeMessage = 'Jó estét!';
+          }
+    
+          welcomeElement.innerHTML = welcomeMessage;
+    
+          // idojaras lekerese
+          fetch('https://api.openweathermap.org/data/2.5/weather?q=Balatonfuzfo&appid=c01a7a32d2b862992d67500569e20363&units=metric&lang=hu')
+            .then(response => response.json())
+            .then(data => {
+                // temperature, weather description, and wind speed
+                const temperature = Math.round(data.main.temp);
+                const feelsLike = Math.round(data.main.feels_like);
+                const iconCode = data.weather[0].icon;
+                const windSpeed = data.wind.speed * 3.6 // m/s -> km/h             //1.94384; // m/s -> csomo
+    
+                // kiiras
+    
+                const iconElement = document.getElementById('weather-icon');
+                const windElement = document.getElementById('wind');
+                const weatherDataElement = document.getElementById('weather-data');
+    
+                // idojaras icon
+                const iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+                iconElement.innerHTML = `<img src="${iconUrl}" id="seal-image" alt="Weather Icon" style="width: 65px; height: 65px;">`;
+    
+                // csomo szamlalo szinei
+                if (windSpeed >= 0 && windSpeed <= 21) {
+                  windElement.innerHTML = `Szélsebesség: <span style="color: green">${windSpeed.toFixed(2)}</span> km/h.`;
+                } else if (windSpeed >= 22 && windSpeed <= 23) {
+                  windElement.innerHTML = `Szélsebesség: <span style="color: orange">${windSpeed.toFixed(2)}</span> km/h.`;
+                } else if (windSpeed >= 24 && windSpeed <= 65) {
+                  windElement.innerHTML = `Szélsebesség: <span style="color: red">${windSpeed.toFixed(2)}</span> km/h.`;
+                }
+    
+                // homerseklet szinei
+                if (temperature >= 0 && temperature <= 16) {
+                  weatherDataElement.innerHTML = `Hőmérséklet: <span style="color: blue">${temperature} &deg;C`;
+                } else if (temperature >= 17 && temperature <= 30) {
+                  weatherDataElement.innerHTML = `Hőmérséklet: <span style="color: orange">${temperature} &deg;C`;
+                } else if (temperature >= 30 && temperature <= 50) {
+                  weatherDataElement.innerHTML = `Hőmérséklet: <span style="color: red">${temperature} &deg;C`;
+                }
+            })
+            .catch(error => {
+                console.log('Error fetching weather data:', error);
+            });
+        });
+    
+        var swipeableBox = document.getElementById('swipeable-box');
+        swipeableBox.addEventListener('click', function() {
+          swipeableBox.classList.toggle('expanded');
+        });
+    </script>
+
+</body>
+</html>
