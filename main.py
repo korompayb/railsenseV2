@@ -144,13 +144,44 @@ def index():
 
             if int(ek) == 1:
               telegram_send(f"*Az átkelés veszélyes!*\n\nSzerelvény érkezik: *{closest_train[0]}* irányban, \n*{closest_train[1]}* másodpercen belül.")
+              load_trains()
             else: 
               pass
               
             #email_list = load_emails()
             #send_email(subject, body, email_list) #ha ezt a kommentet kiszeded az oldal minden megnyitaskor emailt kuildd ha van vonat. fontos ha nincs megnyitva akkor nem kuldd
 
-            return render_template('indexuj.html', message=message, directions=[closest_train[0]], result_status=result_status, update_time=update_time)
+            trains = []
+            
+
+            def update(filename, number):
+                with open(filename, 'r') as f:
+                    lines = f.readlines()
+                return lines[-number:]
+
+            def load_trains():
+
+                with open('static/trains.txt', 'a', encoding='utf-8') as f:
+                    f.write(f'{closest_train};{update_time}\n')
+
+                return
+
+            def render_onsite():
+
+                with open('trains.txt', 'r', encoding='utf-8') as lines:
+
+                    last_five = update('trains.txt', 5)
+                    
+                    # read
+                    for line in last_five:
+                        line = line.strip('\n')
+                        trains.append(line.split(';'))
+                
+                    #print(trains)
+
+            render_onsite()
+            print(f"{trains[0][0]} - {trains[0][1]}\n{trains[1][0]} - {trains[1][1]}\n{trains[2][0]} - {trains[2][1]}\n{trains[3][0]} - {trains[3][1]}\n{trains[4][0]} - {trains[4][1]}")
+            return render_template('indexuj.html', message=message, directions=[closest_train[0]], result_status=result_status, update_time=update_time, train1 = trains[0][0],train2 = trains[0],train3 = trains[3])
         else:
             with open('static/ek.txt', 'w+') as f:
               f.write('0')
