@@ -1,7 +1,6 @@
 flask
 Gunicorn
 requests
-math
 os
 time
 smtplib
