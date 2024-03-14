@@ -1,5 +1,6 @@
 flask
-reque
+Gunicorn
+requests
 math
 os
 time
