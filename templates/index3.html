@@ -1,0 +1,908 @@
+<html lang="en">
+
+<head>
+    <script type="module">
+        import RefreshRuntime from "/@react-refresh"
+        RefreshRuntime.injectIntoGlobalHook(window)
+        window.$RefreshReg$ = () => { }
+        window.$RefreshSig$ = () => (type) => type
+        window.__vite_plugin_react_preamble_installed__ = true
+    </script>
+
+    <script type="module" src="/@vite/client"></script>
+
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/src/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vite App</title>
+    <script src="https://sse-1.codesandbox.io/client-hook-6.js"></script>
+    <style type="text/css" data-vite-dev-id="/sandbox/src/App.module.css">
+        ._root_5lp9e_1 {
+            height: 100%;
+            font-family: sans-serif;
+            background-color: __backgroundColor__;
+            flex-basis: 100%;
+            overflow-y: auto;
+            /* __center__ */
+        }
+    </style>
+    <style type="text/css" data-vite-dev-id="/sandbox/src/components/_resets.module.css">
+        :where(._storybrainResets_48zhe_1),
+        :where(._storybrainResets_48zhe_1) * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            background: none;
+            border: none;
+            flex-shrink: 0;
+            text-decoration: none;
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        :where(._storybrainResets_48zhe_1),
+        :where(._storybrainResets_48zhe_1) :not(span, a, ul, ol, li, p) {
+            display: flex;
+        }
+
+        :where(._storybrainResets_48zhe_1) ul,
+        :where(._storybrainResets_48zhe_1) ol {
+            text-indent: 0;
+            padding-inline-start: 1.5em;
+        }
+
+        :where(._storybrainResets_48zhe_1) p:empty::before {
+            content: '';
+            display: inline-block;
+        }
+
+        :where(._storybrainResets_48zhe_1) img {
+            object-fit: contain;
+        }
+
+        :where(._storybrainResets_48zhe_1) svg {
+            overflow: visible;
+        }
+    </style>
+    <style type="text/css" data-vite-dev-id="/sandbox/src/components/Frame1/Frame1.module.css">
+        ._root_cp1o3_1 {
+            position: relative;
+            width: 1080px;
+            height: 810px;
+            align-items: flex-start;
+            background-color: #141218;
+            overflow: hidden;
+        }
+
+        ._frame1_cp1o3_9 {
+            position: absolute;
+            left: 0;
+            top: 184px;
+            width: 1080px;
+            height: min-content;
+            place-content: center;
+            align-items: center;
+            gap: 128px;
+        }
+
+        ._stateLayer_cp1o3_19 {
+            position: relative;
+            width: 413.8318px;
+            height: 200px;
+            place-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 12px;
+            background-color: #1d1b20;
+            box-shadow: 0px 1px 2px 0px #0000004d, 0px 1px 3px 0px #00000026;
+        }
+
+        ._horizontalCardDark_cp1o3_31 {
+            position: absolute;
+            left: -0.1682px;
+            top: 0;
+            width: 414px;
+            height: 80px;
+            align-items: flex-start;
+            border-radius: 12px;
+        }
+
+        ._content_cp1o3_40 {
+            position: relative;
+            flex: 1;
+            align-self: stretch;
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+            box-shadow: inset 0px -1px 0px #212025;
+        }
+
+        ._header_cp1o3_48 {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            align-items: center;
+        }
+
+        ._content2_cp1o3_56 {
+            height: min-content;
+            flex: 1;
+            padding: 16px;
+        }
+
+        ._text_cp1o3_61 {
+            height: min-content;
+            flex: 1;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        ._header2_cp1o3_68 {
+            color: #e6e0e9;
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: 500;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            letter-spacing: 0.15px;
+            height: min-content;
+            align-self: stretch;
+            flex-direction: column;
+        }
+
+        ._subhead_cp1o3_80 {
+            color: #d0bcfe;
+            font-size: 14px;
+            line-height: 20px;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            letter-spacing: 0.25px;
+            width: min-content;
+            height: min-content;
+            text-align: center;
+            align-items: center;
+            white-space: nowrap;
+            flex-direction: column;
+        }
+
+        ._media_cp1o3_94 {
+            width: 80px;
+            align-self: stretch;
+            overflow: visible;
+        }
+
+        ._icon_cp1o3_99 {
+            width: 100%;
+            height: 100%;
+        }
+
+        ._background_cp1o3_103 {
+            position: relative;
+            width: 414px;
+            height: 80px;
+            align-items: flex-start;
+            border-radius: 12px;
+            background-color: #1d1b20;
+            overflow: hidden;
+        }
+
+        ._stateLayer2_cp1o3_112 {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            flex-direction: column;
+            place-content: center;
+            padding: 10px;
+        }
+
+        ._subhead2_cp1o3_122 {
+            position: absolute;
+            left: 16px;
+            top: 96px;
+            width: 296px;
+            height: min-content;
+            flex-direction: column;
+        }
+
+        ._labelWrapper_cp1o3_130 {
+            font-size: 14px;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            flex-shrink: 1;
+        }
+
+        ._label_cp1o3_130 {
+            color: #e6e0e9;
+            font-size: 14px;
+            line-height: 20px;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            letter-spacing: 0.25px;
+        }
+
+        ._label2_cp1o3_144 {
+            color: #e6e0e9;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: bold;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            letter-spacing: 0.25px;
+        }
+
+        ._label3_cp1o3_153 {
+            color: #e6e0e9;
+            font-size: 14px;
+            line-height: 20px;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            letter-spacing: 0.25px;
+        }
+
+        ._assistiveChipDark_cp1o3_161 {
+            position: absolute;
+            left: 16px;
+            top: 152px;
+            width: min-content;
+            height: min-content;
+            outline: solid 1px #938f99;
+            outline-offset: -1px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        ._stateLayer3_cp1o3_172 {
+            width: min-content;
+            height: 32px;
+            place-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px 6px 8px;
+        }
+
+        ._icon2_cp1o3_180 {
+            width: 18px;
+            height: 18px;
+            overflow: visible;
+        }
+
+        ._icon3_cp1o3_185 {
+            width: 100%;
+            height: 100%;
+        }
+
+        ._labelText_cp1o3_189 {
+            color: #e6e0e9;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 500;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            letter-spacing: 0.1px;
+            width: min-content;
+            height: min-content;
+            text-align: center;
+            align-items: center;
+            white-space: nowrap;
+            flex-direction: column;
+        }
+
+        ._stateLayer4_cp1o3_204 {
+            position: relative;
+            width: 413.8318px;
+            height: 200px;
+            place-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 12px;
+            background-color: #1d1b20;
+            box-shadow: 0px 1px 2px 0px #0000004d, 0px 1px 3px 0px #00000026;
+        }
+
+        ._horizontalCardDark2_cp1o3_216 {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 414px;
+            height: 80px;
+            align-items: flex-start;
+            border-radius: 12px;
+        }
+
+        ._content3_cp1o3_225 {
+            position: relative;
+            flex: 1;
+            align-self: stretch;
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+            box-shadow: inset 0px -1px 0px #212025;
+        }
+
+        ._header3_cp1o3_233 {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            align-items: center;
+        }
+
+        ._content4_cp1o3_241 {
+            height: min-content;
+            flex: 1;
+            padding: 16px;
+        }
+
+        ._text2_cp1o3_246 {
+            height: min-content;
+            flex: 1;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        ._header4_cp1o3_253 {
+            color: #e6e0e9;
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: 500;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            letter-spacing: 0.15px;
+            height: min-content;
+            align-self: stretch;
+            flex-direction: column;
+        }
+
+        ._subhead3_cp1o3_265 {
+            color: #d0bcfe;
+            font-size: 14px;
+            line-height: 20px;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            letter-spacing: 0.25px;
+            width: min-content;
+            height: min-content;
+            text-align: center;
+            align-items: center;
+            white-space: nowrap;
+            flex-direction: column;
+        }
+
+        ._media2_cp1o3_279 {
+            width: 80px;
+            align-self: stretch;
+            overflow: visible;
+        }
+
+        ._icon4_cp1o3_284 {
+            width: 100%;
+            height: 100%;
+        }
+
+        ._background2_cp1o3_288 {
+            position: relative;
+            width: 414px;
+            height: 80px;
+            align-items: flex-start;
+            border-radius: 12px;
+            background-color: #1d1b20;
+            overflow: hidden;
+        }
+
+        ._stateLayer5_cp1o3_297 {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            flex-direction: column;
+            place-content: center;
+            padding: 10px;
+        }
+
+        ._subhead4_cp1o3_307 {
+            position: absolute;
+            left: 16px;
+            top: 96px;
+            width: 296px;
+            height: min-content;
+            flex-direction: column;
+        }
+
+        ._labelWrapper2_cp1o3_315 {
+            font-size: 14px;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            flex-shrink: 1;
+        }
+
+        ._label4_cp1o3_321 {
+            color: #e6e0e9;
+            font-size: 14px;
+            line-height: 20px;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            letter-spacing: 0.25px;
+        }
+
+        ._label5_cp1o3_329 {
+            color: #e6e0e9;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: bold;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            letter-spacing: 0.25px;
+        }
+
+        ._label6_cp1o3_338 {
+            color: #e6e0e9;
+            font-size: 14px;
+            line-height: 20px;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            letter-spacing: 0.25px;
+        }
+
+        ._assistiveChipDark2_cp1o3_346 {
+            position: absolute;
+            left: 16px;
+            top: 152px;
+            width: min-content;
+            height: min-content;
+            outline: solid 1px #938f99;
+            outline-offset: -1px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        ._stateLayer6_cp1o3_357 {
+            width: min-content;
+            height: 32px;
+            place-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px 6px 8px;
+        }
+
+        ._icon5_cp1o3_365 {
+            width: 18px;
+            height: 18px;
+            overflow: visible;
+        }
+
+        ._icon6_cp1o3_370 {
+            width: 100%;
+            height: 100%;
+        }
+
+        ._labelText2_cp1o3_374 {
+            color: #e6e0e9;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 500;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            letter-spacing: 0.1px;
+            width: min-content;
+            height: min-content;
+            text-align: center;
+            align-items: center;
+            white-space: nowrap;
+            flex-direction: column;
+        }
+
+        ._joEstetUser_cp1o3_389 {
+            color: #fff;
+            font-size: 32px;
+            line-height: 28px;
+            font-weight: 500;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            position: absolute;
+            left: 64px;
+            top: 64px;
+            width: min-content;
+            height: min-content;
+            white-space: nowrap;
+            flex-direction: column;
+        }
+
+        ._regebbiVonatok_cp1o3_404 {
+            color: #fff;
+            font-size: 24px;
+            line-height: 28px;
+            font-weight: 500;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            position: absolute;
+            left: 64px;
+            top: 448px;
+            width: min-content;
+            height: min-content;
+            white-space: nowrap;
+            flex-direction: column;
+        }
+
+        ._railSenseV2Balatonfuzfo_cp1o3_419 {
+            color: #fff;
+            font-size: 24px;
+            line-height: 28px;
+            font-weight: 500;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            position: absolute;
+            left: 64px;
+            top: 124px;
+            width: min-content;
+            height: min-content;
+            white-space: nowrap;
+            flex-direction: column;
+        }
+
+        ._line1_cp1o3_434 {
+            position: absolute;
+            left: 62px;
+            top: 416px;
+            width: 956px;
+            max-width: 100%;
+            height: 2px;
+            max-height: 100%;
+            overflow: visible;
+        }
+
+        ._icon7_cp1o3_444 {
+            width: 100%;
+            height: 100%;
+        }
+
+        ._frame2_cp1o3_448 {
+            position: absolute;
+            left: 62px;
+            top: 508px;
+            width: 956px;
+            height: min-content;
+            place-content: center;
+        }
+
+        ._group1_cp1o3_456 {
+            position: relative;
+            width: 208px;
+            height: 240px;
+        }
+
+        ._rectangle3_cp1o3_461 {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 208px;
+            height: 240px;
+            border-radius: 12px;
+            background-color: #1d1b20;
+        }
+
+        ._line2_cp1o3_472 {
+            position: absolute;
+            left: 0%;
+            right: 0%;
+            top: 18.9583%;
+            bottom: 81.0417%;
+            width: 208px;
+            max-width: 100%;
+            height: 1px;
+            max-height: 100%;
+            overflow: visible;
+        }
+
+        ._icon8_cp1o3_484 {
+            width: 100%;
+            height: 100%;
+        }
+
+        ._header5_cp1o3_488 {
+            color: #e6e0e9;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            letter-spacing: 0.15px;
+            position: absolute;
+            left: 3.8462%;
+            right: 69.7115%;
+            top: 2.9167%;
+            bottom: 89.5833%;
+            width: min-content;
+            height: min-content;
+            white-space: nowrap;
+            flex-direction: column;
+        }
+
+        ._subhead5_cp1o3_505 {
+            color: #d0bcfe;
+            font-size: 12px;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            letter-spacing: 0.25px;
+            position: absolute;
+            left: 3.8462%;
+            right: 45.6731%;
+            top: 10.4167%;
+            bottom: 83.75%;
+            width: min-content;
+            height: min-content;
+            text-align: center;
+            align-items: center;
+            white-space: nowrap;
+            flex-direction: column;
+        }
+
+        ._media3_cp1o3_523 {
+            position: absolute;
+            left: 78.3654%;
+            right: 0;
+            top: 0;
+            bottom: 81.25%;
+            width: 45px;
+            height: 45px;
+            overflow: visible;
+        }
+
+        ._icon9_cp1o3_533 {
+            width: 100%;
+            height: 100%;
+        }
+
+        ._subhead6_cp1o3_537 {
+            color: #e6e0e9;
+            font-size: 14px;
+            line-height: 20px;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            letter-spacing: 0.25px;
+            position: absolute;
+            left: 7.6923%;
+            right: 7.6923%;
+            top: 22.9167%;
+            bottom: 28.3333%;
+            width: 176px;
+            height: 117px;
+            flex-direction: column;
+        }
+
+        ._assistiveChipDark3_cp1o3_553 {
+            position: absolute;
+            left: 3.8462%;
+            right: 52.8846%;
+            top: 83.3333%;
+            bottom: 3.3333%;
+            width: min-content;
+            height: min-content;
+            align-self: flex-start;
+            outline: solid 1px #938f99;
+            outline-offset: -1px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        ._stateLayer7_cp1o3_567 {
+            width: min-content;
+            height: 32px;
+            place-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 8px;
+        }
+
+        ._icon10_cp1o3_575 {
+            width: 18px;
+            height: 18px;
+            overflow: visible;
+        }
+
+        ._icon11_cp1o3_580 {
+            width: 100%;
+            height: 100%;
+        }
+
+        ._labelText3_cp1o3_584 {
+            color: #e6e0e9;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 500;
+            font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+                'Liberation Sans', sans-serif;
+            letter-spacing: 0.1px;
+            width: min-content;
+            height: min-content;
+            text-align: center;
+            align-items: center;
+            white-space: nowrap;
+            flex-direction: column;
+        }
+    </style>
+    <style type="text/css" data-vite-dev-id="/sandbox/src/resets.css">
+        html,
+        body,
+        #root {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            display: flex;
+            flex-basis: 100%;
+            width: 100%;
+        }
+
+        #root {
+            position: relative;
+        }
+
+        body button:not(:disabled) {
+            cursor: pointer;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body label {
+            cursor: pointer;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <div class="_storybrainResets_48zhe_1 _root_5lp9e_1">
+            <div class="_storybrainResets_48zhe_1 _root_cp1o3_1">
+                <div class="_frame1_cp1o3_9">
+                    <div class="_stateLayer_cp1o3_19">
+                        <div class="_horizontalCardDark_cp1o3_31">
+                            <div class="_content_cp1o3_40">
+                                <div class="_header_cp1o3_48">
+                                    <div class="_content2_cp1o3_56">
+                                        <div class="_text_cp1o3_61">
+                                            <div class="_header2_cp1o3_68">Átkelés-figyelő</div>
+                                            <div class="_subhead_cp1o3_80">Az átkelés szabad!</div>
+                                        </div>
+                                    </div>
+                                    <div class="_media_cp1o3_94"><svg preserveAspectRatio="none" viewBox="0 0 80 80"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg" class="_icon_cp1o3_99">
+                                            <path
+                                                d="M80 0H80.5V-0.5H80V0ZM80 80V80.5H80.5V80H80ZM0 0.5H80V-0.5H0V0.5ZM79.5 0V80H80.5V0H79.5ZM80 79.5H0V80.5H80V79.5Z"
+                                                fill="#49454F"></path>
+                                            <rect width="80" height="80" fill="#D0BCFE"></rect>
+                                            <path
+                                                d="M33.3333 56L20 42.8085L24.6667 38.1915L33.3333 46.766L55.3333 25L60 29.617L33.3333 56Z"
+                                                fill="#381E72"></path>
+                                        </svg></div>
+                                </div>
+                            </div>
+                            <div class="_background_cp1o3_103">
+                                <div class="_stateLayer2_cp1o3_112"></div>
+                            </div>
+                        </div>
+                        <div class="_subhead2_cp1o3_122">
+                            <p class="_labelWrapper_cp1o3_130"><span class="_label_cp1o3_130">A következő vonat
+                                </span><span class="_label2_cp1o3_144">8 perc</span><span class="_label3_cp1o3_153">
+                                    múlva érkezik, Siófok felé.</span></p>
+                        </div>
+                        <div class="_assistiveChipDark_cp1o3_161">
+                            <div class="_stateLayer3_cp1o3_172">
+                                <div class="_icon2_cp1o3_180"><svg preserveAspectRatio="none" viewBox="0 0 18 18"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg" class="_icon3_cp1o3_185">
+                                        <path
+                                            d="M9.0791 18.1582C10.292 18.1582 11.4697 17.9121 12.5508 17.4551C12.1377 17.0068 11.8213 16.4795 11.5928 15.917C10.8105 16.207 9.9668 16.374 9.0791 16.374C5.03613 16.374 1.79297 13.1221 1.79297 9.0791C1.79297 5.03613 5.02734 1.79297 9.07031 1.79297C12.7266 1.79297 15.7412 4.46484 16.2686 7.97168C16.8135 7.88379 17.5342 7.91016 18.0879 8.05078C17.5693 3.55078 13.6934 0 9.07031 0C4.0957 0 0 4.11328 0 9.0791C0 14.0537 4.10449 18.1582 9.0791 18.1582ZM4.63184 10.1689H9.07031C9.46582 10.1689 9.76465 9.86133 9.76465 9.47461V3.70898C9.76465 3.32227 9.46582 3.01465 9.07031 3.01465C8.68359 3.01465 8.37598 3.32227 8.37598 3.70898V8.78027H4.63184C4.23633 8.78027 3.9375 9.0791 3.9375 9.47461C3.9375 9.86133 4.23633 10.1689 4.63184 10.1689ZM16.875 18.2021C19.3359 18.2021 21.4014 16.1455 21.4014 13.6758C21.4014 11.1973 19.3535 9.1582 16.875 9.1582C14.3965 9.1582 12.3486 11.1973 12.3486 13.6758C12.3486 16.1631 14.3965 18.2021 16.875 18.2021ZM16.3477 16.3477C16.1807 16.3477 15.9785 16.2773 15.8467 16.1367L14.1943 14.3262C14.1064 14.2383 14.0449 14.0625 14.0449 13.9131C14.0449 13.5352 14.335 13.2891 14.6689 13.2891C14.8711 13.2891 15.0293 13.3682 15.1436 13.4912L16.3125 14.7744L18.5537 11.6543C18.6768 11.4961 18.8613 11.3818 19.0811 11.3818C19.4238 11.3818 19.7139 11.6543 19.7139 12.0059C19.7139 12.1113 19.6699 12.252 19.582 12.3662L16.8662 16.1104C16.7607 16.251 16.5586 16.3477 16.3477 16.3477Z"
+                                            fill="#E6E0E9"></path>
+                                    </svg></div>
+                                <div class="_labelText_cp1o3_189">Most frissült</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="_stateLayer4_cp1o3_204">
+                        <div class="_horizontalCardDark2_cp1o3_216">
+                            <div class="_content3_cp1o3_225">
+                                <div class="_header3_cp1o3_233">
+                                    <div class="_content4_cp1o3_241">
+                                        <div class="_text2_cp1o3_246">
+                                            <div class="_header4_cp1o3_253">Időjárás</div>
+                                            <div class="_subhead3_cp1o3_265">Az átkelés szabad!</div>
+                                        </div>
+                                    </div>
+                                    <div class="_media2_cp1o3_279"><svg preserveAspectRatio="none" viewBox="0 0 80 80"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg" class="_icon4_cp1o3_284">
+                                            <path
+                                                d="M80 0H80.5V-0.5H80V0ZM80 80V80.5H80.5V80H80ZM0 0.5H80V-0.5H0V0.5ZM79.5 0V80H80.5V0H79.5ZM80 79.5H0V80.5H80V79.5Z"
+                                                fill="#49454F"></path>
+                                            <rect width="80" height="80" fill="#D0BCFE"></rect>
+                                            <path
+                                                d="M25.5867 35.5167C27.8042 34.8237 30.0986 34.4695 32.2853 34.4695C35.1034 34.4695 37.1822 34.9161 39.8617 34.9161C42.6797 34.9161 44.4968 32.9758 44.4968 30.4504C44.4968 27.8633 42.5411 26 40.0619 26C38.291 26 36.7049 27.0933 36.0119 28.6025C35.7193 29.1876 35.8425 29.8498 36.4431 30.1578C36.9975 30.4658 37.6904 30.281 38.06 29.588C38.3834 28.8642 39.1687 28.2945 40.0619 28.2945C41.2784 28.2945 42.2178 29.126 42.2178 30.4504C42.2178 31.7747 41.2938 32.6216 39.8617 32.6216C37.3362 32.6216 35.2112 32.1751 32.2853 32.1751C29.7753 32.1751 27.219 32.6216 24.8937 33.33C24.17 33.5302 23.8774 34.1615 24.0468 34.7775C24.2316 35.3935 24.8167 35.7323 25.5867 35.5167ZM49.7479 42.9083C53.3975 42.9083 56 40.5676 56 37.303C56 34.0999 53.5361 31.7439 50.4409 31.7439C47.6999 31.7439 45.5748 33.6072 45.1128 36.1172C44.9588 36.8102 45.3284 37.4262 45.9444 37.5494C46.5757 37.688 47.1763 37.3184 47.3611 36.533C47.6383 35.0393 48.9318 34.023 50.4409 34.023C52.258 34.023 53.7055 35.3627 53.7055 37.303C53.7055 39.2741 52.1502 40.6292 49.7479 40.6292C45.0512 40.6292 39.9387 37.9497 33.7636 37.9497C30.576 37.9497 27.6656 38.4579 24.8783 39.4127C24.1854 39.6436 23.8774 40.2596 24.0468 40.8756C24.2316 41.4915 24.8475 41.8457 25.5867 41.5839C28.1275 40.66 30.7608 40.2442 33.7636 40.2442C39.8771 40.2442 44.4968 42.9083 49.7479 42.9083ZM39.8925 53.934C42.3256 53.934 44.2351 52.1016 44.2351 49.5145C44.2351 45.7879 40.4315 43.7244 33.4864 43.7244C30.6376 43.7244 27.527 44.2634 24.8937 45.1565C24.1854 45.4029 23.8774 46.0189 24.0468 46.6195C24.2316 47.2508 24.8475 47.605 25.5867 47.3432C28.0352 46.4809 30.7454 46.0035 33.4864 46.0035C38.9685 46.0035 41.9406 47.374 41.9406 49.5145C41.9406 50.8388 41.032 51.6396 39.8925 51.6396C38.7684 51.6396 38.0754 50.9004 37.8444 49.7147C37.675 49.0833 37.1514 48.6367 36.4431 48.7599C35.7193 48.8677 35.4267 49.5453 35.5807 50.2383C35.9811 52.3171 37.5826 53.934 39.8925 53.934Z"
+                                                fill="#381E72"></path>
+                                        </svg></div>
+                                </div>
+                            </div>
+                            <div class="_background2_cp1o3_288">
+                                <div class="_stateLayer5_cp1o3_297"></div>
+                            </div>
+                        </div>
+                        <div class="_subhead4_cp1o3_307">
+                            <p class="_labelWrapper2_cp1o3_315"><span class="_label4_cp1o3_321">A következő vonat
+                                </span><span class="_label5_cp1o3_329">8 perc</span><span class="_label6_cp1o3_338">
+                                    múlva érkezik, Siófok felé.</span></p>
+                        </div>
+                        <div class="_assistiveChipDark2_cp1o3_346">
+                            <div class="_stateLayer6_cp1o3_357">
+                                <div class="_icon5_cp1o3_365"><svg preserveAspectRatio="none" viewBox="0 0 18 18"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg" class="_icon6_cp1o3_370">
+                                        <path
+                                            d="M9.0791 18.1582C10.292 18.1582 11.4697 17.9121 12.5508 17.4551C12.1377 17.0068 11.8213 16.4795 11.5928 15.917C10.8105 16.207 9.9668 16.374 9.0791 16.374C5.03613 16.374 1.79297 13.1221 1.79297 9.0791C1.79297 5.03613 5.02734 1.79297 9.07031 1.79297C12.7266 1.79297 15.7412 4.46484 16.2686 7.97168C16.8135 7.88379 17.5342 7.91016 18.0879 8.05078C17.5693 3.55078 13.6934 0 9.07031 0C4.0957 0 0 4.11328 0 9.0791C0 14.0537 4.10449 18.1582 9.0791 18.1582ZM4.63184 10.1689H9.07031C9.46582 10.1689 9.76465 9.86133 9.76465 9.47461V3.70898C9.76465 3.32227 9.46582 3.01465 9.07031 3.01465C8.68359 3.01465 8.37598 3.32227 8.37598 3.70898V8.78027H4.63184C4.23633 8.78027 3.9375 9.0791 3.9375 9.47461C3.9375 9.86133 4.23633 10.1689 4.63184 10.1689ZM16.875 18.2021C19.3359 18.2021 21.4014 16.1455 21.4014 13.6758C21.4014 11.1973 19.3535 9.1582 16.875 9.1582C14.3965 9.1582 12.3486 11.1973 12.3486 13.6758C12.3486 16.1631 14.3965 18.2021 16.875 18.2021ZM16.3477 16.3477C16.1807 16.3477 15.9785 16.2773 15.8467 16.1367L14.1943 14.3262C14.1064 14.2383 14.0449 14.0625 14.0449 13.9131C14.0449 13.5352 14.335 13.2891 14.6689 13.2891C14.8711 13.2891 15.0293 13.3682 15.1436 13.4912L16.3125 14.7744L18.5537 11.6543C18.6768 11.4961 18.8613 11.3818 19.0811 11.3818C19.4238 11.3818 19.7139 11.6543 19.7139 12.0059C19.7139 12.1113 19.6699 12.252 19.582 12.3662L16.8662 16.1104C16.7607 16.251 16.5586 16.3477 16.3477 16.3477Z"
+                                            fill="#E6E0E9"></path>
+                                    </svg></div>
+                                <div class="_labelText2_cp1o3_374">Most frissült</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="_joEstetUser_cp1o3_389">Jó estét, User!</div>
+                <div class="_regebbiVonatok_cp1o3_404">Régebbi vonatok</div>
+                <div class="_railSenseV2Balatonfuzfo_cp1o3_419">RailSenseV2 - Balatonfűzfő</div>
+                <div class="_line1_cp1o3_434"><svg preserveAspectRatio="none" viewBox="0 0 956 2" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" class="_icon7_cp1o3_444">
+                        <path d="M0 0H956" stroke="#212025" stroke-width="2" stroke-linecap="round"></path>
+                    </svg></div>
+                <div class="_frame2_cp1o3_448">
+                    <div class="_group1_cp1o3_456">
+                        <div class="_rectangle3_cp1o3_461"></div>
+                        <div class="_line2_cp1o3_472"><svg preserveAspectRatio="none" viewBox="0 0 208 1" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" class="_icon8_cp1o3_484">
+                                <path d="M0 0H208" stroke="#212025" stroke-linecap="round"></path>
+                            </svg></div>
+                        <div class="_header5_cp1o3_488">Időjárás</div>
+                        <div class="_subhead5_cp1o3_505">Az átkelés szabad!</div>
+                        <div class="_media3_cp1o3_523"><svg preserveAspectRatio="none" viewBox="0 0 45 45" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" class="_icon9_cp1o3_533">
+                                <path d="M0 0H33C39.6274 0 45 5.37258 45 12V45H0V0Z" fill="#D0BCFE"></path>
+                                <path
+                                    d="M17.8681 30.1657H17.9763L16.0282 33.2954C15.7756 33.7012 15.9921 34.1883 16.4882 34.1883H17.0564C17.345 34.1883 17.5073 34.0891 17.6607 33.8455L18.1657 33.0248H27.7892L28.2943 33.8455C28.4476 34.0891 28.6189 34.1883 28.9076 34.1883H29.4307C29.9267 34.1883 30.1612 33.6922 29.8906 33.2683L27.9786 30.1657H28.1229C29.9448 30.1657 31 28.9572 31 27.1984V20.5423C31 18.08 30.7204 16.0056 30.3777 14.5626C29.9628 12.6505 28.8354 11.4329 26.9233 11.1984C26.2469 11.1172 24.7768 11 23 11C21.2232 11 19.7441 11.1172 19.0767 11.1984C17.1646 11.4329 16.0372 12.6505 15.6133 14.5626C15.2706 16.0056 15 18.08 15 20.5423V27.1984C15 28.9572 16.0462 30.1657 17.8681 30.1657ZM20.655 14.1387C20.2762 14.1387 20.0237 13.8771 20.0237 13.4983C20.0237 13.1195 20.2762 12.867 20.655 12.867H25.345C25.7238 12.867 25.9763 13.1195 25.9763 13.4983C25.9763 13.8771 25.7238 14.1387 25.345 14.1387H20.655ZM23 24.0147C20.8444 23.9966 18.9594 23.9064 17.9944 23.7892C17.4081 23.717 17.1556 23.3382 17.1556 22.7881V20.5964C17.1556 18.8016 17.354 17.2773 17.4893 16.655C17.5795 16.2221 17.8591 15.9064 18.292 15.8523C19.3021 15.726 20.6189 15.6629 23 15.6539C25.363 15.6449 26.6888 15.726 27.6809 15.8523C28.1229 15.9064 28.4115 16.2221 28.5017 16.655C28.637 17.2773 28.8354 18.8016 28.8354 20.5964V22.7881C28.8354 23.3472 28.5829 23.726 28.0056 23.7892C26.6347 23.9425 24.7587 24.0147 23 24.0147ZM27.2841 28.1274C26.5626 28.1274 26.0124 27.5772 26.0124 26.8557C26.0124 26.1342 26.5626 25.584 27.2841 25.584C28.0056 25.584 28.5558 26.1342 28.5558 26.8557C28.5558 27.5772 27.9966 28.1274 27.2841 28.1274ZM18.6979 28.1184C17.9763 28.1184 17.4442 27.5862 17.4442 26.8557C17.4442 26.1251 17.9763 25.593 18.6979 25.593C19.4284 25.593 19.9696 26.1251 19.9696 26.8557C19.9696 27.5862 19.4194 28.1184 18.6979 28.1184ZM19.1037 31.5186L19.9425 30.1657H26.0124L26.8512 31.5186H19.1037Z"
+                                    fill="#381E72"></path>
+                            </svg></div>
+                        <div class="_subhead6_cp1o3_537">Vonat haladt át 11:59 perckor Budapest-Kelenföldről
+                            Székesfehérvárra</div>
+                        <div class="_assistiveChipDark3_cp1o3_553">
+                            <div class="_stateLayer7_cp1o3_567">
+                                <div class="_icon10_cp1o3_575"><svg preserveAspectRatio="none" viewBox="0 0 18 18"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg" class="_icon11_cp1o3_580">
+                                        <path
+                                            d="M9.0791 18.1582C10.292 18.1582 11.4697 17.9121 12.5508 17.4551C12.1377 17.0068 11.8213 16.4795 11.5928 15.917C10.8105 16.207 9.9668 16.374 9.0791 16.374C5.03613 16.374 1.79297 13.1221 1.79297 9.0791C1.79297 5.03613 5.02734 1.79297 9.07031 1.79297C12.7266 1.79297 15.7412 4.46484 16.2686 7.97168C16.8135 7.88379 17.5342 7.91016 18.0879 8.05078C17.5693 3.55078 13.6934 0 9.07031 0C4.0957 0 0 4.11328 0 9.0791C0 14.0537 4.10449 18.1582 9.0791 18.1582ZM4.63184 10.1689H9.07031C9.46582 10.1689 9.76465 9.86133 9.76465 9.47461V3.70898C9.76465 3.32227 9.46582 3.01465 9.07031 3.01465C8.68359 3.01465 8.37598 3.32227 8.37598 3.70898V8.78027H4.63184C4.23633 8.78027 3.9375 9.0791 3.9375 9.47461C3.9375 9.86133 4.23633 10.1689 4.63184 10.1689ZM16.875 18.2021C19.3359 18.2021 21.4014 16.1455 21.4014 13.6758C21.4014 11.1973 19.3535 9.1582 16.875 9.1582C14.3965 9.1582 12.3486 11.1973 12.3486 13.6758C12.3486 16.1631 14.3965 18.2021 16.875 18.2021ZM16.3477 16.3477C16.1807 16.3477 15.9785 16.2773 15.8467 16.1367L14.1943 14.3262C14.1064 14.2383 14.0449 14.0625 14.0449 13.9131C14.0449 13.5352 14.335 13.2891 14.6689 13.2891C14.8711 13.2891 15.0293 13.3682 15.1436 13.4912L16.3125 14.7744L18.5537 11.6543C18.6768 11.4961 18.8613 11.3818 19.0811 11.3818C19.4238 11.3818 19.7139 11.6543 19.7139 12.0059C19.7139 12.1113 19.6699 12.252 19.582 12.3662L16.8662 16.1104C16.7607 16.251 16.5586 16.3477 16.3477 16.3477Z"
+                                            fill="#E6E0E9"></path>
+                                    </svg></div>
+                                <div class="_labelText3_cp1o3_584">5 perce</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>(function () { var js = "window['__CF$cv$params']={r:'865c174a8a923266',t:'MTcxMDY2OTE1NS4xNTIwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);"; var _0xh = document.createElement('iframe'); _0xh.height = 1; _0xh.width = 1; _0xh.style.position = 'absolute'; _0xh.style.top = 0; _0xh.style.left = 0; _0xh.style.border = 'none'; _0xh.style.visibility = 'hidden'; document.body.appendChild(_0xh); function handler() { var _0xi = _0xh.contentDocument || _0xh.contentWindow.document; if (_0xi) { var _0xj = _0xi.createElement('script'); _0xj.innerHTML = js; _0xi.getElementsByTagName('head')[0].appendChild(_0xj); } } if (document.readyState !== 'loading') { handler(); } else if (window.addEventListener) { document.addEventListener('DOMContentLoaded', handler); } else { var prev = document.onreadystatechange || function () { }; document.onreadystatechange = function (e) { prev(e); if (document.readyState !== 'loading') { document.onreadystatechange = prev; handler(); } }; } })();</script>
+    <iframe height="1" width="1"
+        style="position: absolute; top: 0px; left: 0px; border: medium; visibility: hidden;"></iframe>
+    <script defer=""
+        src="https://static.cloudflareinsights.com/beacon.min.js/v84a3a4012de94ce1a686ba8c167c359c1696973893317"
+        integrity="sha512-euoFGowhlaLqXsPWQ48qSkBSCFs3DPRyiwVu3FjR96cMPx+Fr+gpWRhIafcHwqwCqWS42RZhIudOvEI+Ckf6MA=="
+        data-cf-beacon="{&quot;rayId&quot;:&quot;865c174a8a923266&quot;,&quot;version&quot;:&quot;2024.2.4&quot;,&quot;token&quot;:&quot;7449176f14aa420c959831edd48bd5b7&quot;}"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
