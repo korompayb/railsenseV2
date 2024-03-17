@@ -152,16 +152,16 @@ def index():
             #send_email(subject, body, email_list) #ha ezt a kommentet kiszeded az oldal minden megnyitaskor emailt kuildd ha van vonat. fontos ha nincs megnyitva akkor nem kuldd
 
             
-            return render_template('indexuj.html', message=message, directions=[closest_train[0]], result_status=result_status, update_time=update_time)
+            return render_template('respon.html', message=message, directions=[closest_train[0]], result_status=result_status, update_time=update_time)
         else:
             with open('static/ek.txt', 'w+') as f:
               f.write('0')
           
             result_status = 2
-            return render_template('indexuj.html', message="A legközelebbi szerelvény érkezéséig, akár 5-30 perc is eltelhet. ", result_status=result_status,     update_time=update_time)
+            return render_template('respon.html', message="A legközelebbi szerelvény érkezéséig, akár 5-30 perc is eltelhet. ", result_status=result_status,     update_time=update_time)
     else:
         result_status = 3
-        return render_template('index.html', message=f"Error occurred: {response.status_code}", result_status=result_status, update_time=update_time)
+        return render_template('respon.html', message=f"Error occurred: {response.status_code}", result_status=result_status, update_time=update_time)
 
 
 if __name__ == '__main__':
