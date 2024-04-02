@@ -112,7 +112,7 @@ def index():
         data = response.json()
         close_trains = []
         for item in data:
-            if item.get("company") == "MAV" or item.get("company") == "GYSEV":  # gysev
+            if item.get("company") == "MAV" or item.get("company") == "GYSEV":  # gysev és máv vonatok filterezése
                 lat = item.get("lat")
                 lon = item.get("lon")
                 update_time = item.get("event_time")
@@ -164,7 +164,7 @@ def index():
                 f.write('0')
             result_status = 2
             return render_template('respon.html',
-                                   message="A legközelebbi szerelvény érkezéséig, akár 5-30 perc is eltelhet. ",
+                                   message="Óvatosan és magabiztosan közlekedj! Nézz körül minden esetben! ",
                                    result_status=result_status, update_time=update_time)
     else:
         result_status = 3
