@@ -1,0 +1,10 @@
+{
+    "name": "RailSense",
+    "icons": [
+      {
+        "src": "../static/favicon.ico",
+        "type": "icon/ico",
+        "sizes": "512x512"
+      }
+    ]
+  }
