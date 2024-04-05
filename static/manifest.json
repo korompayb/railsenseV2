@@ -1,18 +1,44 @@
 {
-  "background_color": "#ffffff",
+  "background_color": "#1e1e1e",
   "description": "A vonatok váratlan érkezése az életébe kerülhet. Vigyázzon magára!",
   "display": "standalone",
   "icons": [
     {
-      "src": "https://cdn.discordapp.com/attachments/880534853257400340/1225925798972882984/IMG_20240405_235058_584.jpg?ex=6622e75f&is=6610725f&hm=5c2e1e0da8d69d61c0933df74438348172360747873059fcbe233b89c1ad0a1e&",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/jpg"
+      "src": "icon192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "ok.png",
+      "type": "image/png",
+      "sizes": "429x952",
+      "purpose": "any"
+    },
+    {
+      "src": "no.png",
+      "type": "image/png",
+      "sizes": "429x952",
+      "purpose": "any"
+    },
+    {
+      "src": "okwide.png",
+      "type": "image/png",
+      "sizes": "1992x1352",
+      "purpose": "any",
+      "form_factor": "wide"
     }
   ],
   "name": "RailSense",
   "short_name": "RailSense",
   "start_url": "https://railsensev2.onrender.com",
-  "theme_color": "#ffffff",
+  "theme_color": "#1e1e1e",
   "scope": "/",
   "launch_handler": {
       "route_to": "existing-client",
