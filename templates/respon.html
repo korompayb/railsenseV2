@@ -8,7 +8,8 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>RailSense Átkelés-figyelő rendszer</title>
     <meta name="theme-color" content="#1b201b">
-    <link rel="manifest" href="manifest.json" />
+    <link rel="manifest" href="{{ manifest_url }}" />
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <style>
 
@@ -294,6 +295,23 @@
             setTimeout(function() {
                 location.reload();
             }, 10000);
+        </script>
+
+
+        <script src="/service-worker.js"></script>
+        <script>
+            if ('serviceWorker' in navigator) {
+              window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js')
+                  .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                  })
+                  .catch(function(error) {
+                    console.error('Service Worker registration failed:', error);
+                  });
+              });
+            }
+          
         </script>
 </body>
 

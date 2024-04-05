@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 import math
 import os
 import requests
@@ -99,6 +99,7 @@ def calculate_time_to_reach_coordinate(start_lat, start_lon, finish_lat, finish_
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    manifest_url = url_for('static', filename='manifest.json')
     with open('static/ek.txt', 'r') as f:
         ek = f.read()
     url = "https://apiv2.oroszi.net/elvira/maps"
@@ -156,7 +157,7 @@ def index():
                 pass
             # email_list = load_emails()
             # send_email(subject, body, email_list) #ha ezt a kommentet kiszeded az oldal minden megnyitaskor emailt kuildd ha van vonat. fontos ha nincs megnyitva akkor nem kuldd
-            return render_template('respon.html', message=message, directions=[closest_train[0]], result_status=result_status, update_time=update_time, trains=trains)
+            return render_template('respon.html', message=message, directions=[closest_train[0]], result_status=result_status, update_time=update_time, trains=trains, manifest_url=manifest_url)
 
         else:
             render_onsite()
@@ -165,11 +166,11 @@ def index():
             result_status = 2
             return render_template('respon.html',
                                    message="Óvatosan és magabiztosan közlekedj! Nézz körül minden esetben! ",
-                                   result_status=result_status, update_time=update_time)
+                                   result_status=result_status, update_time=update_time, manifest_url=manifest_url)
     else:
         result_status = 3
         return render_template('respon.html', message=f"Error occurred: {response.status_code}",
-                               result_status=result_status, update_time=update_time)
+                               result_status=result_status, update_time=update_time, manifest_url=manifest_url)
 
 
 if __name__ == '__main__':
