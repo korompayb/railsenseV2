@@ -9,7 +9,12 @@
       "sizes": "192x192"
     },
     {
-      "src": "icon512.png",
+      "src": "512x512@2.png",
+      "type": "image/png",
+      "sizes": "1024x1024"
+    },
+    {
+      "src": "512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
