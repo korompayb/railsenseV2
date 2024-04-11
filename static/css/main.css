@@ -3,7 +3,7 @@
     /* Theme colors */
     --szabad-fő: #1e1e1e;
     --szabad-másodlagos: #34913c;
-    --szabad-ikon: #064d0e;
+    --szabad-ikon: #107e1d;
     --szabad-szoveg: white;
 
     --vilagos-fő: #ffffff;
@@ -79,18 +79,28 @@
                     fill: var(--hiba-ikon) !important;
     }
 
-
+    body {
+        background-color: #1e1e1e !important;
+    }
 
     hr {
         border: 1px solid var(--secondary-color);
     }
 
+    .card {
+        background-color: #1e1e1e !important;
+    }
+
+    .dark-mode .card {
+        background-color: white !important;
+    }
+
     .dark-mode body{
-        background-color: #ffffff; /* Sötét háttérszín */
+        background-color: #ffffff !important; /* Sötét háttérszín */
         color: #343a40; /* Világos szövegszín */
     }
 
-    .dark-mode div {
+    .dark-mode div  {
         background-color: #ffffff; /* Sötét háttérszín */
         color: #343a40; /* Világos szövegszín */
     }
@@ -102,5 +112,6 @@
       
     .dark-mode .btn {
         color: #343a40;
+        border: 1px solid;
     }
-
+      

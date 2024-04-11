@@ -21,11 +21,12 @@
     <main>
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-sm-11">
                     <br>
-                    <h1 id="welcome"></h1><div style="float: right;"><button style="border: 1px solid;" class="btn ms-3" id="dark-mode-toggle" data-bs-toggle="button" aria-pressed="false">Mód</button></div>
+                    <h1 id="welcome"></h1>
                     <h6 class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" id="date"></h6>
                 </div>
+                <div class="col-lg-1"><br><button class="btn btn-outline-light ms-3" id="dark-mode-toggle" data-bs-toggle="button" aria-pressed="false">Mód</button></div>
                 
             </div>
             <hr>
@@ -70,7 +71,7 @@
                             </p>
 
                         </div>
-                        <div class="card-footer bg-dark-muted swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="background-color: var(--primary-color); vertical-align: top;">
+                        <div class="card-footer  swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="background-color: var(--primary-color); vertical-align: top;">
                             <div class="rounded" 
                                 style="padding: 5px;  vertical-align: middle; width: fit-content; border: 1px solid;">
                                 <div class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}"
@@ -99,7 +100,7 @@
                                 <h4 id="location-name" class="card-subtitle" style="margin-bottom: 0px;margin-top: 5px; ">{{ content }}</h4>
                             </div>
                         </div>
-                        <div class="card-footer bg-dark-muted" style=" vertical-align: top;">
+                        <div class="card-footer " style=" vertical-align: top;">
                             <div
                                 style="padding: 5px; vertical-align: middle; width: fit-content;">
                                 <div
@@ -125,9 +126,8 @@
                                 <span  id="weather-icon"></span>
                             </div>
                         </div>
-                        <div class="card-footer bg-dark-muted" style=" vertical-align: top;">
-                            <div
-                                style="padding: 5px; vertical-align: middle; width: fit-content;">
+                        <div class="card-footer" style=" vertical-align: top;">
+                            <div style="padding: 5px; vertical-align: middle; width: fit-content;">
                                 <div class="text-light"
                                     style="vertical-align: middle; box-sizing: border-box; display: flex; flex-direction: row;">
 
