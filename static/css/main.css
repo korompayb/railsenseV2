@@ -3,7 +3,7 @@
     /* Theme colors */
     --szabad-fő: #1e1e1e;
     --szabad-másodlagos: #34913c;
-    --szabad-ikon: #107e1d;
+    --szabad-ikon: #064d0e;
     --szabad-szoveg: white;
 
     --vilagos-fő: #ffffff;
@@ -28,10 +28,16 @@
 
     }
 
+    .card-header {
+        border: none !important;
+    }
+
+    .card-footer {
+        border: none !important;
+    }
     
     .box-red{
         color: var(--tilos-másodlagos) !important;
-        background-color: var(--tilos-fő) !important;
         border-color: var(--tilos-másodlagos) !important;
         fill: var(--tilos-ikon) !important;
 
@@ -63,14 +69,12 @@
 
     .box-green{
                    color: var(--szabad-másodlagos) !important;
-        background-color: var(--szabad-fő) !important;
             border-color: var(--szabad-másodlagos) !important;
                     fill: var(--szabad-ikon) !important;
     }
 
     .box-orange{
                    color: var(--hiba-másodlagos) !important;
-        background-color: var(--hiba-fő) !important;
             border-color: var(--hiba-másodlagos) !important;
                     fill: var(--hiba-ikon) !important;
     }
@@ -80,3 +84,23 @@
     hr {
         border: 1px solid var(--secondary-color);
     }
+
+    .dark-mode body{
+        background-color: #ffffff; /* Sötét háttérszín */
+        color: #343a40; /* Világos szövegszín */
+    }
+
+    .dark-mode div {
+        background-color: #ffffff; /* Sötét háttérszín */
+        color: #343a40; /* Világos szövegszín */
+    }
+
+    .dark-mode div p {
+        background-color: #ffffff; /* Sötét háttérszín */
+        color: #343a40 !important; /* Világos szövegszín */
+    }
+      
+    .dark-mode .btn {
+        color: #343a40;
+    }
+

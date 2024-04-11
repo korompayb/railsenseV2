@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="hu" data-bs-theme="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -17,13 +17,16 @@
 
 </style>
 
-<body style="background-color: var(--szabad-fő);">
+<body>
     <main>
         <div class="container">
-            <div>
-                <br>
-                <h1 id="welcome" style="color: white;"></h1>
-                <h6 class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" id="date">Railsense V2 - Balatonfüzfő</h6>
+            <div class="row">
+                <div class="col-lg-12">
+                    <br>
+                    <h1 id="welcome"></h1><div style="float: right;"><button style="border: 1px solid;" class="btn ms-3" id="dark-mode-toggle" data-bs-toggle="button" aria-pressed="false">Mód</button></div>
+                    <h6 class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" id="date"></h6>
+                </div>
+                
             </div>
             <hr>
             <div>
@@ -31,7 +34,7 @@
                     <div class="card swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="max-width: 30rem;">
                         <div style="padding: 0px; overflow: hidden;" class="card-header">
                             <div style="float: left; padding: 13px;">
-                                <p class="card-title  " style="color: white;">Átkelés-figyelő</p>
+                                <p class="card-title text-light">Átkelés-figyelő</p>
                                 <h4 class="card-subtitle swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="margin-bottom: 0px;margin-top: 5px;">{% if result_status == 1 %}Az átkelés veszélyes!{% elif
                                     result_status == 2 or result_status == 4%}Az átkelés szabad!{% elif result_status == 3 %}Hiba: Error code 2{%
                                     endif %}</h4>
@@ -43,7 +46,7 @@
                                 </svg>
                             </div>
                         </div>
-                        <div class="card-body" style="border-bottom: var(--bs-card-border-width) solid var(); color: white;">
+                        <div class="card-body text-light" style="border-bottom: var(--bs-card-border-width) solid var();">
                             <p class="card-subtitle">
                                 {% if result_status == 1 %}
                                     Vonat érkezik:
@@ -92,7 +95,7 @@
                     <div class="card swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="max-width: 30rem; ">
                         <div style="padding: 0px; overflow: hidden;" class="card-header">
                             <div style="float: left; padding: 13px;">
-                                <p class="card-title" style="margin-bottom: 2px; color: white;">{{ contentmessage }}</p>
+                                <p class="card-title text-light" style="margin-bottom: 2px;">{{ contentmessage }}</p>
                                 <h4 id="location-name" class="card-subtitle" style="margin-bottom: 0px;margin-top: 5px; ">{{ content }}</h4>
                             </div>
                         </div>
@@ -102,7 +105,8 @@
                                 <div
                                     style="vertical-align: middle; box-sizing: border-box; display: flex; flex-direction: row;">
 
-                                    <p>asd</p>
+                                    <p>{{ directions[0] }} -irányban</p>
+                                    <p></p>
                                 </div>
                             </div>
                         </div>
@@ -113,8 +117,8 @@
                     <div class="card swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="max-width: 30rem; ">
                         <div style="padding: 0px; overflow: hidden;" class="card-header">
                             <div style="float: left; padding: 13px;">
-                                <p class="card-title" style="margin-bottom: 2px; color: white;">Időjárás</p>
-                                <h4 id="location-name" class="card-subtitle" style="margin-bottom: 0px;margin-top: 5px; ">Balatonfüzfő</h4>
+                                <p class="card-title text-light" style="margin-bottom: 2px;">Időjárás</p>
+                                <h4 id="location-name" class="card-subtitle swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="margin-bottom: 0px;margin-top: 5px;">Balatonfüzfő</h4>
                             </div>
                             <div  class="img-fluid svgdoboz"
                                 style="float: right; padding: 10px; border-top-right-radius: 5px;">
@@ -124,7 +128,7 @@
                         <div class="card-footer bg-dark-muted" style=" vertical-align: top;">
                             <div
                                 style="padding: 5px; vertical-align: middle; width: fit-content;">
-                                <div
+                                <div class="text-light"
                                     style="vertical-align: middle; box-sizing: border-box; display: flex; flex-direction: row;">
 
                                     <small style="vertical-align: top; flex: 1;margin-left: 5px; ;">
@@ -243,12 +247,12 @@
                 swipeableBox.classList.toggle('expanded');
             });
         </script>
-        <!--<script>
+        <script>
             // Refresh the page after a certain delay
             setTimeout(function() {
                 location.reload();
             }, 10000);
-        </script>-->
+        </script>
 
 
         <script src="/service-worker.js"></script>
@@ -266,6 +270,87 @@
             }
           
         </script>
+        <!--script>
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const htmlElement = document.querySelector('html');
+    
+    darkModeToggle.addEventListener('click', () => {
+      const currentTheme = htmlElement.getAttribute('data-bs-theme');
+    
+      if (currentTheme === 'light') {
+        htmlElement.setAttribute('data-bs-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        applyDarkModeStyles();
+      } else {
+        htmlElement.setAttribute('data-bs-theme', 'light');
+        localStorage.setItem('theme', 'light');
+        applyLightModeStyles();
+      }
+    });
+    
+    function applyDarkModeStyles() {
+      const accordionHeaders = document.querySelectorAll('.accordion-header');
+      const accordionBodies = document.querySelectorAll('.accordion-body');
+    
+      accordionHeaders.forEach(header => {
+        header.classList.add('dark-mode-accordion-header');
+      });
+    
+      accordionBodies.forEach(body => {
+        body.classList.add('dark-mode-accordion-body');
+      });
+    }
+    
+    function applyLightModeStyles() {
+      const accordionHeaders = document.querySelectorAll('.accordion-header');
+      const accordionBodies = document.querySelectorAll('.accordion-body');
+    
+      accordionHeaders.forEach(header => {
+        header.classList.remove('dark-mode-accordion-header');
+      });
+    
+      accordionBodies.forEach(body => {
+        body.classList.remove('dark-mode-accordion-body');
+      });
+    }
+    
+    // Check for theme preference from local storage on page load
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      htmlElement.setAttribute('data-bs-theme', savedTheme);
+      if (savedTheme === 'dark') {
+        applyDarkModeStyles();
+      }
+    }
+    
+    
+        </script-->
+        <script>const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const body = document.body;
+            const allElements = document.querySelectorAll('*');
+            
+            darkModeToggle.addEventListener('click', () => {
+              const isDarkMode = body.classList.toggle('dark-mode');
+            
+              allElements.forEach(element => {
+                if (isDarkMode) {
+                  element.classList.add('dark-mode');
+                } else {
+                  element.classList.remove('dark-mode');
+                }
+              });
+            
+              localStorage.setItem('darkMode', isDarkMode);
+            });
+            
+            // Check for dark mode preference from local storage on page load
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+              body.classList.add('dark-mode');
+              allElements.forEach(element => {
+                element.classList.add('dark-mode');
+              });
+            }</script>
 </body>
 
 </html>

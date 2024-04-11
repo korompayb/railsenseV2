@@ -16,23 +16,16 @@ def update(filename, number):
         lines = f.readlines()
     return lines[-number:]
 
-def load_trains():
-    with open('static/trains.txt', 'a', encoding='utf-8') as f:
-        f.write(f'{closest_train};{update_time}\n')
 
-def render_onsite():
-    with open('static/trains.txt', 'r', encoding='utf-8') as lines:
-        last_five = update('static/trains.txt', 5)
-        for line in last_five:
-            line = line.strip('\n')
-            trains.append(line.split(';'))
+
 
 def telegram_send(message):
     seconds = time.time()
-    token = "YOUR_TELEGRAM_BOT_TOKEN"
+    token = "6074022456:AAEi_sEwhxU8qE1JeOCJwDXeeBS5ZDXwE28"
     url = f"https://api.telegram.org/bot{token}/sendMessage"
-    myobj = {'chat_id': 'YOUR_CHAT_ID', 'parse_mode': 'MARKDOWN', 'text': f"{message} \n"}
+    myobj = {'chat_id': '1001862414880', 'parse_mode': 'MARKDOWN', 'text': f"{message} \n"}
     x = requests.post(url, json=myobj)
+
 
 def calculate_time_to_reach_coordinate(start_lat, start_lon, finish_lat, finish_lon, speed):
     lat1 = math.radians(start_lat)
@@ -95,7 +88,7 @@ def index():
                         if distance <= max_distance:
                             time_to_reach = calculate_time_to_reach_coordinate(lat, lon, target_lat, target_lon, speed)
                             close_trains.append((item["direction"], time_to_reach))
-                        elif distanceo <= 10:
+                        elif distanceo <= 6: # külső kör sugara
                             time_to_reach = calculate_time_to_reach_coordinate(lat, lon, target_lat, target_lon, speed)
                             close_trains.append((item["direction"], time_to_reach))
                             try:
@@ -124,7 +117,7 @@ def index():
                     closest_train = close_trains[0]
                     message = f"A vonat még távol van, de légy óvatos!"
 
-                    return render_template('index.html', contentmessage="Outer radius active", directions=[closest_train[0]], message=message, result_status=result_status, update_time=update_time, manifest_url=manifest_url)
+                    return render_template('index.html', contentmessage="Vonat érzékelve", directions=[closest_train[0]], message=message, result_status=result_status, update_time=update_time, manifest_url=manifest_url)
             except:
                 pass
 
@@ -142,7 +135,7 @@ def index():
             
             return render_template('index.html', message=message, directions=[closest_train[0]], result_status=result_status, update_time=update_time, trains=trains, manifest_url=manifest_url)
         else:
-            render_onsite()
+            
             with open('static/ek.txt', 'w+') as f:
                 f.write('0')
             result_status = 2
@@ -156,5 +149,4 @@ def index():
 
 
 if __name__ == '__main__':
-    render_onsite()
     app.run(host='0.0.0.0', port=81, debug=True)
