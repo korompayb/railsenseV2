@@ -1,0 +1,82 @@
+:root {
+
+    /* Theme colors */
+    --szabad-fő: #1e1e1e;
+    --szabad-másodlagos: #34913c;
+    --szabad-ikon: #107e1d;
+    --szabad-szoveg: white;
+
+    --vilagos-fő: #ffffff;
+    --vilagos-másodlagos: #5cfb38;
+    --vilagos-ikon: #8dff8d;
+    --vilagos-szoveg: rgb(0, 0, 0);
+
+    --tilos-fő: #1e1e1e;
+    --tilos-másodlagos: #db2525;
+    --tilos-ikon: #9d0000;
+    --tilos-szoveg: #ffffff;
+
+    --hiba-fő: #1e1e1e;
+    --hiba-másodlagos: #efff0f;
+    --hiba-ikon: #716b1a;
+    --hiba-szoveg: #aeba00;
+
+    --kontraszt-fő: #ffffff;
+    --kontraszt-másodlagos: #000000;
+    --kontraszt-ikon: #ffffff;
+    --kontraszt-szoveg: black;
+
+    }
+
+    
+    .box-red{
+        color: var(--tilos-másodlagos) !important;
+        background-color: var(--tilos-fő) !important;
+        border-color: var(--tilos-másodlagos) !important;
+        fill: var(--tilos-ikon) !important;
+
+    }
+
+    .box-red .svgdoboz {
+        background-color: var(--tilos-másodlagos) !important;
+    }
+
+    .box-green .svgdoboz {
+        background-color: var(--szabad-másodlagos) !important;
+    }
+
+    .box-orange .svgdoboz {
+        background-color: var(--hiba-másodlagos) !important;
+    }
+
+    .box-red .svgdoboz2 {
+        fill: var(--tilos-másodlagos) !important;
+    }
+
+    .box-green .svgdoboz2 {
+        fill: var(--szabad-másodlagos) !important;
+    }
+
+    .box-orange .svgdoboz2 {
+        fill: var(--hiba-másodlagos) !important;
+    }
+
+    .box-green{
+                   color: var(--szabad-másodlagos) !important;
+        background-color: var(--szabad-fő) !important;
+            border-color: var(--szabad-másodlagos) !important;
+                    fill: var(--szabad-ikon) !important;
+    }
+
+    .box-orange{
+                   color: var(--hiba-másodlagos) !important;
+        background-color: var(--hiba-fő) !important;
+            border-color: var(--hiba-másodlagos) !important;
+                    fill: var(--hiba-ikon) !important;
+    }
+
+
+
+    hr {
+        border: 1px solid var(--secondary-color);
+    }

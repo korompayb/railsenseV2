@@ -4,36 +4,36 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "icon192.png",
+      "src": "img/512x512.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "512x512@2.png",
+      "src": "img/512x512.png",
       "type": "image/png",
       "sizes": "1024x1024"
     },
     {
-      "src": "512x512.png",
+      "src": "img/512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
   "screenshots": [
     {
-      "src": "ok.png",
+      "src": "img/ok.png",
       "type": "image/png",
       "sizes": "429x952",
       "purpose": "any"
     },
     {
-      "src": "no.png",
+      "src": "img/no.png",
       "type": "image/png",
       "sizes": "429x952",
       "purpose": "any"
     },
     {
-      "src": "okwide.png",
+      "src": "img/okwide.png",
       "type": "image/png",
       "sizes": "1992x1352",
       "purpose": "any",
