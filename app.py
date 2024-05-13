@@ -117,7 +117,7 @@ def index():
                     closest_train = close_trains[0]
                     message = f"A vonat még távol van, de légy óvatos!"
 
-                    return render_template('index.html', contentmessage="Vonat érzékelve", directions=[closest_train[0]], message=message, result_status=result_status, update_time=update_time, manifest_url=manifest_url)
+                    return render_template('index.html', contentmessage="Vonat érzékelve", directions=[closest_train[0]], message=message, result_status=result_status, update_time="update_time", manifest_url=manifest_url)
             except:
                 pass
 
@@ -133,7 +133,7 @@ def index():
             else:
                 pass
             
-            return render_template('index.html', message=message, directions=[closest_train[0]], result_status=result_status, update_time=update_time, trains=trains, manifest_url=manifest_url)
+            return render_template('index.html', message=message, directions=[closest_train[0]], result_status=result_status, update_time="update_time", trains=trains, manifest_url=manifest_url)
         else:
             
             with open('static/ek.txt', 'w+') as f:
@@ -141,11 +141,11 @@ def index():
             result_status = 2
             return render_template('index.html',
                                    message="Óvatosan és magabiztosan közlekedj! Nézz körül minden esetben! ",
-                                   result_status=result_status, update_time=update_time, manifest_url=manifest_url)
+                                   result_status=result_status, update_time="update_time", manifest_url=manifest_url)
     else:
         result_status = 3
-        return render_template('index.html', message=f"Error occurred: {response.status_code}",
-                               result_status=result_status, update_time=update_time, manifest_url=manifest_url)
+        return render_template('index.html', message=f"   Hiba történt a kiszolgálóval való kapcsolodás közben:  {response.status_code}",
+                               result_status=result_status, update_time="update_time", manifest_url=manifest_url)
 
 
 if __name__ == '__main__':
