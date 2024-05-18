@@ -25,6 +25,7 @@
                     <br>
                     <h1 id="welcome"></h1>
                     <h6 class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" id="date"></h6>
+                    <h2 class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" >{{message}}</h2>
                 </div>
                 <div class="col-lg-1"><br><button class="btn btn-outline-light ms-3" id="dark-mode-toggle" data-bs-toggle="button" aria-pressed="false">Mód</button></div>
                 
@@ -32,148 +33,63 @@
             <hr>
             <div>
                 <div>
-                    <div class="card swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="max-width: 30rem;">
-                        <div style="padding: 0px; overflow: hidden;" class="card-header">
-                            <div style="float: left; padding: 13px;">
-                                <p class="card-title text-light">FIGYELEM!</p>
-                                <h4 class="card-subtitle swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="margin-bottom: 0px;margin-top: 5px;">
-                                    Az alkalmazás jelenleg <br> nem üzemel!</h4>
-                            </div>
-                            <div class="svgdoboz img-fluid swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}"
-                                style="float: right; padding: 10px; border-top-right-radius: 5px;">
-                                <svg width="65" height="70" viewBox="0 0 33 44" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M4.22601 43.5H5.29787C5.84231 43.5 6.16557 43.3179 6.45481 42.8711L7.40758 41.3649H25.5612L26.514 42.8711C26.8032 43.3179 27.1095 43.5 27.6539 43.5H28.6407C29.5765 43.5 30.0188 42.5897 29.5254 41.8118L26.2588 36.6644C30.206 36.5154 32.5369 33.8672 32.5369 30.0439V19.2525C32.5369 14.7009 32.0094 10.679 31.2949 7.79908C30.3761 3.72748 27.8241 1.34411 23.8939 0.864126C22.6008 0.715166 19.7085 0.5 16.5099 0.5C13.0391 0.5 10.419 0.715166 9.12597 0.864126C5.21281 1.34411 2.64373 3.72748 1.72499 7.79908C1.01041 10.679 0.5 14.5851 0.5 19.1201V30.0439C0.5 33.8507 2.79685 36.4823 6.693 36.6644L3.37532 41.8614C2.89894 42.6062 3.30727 43.5 4.22601 43.5ZM7.57771 33.9996C4.63434 33.9996 3.23921 32.2948 3.23921 29.8784V19.1201C3.23921 14.7009 3.76664 11.0431 4.43017 8.27906C5.0767 5.39915 6.79508 3.81024 9.50027 3.51232C10.7593 3.36336 13.2093 3.19784 16.5099 3.19784C19.5384 3.19784 22.2776 3.36336 23.5366 3.51232C26.2418 3.81024 27.9602 5.39915 28.6067 8.27906C29.2702 11.0431 29.7806 14.8168 29.7806 19.2525V29.8784C29.7806 32.2948 28.4025 33.9996 25.4592 33.9996H7.57771ZM12.1544 7.68322H20.8654C21.58 7.68322 22.0394 7.21978 22.0394 6.54119C22.0394 5.86259 21.58 5.39915 20.8654 5.39915H12.1544C11.4568 5.39915 10.9975 5.86259 10.9975 6.54119C10.9975 7.21978 11.4568 7.68322 12.1544 7.68322ZM16.5099 24.7144C20.7804 24.6978 24.013 24.5323 25.8164 24.3172C26.8883 24.1848 27.3647 23.4896 27.3647 22.5131V18.5574C27.3647 15.2968 26.9904 12.5493 26.7352 11.4238C26.565 10.6293 26.0376 10.0666 25.221 9.96728C23.3665 9.75212 21.2057 9.63626 16.5099 9.61971C11.8141 9.63626 9.65339 9.75212 7.76487 9.98383C6.96522 10.0666 6.45481 10.6293 6.28467 11.4238C6.02946 12.5493 5.67218 15.2968 5.67218 18.5574V22.5131C5.67218 23.4896 6.13155 24.1848 7.20341 24.3172C9.00687 24.5323 12.2395 24.6978 16.5099 24.7144ZM24.4894 31.5335C25.7994 31.5335 26.8373 30.5404 26.8373 29.2329C26.8373 27.9419 25.8164 26.9488 24.4894 26.9488C23.1283 26.9488 22.1074 27.9419 22.1074 29.2329C22.1074 30.5404 23.1283 31.5335 24.4894 31.5335ZM8.53048 31.5169C9.85756 31.5169 10.8784 30.557 10.8784 29.2329C10.8784 27.9253 9.89158 26.9654 8.53048 26.9654C7.1864 26.9654 6.1996 27.9253 6.1996 29.2329C6.1996 30.557 7.1864 31.5169 8.53048 31.5169ZM9.17701 38.6008L10.402 36.6809H22.5668L23.7748 38.6008H9.17701Z"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="card-body text-light" style="border-bottom: var(--bs-card-border-width) solid var();">
-                            <p class="card-subtitle">
-                               Kérlek rettentő körültekintően közlekedj! Nagy óvatosságot szeretnék kérni!
-                            </p>
-
-                        </div>
-                        <div class="card-footer  swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="background-color: var(--primary-color); vertical-align: top;">
-                            <div class="rounded" 
-                                style="padding: 5px;  vertical-align: middle; width: fit-content; border: 1px solid;">
-                                <div class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}"
-                                    style="vertical-align: middle; box-sizing: border-box; display: flex; flex-direction: row;">
-                                    <svg style="box-sizing: border-box; overflow: scroll; background-color: transparent;" class="svgdoboz2" width="22" height="22"
-                                        viewBox="0 0 22 19" fill="" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M9.0791 18.7334C10.292 18.7334 11.4697 18.4873 12.5508 18.0303C12.1377 17.582 11.8213 17.0547 11.5928 16.4922C10.8105 16.7822 9.9668 16.9492 9.0791 16.9492C5.03613 16.9492 1.79297 13.6973 1.79297 9.6543C1.79297 5.61133 5.02734 2.36816 9.07031 2.36816C12.7266 2.36816 15.7412 5.04004 16.2686 8.54688C16.8135 8.45898 17.5342 8.48535 18.0879 8.62598C17.5693 4.12598 13.6934 0.575195 9.07031 0.575195C4.0957 0.575195 0 4.68848 0 9.6543C0 14.6289 4.10449 18.7334 9.0791 18.7334ZM4.63184 10.7441H9.07031C9.46582 10.7441 9.76465 10.4365 9.76465 10.0498V4.28418C9.76465 3.89746 9.46582 3.58984 9.07031 3.58984C8.68359 3.58984 8.37598 3.89746 8.37598 4.28418V9.35547H4.63184C4.23633 9.35547 3.9375 9.6543 3.9375 10.0498C3.9375 10.4365 4.23633 10.7441 4.63184 10.7441ZM16.875 18.7773C19.3359 18.7773 21.4014 16.7207 21.4014 14.251C21.4014 11.7725 19.3535 9.7334 16.875 9.7334C14.3965 9.7334 12.3486 11.7725 12.3486 14.251C12.3486 16.7383 14.3965 18.7773 16.875 18.7773ZM16.3477 16.9229C16.1807 16.9229 15.9785 16.8525 15.8467 16.7119L14.1943 14.9014C14.1064 14.8135 14.0449 14.6377 14.0449 14.4883C14.0449 14.1104 14.335 13.8643 14.6689 13.8643C14.8711 13.8643 15.0293 13.9434 15.1436 14.0664L16.3125 15.3496L18.5537 12.2295C18.6768 12.0713 18.8613 11.957 19.0811 11.957C19.4238 11.957 19.7139 12.2295 19.7139 12.5811C19.7139 12.6865 19.6699 12.8271 19.582 12.9414L16.8662 16.6855C16.7607 16.8262 16.5586 16.9229 16.3477 16.9229Z"
-                                             />
+                    {% for train in items %}
+                        <div class="card swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="max-width: 30rem;">
+                            <div style="padding: 0px; overflow: hidden;" class="card-header">
+                                <div style="float: left; padding: 13px;">
+                                    <p class="card-title text-light">Átkelés-figyelő</p>
+                                    <h4 class="card-subtitle swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="margin-bottom: 0px;margin-top: 5px;">
+                                        {% if result_status == 1 %}Az átkelés veszélyes!{% elif result_status == 2 or result_status == 4%}Az átkelés szabad!{% elif result_status == 3 %}Kiszolgálóhiba: 500{% endif %}
+                                    </h4>
+                                </div>
+                                <div class="svgdoboz img-fluid swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="float: right; padding: 10px; border-top-right-radius: 5px;">
+                                    <svg width="65" height="70" viewBox="0 0 33 44" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4.22601 43.5H5.29787C5.84231 43.5 6.16557 43.3179 6.45481 42.8711L7.40758 41.3649H25.5612L26.514 42.8711C26.8032 43.3179 27.1095 43.5 27.6539 43.5H28.6407C29.5765 43.5 30.0188 42.5897 29.5254 41.8118L26.2588 36.6644C30.206 36.5154 32.5369 33.8672 32.5369 30.0439V19.2525C32.5369 14.7009 32.0094 10.679 31.2949 7.79908C30.3761 3.72748 27.8241 1.34411 23.8939 0.864126C22.6008 0.715166 19.7085 0.5 16.5099 0.5C13.0391 0.5 10.419 0.715166 9.12597 0.864126C5.21281 1.34411 2.64373 3.72748 1.72499 7.79908C1.01041 10.679 0.5 14.5851 0.5 19.1201V30.0439C0.5 33.8507 2.79685 36.4823 6.693 36.6644L3.37532 41.8614C2.89894 42.6062 3.30727 43.5 4.22601 43.5ZM7.57771 33.9996C4.63434 33.9996 3.23921 32.2948 3.23921 29.8784V19.1201C3.23921 14.7009 3.76664 11.0431 4.43017 8.27906C5.0767 5.39915 6.79508 3.81024 9.50027 3.51232C10.7593 3.36336 13.2093 3.19784 16.5099 3.19784C19.5384 3.19784 22.2776 3.36336 23.5366 3.51232C26.2418 3.81024 27.9602 5.39915 28.6067 8.27906C29.2702 11.0431 29.7806 14.8168 29.7806 19.2525V29.8784C29.7806 32.2948 28.4025 33.9996 25.4592 33.9996H7.57771ZM12.1544 7.68322H20.8654C21.58 7.68322 22.0394 7.21978 22.0394 6.54119C22.0394 5.86259 21.58 5.39915 20.8654 5.39915H12.1544C11.4568 5.39915 10.9975 5.86259 10.9975 6.54119C10.9975 7.21978 11.4568 7.68322 12.1544 7.68322ZM16.5099 24.7144C20.7804 24.6978 24.013 24.5323 25.8164 24.3172C26.8883 24.1848 27.3647 23.4896 27.3647 22.5131V18.5574C27.3647 15.2968 26.9904 12.5493 26.7352 11.4238C26.565 10.6293 26.0376 10.0666 25.221 9.96728C23.3665 9.75212 21.2057 9.63626 16.5099 9.61971C11.8141 9.63626 9.65339 9.75212 7.76487 9.98383C6.96522 10.0666 6.45481 10.6293 6.28467 11.4238C6.02946 12.5493 5.67218 15.2968 5.67218 18.5574V22.5131C5.67218 23.4896 6.13155 24.1848 7.20341 24.3172C9.00687 24.5323 12.2395 24.6978 16.5099 24.7144ZM24.4894 31.5335C25.7994 31.5335 26.8373 30.5404 26.8373 29.2329C26.8373 27.9419 25.8164 26.9488 24.4894 26.9488C23.1283 26.9488 22.1074 27.9419 22.1074 29.2329C22.1074 30.5404 23.1283 31.5335 24.4894 31.5335ZM8.53048 31.5169C9.85756 31.5169 10.8784 30.557 10.8784 29.2329C10.8784 27.9253 9.89158 26.9654 8.53048 26.9654C7.1864 26.9654 6.1996 27.9253 6.1996 29.2329C6.1996 30.557 7.1864 31.5169 8.53048 31.5169ZM9.17701 38.6008L10.402 36.6809H22.5668L23.7748 38.6008H9.17701Z"/>
                                     </svg>
-
-                                    <small style="vertical-align: top; flex: 1;margin-left: 5px;">Létrehozva: 2024.05.13  18:17</small>
-
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="card swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="max-width: 30rem;">
-                        <div style="padding: 0px; overflow: hidden;" class="card-header">
-                            <div style="float: left; padding: 13px;">
-                                <p class="card-title text-light">Átkelés-figyelő</p>
-                                <h4 class="card-subtitle swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="margin-bottom: 0px;margin-top: 5px;">{% if result_status == 1 %}Az átkelés veszélyes!{% elif
-                                    result_status == 2 or result_status == 4%}Az átkelés szabad!{% elif result_status == 3 %}Kiszolgálóhiba: 500{%
-                                    endif %}</h4>
-                            </div>
-                            <div class="svgdoboz img-fluid swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}"
-                                style="float: right; padding: 10px; border-top-right-radius: 5px;">
-                                <svg width="65" height="70" viewBox="0 0 33 44" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M4.22601 43.5H5.29787C5.84231 43.5 6.16557 43.3179 6.45481 42.8711L7.40758 41.3649H25.5612L26.514 42.8711C26.8032 43.3179 27.1095 43.5 27.6539 43.5H28.6407C29.5765 43.5 30.0188 42.5897 29.5254 41.8118L26.2588 36.6644C30.206 36.5154 32.5369 33.8672 32.5369 30.0439V19.2525C32.5369 14.7009 32.0094 10.679 31.2949 7.79908C30.3761 3.72748 27.8241 1.34411 23.8939 0.864126C22.6008 0.715166 19.7085 0.5 16.5099 0.5C13.0391 0.5 10.419 0.715166 9.12597 0.864126C5.21281 1.34411 2.64373 3.72748 1.72499 7.79908C1.01041 10.679 0.5 14.5851 0.5 19.1201V30.0439C0.5 33.8507 2.79685 36.4823 6.693 36.6644L3.37532 41.8614C2.89894 42.6062 3.30727 43.5 4.22601 43.5ZM7.57771 33.9996C4.63434 33.9996 3.23921 32.2948 3.23921 29.8784V19.1201C3.23921 14.7009 3.76664 11.0431 4.43017 8.27906C5.0767 5.39915 6.79508 3.81024 9.50027 3.51232C10.7593 3.36336 13.2093 3.19784 16.5099 3.19784C19.5384 3.19784 22.2776 3.36336 23.5366 3.51232C26.2418 3.81024 27.9602 5.39915 28.6067 8.27906C29.2702 11.0431 29.7806 14.8168 29.7806 19.2525V29.8784C29.7806 32.2948 28.4025 33.9996 25.4592 33.9996H7.57771ZM12.1544 7.68322H20.8654C21.58 7.68322 22.0394 7.21978 22.0394 6.54119C22.0394 5.86259 21.58 5.39915 20.8654 5.39915H12.1544C11.4568 5.39915 10.9975 5.86259 10.9975 6.54119C10.9975 7.21978 11.4568 7.68322 12.1544 7.68322ZM16.5099 24.7144C20.7804 24.6978 24.013 24.5323 25.8164 24.3172C26.8883 24.1848 27.3647 23.4896 27.3647 22.5131V18.5574C27.3647 15.2968 26.9904 12.5493 26.7352 11.4238C26.565 10.6293 26.0376 10.0666 25.221 9.96728C23.3665 9.75212 21.2057 9.63626 16.5099 9.61971C11.8141 9.63626 9.65339 9.75212 7.76487 9.98383C6.96522 10.0666 6.45481 10.6293 6.28467 11.4238C6.02946 12.5493 5.67218 15.2968 5.67218 18.5574V22.5131C5.67218 23.4896 6.13155 24.1848 7.20341 24.3172C9.00687 24.5323 12.2395 24.6978 16.5099 24.7144ZM24.4894 31.5335C25.7994 31.5335 26.8373 30.5404 26.8373 29.2329C26.8373 27.9419 25.8164 26.9488 24.4894 26.9488C23.1283 26.9488 22.1074 27.9419 22.1074 29.2329C22.1074 30.5404 23.1283 31.5335 24.4894 31.5335ZM8.53048 31.5169C9.85756 31.5169 10.8784 30.557 10.8784 29.2329C10.8784 27.9253 9.89158 26.9654 8.53048 26.9654C7.1864 26.9654 6.1996 27.9253 6.1996 29.2329C6.1996 30.557 7.1864 31.5169 8.53048 31.5169ZM9.17701 38.6008L10.402 36.6809H22.5668L23.7748 38.6008H9.17701Z"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="card-body text-light" style="border-bottom: var(--bs-card-border-width) solid var();">
-                            <p class="card-subtitle">
-                                {% if result_status == 1 %}
-                                    Vonat érkezik:
-                                    {% if directions %}
-                                        
-                                        {{ directions[0] }} -irányban. 
-                                        <br>
-                                        {{ directions[1] }}
-                                        
-                                    {% endif %} 
-
-                                {% elif result_status == 2 or result_status == 4 %}
-                                    Nincs vonat a közelben!
-
-                                {% elif result_status == 3 %}
-                                    <a href="https://forms.gle/nb49zoTMinVZVxsv5"> Hiba lépett fel, kérjük lépjen kapcsolatba a fejlesztővel!</a>
+                            <div class="card-body text-light" style="border-bottom: var(--bs-card-border-width) solid var();">
+                                <p>{{ train.stopHeadsign }}</p>
+                               
+                                    <p>Route ID: {{ routes }}</p>
+                            
                                 
-                                {% endif %}
-
-                                {% if message %} {{ message }} {% elif result_status == 3 %}Hiba: Error code 3{% endif %}
-                            </p>
-
-                        </div>
-                        <div class="card-footer  swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="background-color: var(--primary-color); vertical-align: top;">
-                            <div class="rounded" 
-                                style="padding: 5px;  vertical-align: middle; width: fit-content; border: 1px solid;">
-                                <div class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}"
-                                    style="vertical-align: middle; box-sizing: border-box; display: flex; flex-direction: row;">
-                                    <svg style="box-sizing: border-box; overflow: scroll; background-color: transparent;" class="svgdoboz2" width="22" height="22"
-                                        viewBox="0 0 22 19" fill="" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M9.0791 18.7334C10.292 18.7334 11.4697 18.4873 12.5508 18.0303C12.1377 17.582 11.8213 17.0547 11.5928 16.4922C10.8105 16.7822 9.9668 16.9492 9.0791 16.9492C5.03613 16.9492 1.79297 13.6973 1.79297 9.6543C1.79297 5.61133 5.02734 2.36816 9.07031 2.36816C12.7266 2.36816 15.7412 5.04004 16.2686 8.54688C16.8135 8.45898 17.5342 8.48535 18.0879 8.62598C17.5693 4.12598 13.6934 0.575195 9.07031 0.575195C4.0957 0.575195 0 4.68848 0 9.6543C0 14.6289 4.10449 18.7334 9.0791 18.7334ZM4.63184 10.7441H9.07031C9.46582 10.7441 9.76465 10.4365 9.76465 10.0498V4.28418C9.76465 3.89746 9.46582 3.58984 9.07031 3.58984C8.68359 3.58984 8.37598 3.89746 8.37598 4.28418V9.35547H4.63184C4.23633 9.35547 3.9375 9.6543 3.9375 10.0498C3.9375 10.4365 4.23633 10.7441 4.63184 10.7441ZM16.875 18.7773C19.3359 18.7773 21.4014 16.7207 21.4014 14.251C21.4014 11.7725 19.3535 9.7334 16.875 9.7334C14.3965 9.7334 12.3486 11.7725 12.3486 14.251C12.3486 16.7383 14.3965 18.7773 16.875 18.7773ZM16.3477 16.9229C16.1807 16.9229 15.9785 16.8525 15.8467 16.7119L14.1943 14.9014C14.1064 14.8135 14.0449 14.6377 14.0449 14.4883C14.0449 14.1104 14.335 13.8643 14.6689 13.8643C14.8711 13.8643 15.0293 13.9434 15.1436 14.0664L16.3125 15.3496L18.5537 12.2295C18.6768 12.0713 18.8613 11.957 19.0811 11.957C19.4238 11.957 19.7139 12.2295 19.7139 12.5811C19.7139 12.6865 19.6699 12.8271 19.582 12.9414L16.8662 16.6855C16.7607 16.8262 16.5586 16.9229 16.3477 16.9229Z"
-                                             />
-                                    </svg>
-
-                                    <small style="vertical-align: top; flex: 1;margin-left: 5px;">{{ update_time }} frissítve</small>
-
+                                
+                            </div>
+                            <div class="card-footer swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="background-color: var(--primary-color); vertical-align: top;">
+                                <div class="rounded" style="padding: 5px; vertical-align: middle; width: fit-content; border: 1px solid;">
+                                    <div class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="vertical-align: middle; box-sizing: border-box; display: flex; flex-direction: row;">
+                                        <svg style="box-sizing: border-box; overflow: scroll; background-color: transparent;" class="svgdoboz2" width="22" height="22" viewBox="0 0 22 19" fill="theme-color" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.0791 18.7334C10.292 18.7334 11.4697 18.4873 12.5508 18.0303C12.1377 17.582 11.8213 17.0547 11.5928 16.4922C10.8105 16.7822 9.9668 16.9492 9.0791 16.9492C5.03613 16.9492 1.79297 13.6973 1.79297 9.6543C1.79297 5.61133 5.02734 2.36816 9.07031 2.36816C12.7266 2.36816 15.7412 5.04004 16.2686 8.54688C16.8135 8.45898 17.5342 8.48535 18.0879 8.62598C17.5693 4.12598 13.6934 0.575195 9.07031 0.575195C4.0957 0.575195 0 4.68848 0 9.6543C0 14.6289 4.10449 18.7334 9.0791 18.7334ZM4.63184 10.7441H9.07031C9.46582 10.7441 9.76465 10.4365 9.76465 10.0498V4.28418C9.76465 3.89746 9.46582 3.58984 9.07031 3.58984C8.68359 3.58984 8.37598 3.89746 8.37598 4.28418V9.35547H4.63184C4.23633 9.35547 3.9375 9.6543 3.9375 10.0498C3.9375 10.4365 4.23633 10.7441 4.63184 10.7441ZM16.875 18.7773C19.3359 18.7773 21.4014 16.7207 21.4014 14.251C21.4014 11.7725 19.3535 9.7334 16.875 9.7334C14.3965 9.7334 12.3486 11.7725 12.3486 14.251C12.3486 16.7383 14.3965 18.7773 16.875 18.7773ZM16.3477 16.9229C16.1807 16.9229 15.9785 16.8525 15.8467 16.7119L14.1943 14.9014C14.1064 14.8135 14.0449 14.6377 14.0449 14.4883C14.0449 14.1104 14.335 13.8643 14.6689 13.8643C14.8711 13.8643 15.0293 13.9434 15.1436 14.0664L16.3125 15.3496L18.5537 12.2295C18.6768 12.0713 18.8613 11.957 19.0811 11.957C19.4238 11.957 19.7139 12.2295 19.7139 12.5811C19.7139 12.6865 19.6699 12.8271 19.582 12.9414L16.8662 16.6855C16.7607 16.8262 16.5586 16.9229 16.3477 16.9229Z"/>
+                                        </svg>
+                                        <small style="vertical-align: top; flex: 1;margin-left: 5px;">{{ train.predictedArrivalTime }}-kor érkezik az átkelőhöz</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    {% if result_status == 4 %}
-                    <br>
-                    
-                    <div class="card swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="max-width: 30rem; ">
+                        <br>
+                    {% endfor %}
+
+
+
+
+
+                    <div class="card swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="max-width: 30rem;">
                         <div style="padding: 0px; overflow: hidden;" class="card-header">
                             <div style="float: left; padding: 13px;">
-                                <p class="card-title text-light" style="margin-bottom: 2px;">{{ contentmessage }}</p>
-                                <h4 id="location-name" class="card-subtitle" style="margin-bottom: 0px;margin-top: 5px; ">{{ content }}</h4>
+                                <p class="card-title text-light">Időjárás</p>
+                                <h4 class="card-subtitle swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="margin-bottom: 0px;margin-top: 5px;" id="location-name">
+                                    Balatonfüzfő
+                                </h4>
+                            </div>
+                            <div class="svgdoboz img-fluid swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="float: right; padding: 10px; border-top-right-radius: 5px;">
+                                <span id="weather-icon"></span>
+                                    <path d="M4.22601 43.5H5.29787C5.84231 43.5 6.16557 43.3179 6.45481 42.8711L7.40758 41.3649H25.5612L26.514 42.8711C26.8032 43.3179 27.1095 43.5 27.6539 43.5H28.6407C29.5765 43.5 30.0188 42.5897 29.5254 41.8118L26.2588 36.6644C30.206 36.5154 32.5369 33.8672 32.5369 30.0439V19.2525C32.5369 14.7009 32.0094 10.679 31.2949 7.79908C30.3761 3.72748 27.8241 1.34411 23.8939 0.864126C22.6008 0.715166 19.7085 0.5 16.5099 0.5C13.0391 0.5 10.419 0.715166 9.12597 0.864126C5.21281 1.34411 2.64373 3.72748 1.72499 7.79908C1.01041 10.679 0.5 14.5851 0.5 19.1201V30.0439C0.5 33.8507 2.79685 36.4823 6.693 36.6644L3.37532 41.8614C2.89894 42.6062 3.30727 43.5 4.22601 43.5ZM7.57771 33.9996C4.63434 33.9996 3.23921 32.2948 3.23921 29.8784V19.1201C3.23921 14.7009 3.76664 11.0431 4.43017 8.27906C5.0767 5.39915 6.79508 3.81024 9.50027 3.51232C10.7593 3.36336 13.2093 3.19784 16.5099 3.19784C19.5384 3.19784 22.2776 3.36336 23.5366 3.51232C26.2418 3.81024 27.9602 5.39915 28.6067 8.27906C29.2702 11.0431 29.7806 14.8168 29.7806 19.2525V29.8784C29.7806 32.2948 28.4025 33.9996 25.4592 33.9996H7.57771ZM12.1544 7.68322H20.8654C21.58 7.68322 22.0394 7.21978 22.0394 6.54119C22.0394 5.86259 21.58 5.39915 20.8654 5.39915H12.1544C11.4568 5.39915 10.9975 5.86259 10.9975 6.54119C10.9975 7.21978 11.4568 7.68322 12.1544 7.68322ZM16.5099 24.7144C20.7804 24.6978 24.013 24.5323 25.8164 24.3172C26.8883 24.1848 27.3647 23.4896 27.3647 22.5131V18.5574C27.3647 15.2968 26.9904 12.5493 26.7352 11.4238C26.565 10.6293 26.0376 10.0666 25.221 9.96728C23.3665 9.75212 21.2057 9.63626 16.5099 9.61971C11.8141 9.63626 9.65339 9.75212 7.76487 9.98383C6.96522 10.0666 6.45481 10.6293 6.28467 11.4238C6.02946 12.5493 5.67218 15.2968 5.67218 18.5574V22.5131C5.67218 23.4896 6.13155 24.1848 7.20341 24.3172C9.00687 24.5323 12.2395 24.6978 16.5099 24.7144ZM24.4894 31.5335C25.7994 31.5335 26.8373 30.5404 26.8373 29.2329C26.8373 27.9419 25.8164 26.9488 24.4894 26.9488C23.1283 26.9488 22.1074 27.9419 22.1074 29.2329C22.1074 30.5404 23.1283 31.5335 24.4894 31.5335ZM8.53048 31.5169C9.85756 31.5169 10.8784 30.557 10.8784 29.2329C10.8784 27.9253 9.89158 26.9654 8.53048 26.9654C7.1864 26.9654 6.1996 27.9253 6.1996 29.2329C6.1996 30.557 7.1864 31.5169 8.53048 31.5169ZM9.17701 38.6008L10.402 36.6809H22.5668L23.7748 38.6008H9.17701Z"/>
+                                </svg>
                             </div>
                         </div>
-                        <div class="card-footer " style=" vertical-align: top;">
-                            <div
-                                style="padding: 5px; vertical-align: middle; width: fit-content;">
-                                <div
-                                    style="vertical-align: middle; box-sizing: border-box; display: flex; flex-direction: row;">
-
-                                    <p>{{ directions[0] }} -irányban</p>
-                                    <p></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    <br>
-
-                    <div class="card swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="max-width: 30rem; ">
-                        <div style="padding: 0px; overflow: hidden;" class="card-header">
-                            <div style="float: left; padding: 13px;">
-                                <p class="card-title text-light" style="margin-bottom: 2px;">Időjárás</p>
-                                <h4 id="location-name" class="card-subtitle swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}" style="margin-bottom: 0px;margin-top: 5px;">Balatonfüzfő</h4>
-                            </div>
-                            <div  class="img-fluid svgdoboz"
-                                style="float: right; padding: 10px; border-top-right-radius: 5px;">
-                                <span  id="weather-icon"></span>
-                            </div>
-                        </div>
-                        <div class="card-footer" style=" vertical-align: top;">
-                            <div style="padding: 5px; vertical-align: middle; width: fit-content;">
-                                <div class="text-light"
-                                    style="vertical-align: middle; box-sizing: border-box; display: flex; flex-direction: row;">
-
-                                    <small style="vertical-align: top; flex: 1;margin-left: 5px; ;">
-                                    <p id="weather-data"></p><p id="wind"></p></small>
-                                </div>
-                            </div>
+                        <div class="card-body text-light" style="border-bottom: var(--bs-card-border-width) solid var();">
+                            <p id="weather-data"></p><p id="wind"></p>
                         </div>
                     </div>
                 </div>
@@ -309,61 +225,7 @@
             }
           
         </script>
-        <!--script>
-            const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const htmlElement = document.querySelector('html');
-    
-    darkModeToggle.addEventListener('click', () => {
-      const currentTheme = htmlElement.getAttribute('data-bs-theme');
-    
-      if (currentTheme === 'light') {
-        htmlElement.setAttribute('data-bs-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-        applyDarkModeStyles();
-      } else {
-        htmlElement.setAttribute('data-bs-theme', 'light');
-        localStorage.setItem('theme', 'light');
-        applyLightModeStyles();
-      }
-    });
-    
-    function applyDarkModeStyles() {
-      const accordionHeaders = document.querySelectorAll('.accordion-header');
-      const accordionBodies = document.querySelectorAll('.accordion-body');
-    
-      accordionHeaders.forEach(header => {
-        header.classList.add('dark-mode-accordion-header');
-      });
-    
-      accordionBodies.forEach(body => {
-        body.classList.add('dark-mode-accordion-body');
-      });
-    }
-    
-    function applyLightModeStyles() {
-      const accordionHeaders = document.querySelectorAll('.accordion-header');
-      const accordionBodies = document.querySelectorAll('.accordion-body');
-    
-      accordionHeaders.forEach(header => {
-        header.classList.remove('dark-mode-accordion-header');
-      });
-    
-      accordionBodies.forEach(body => {
-        body.classList.remove('dark-mode-accordion-body');
-      });
-    }
-    
-    // Check for theme preference from local storage on page load
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      htmlElement.setAttribute('data-bs-theme', savedTheme);
-      if (savedTheme === 'dark') {
-        applyDarkModeStyles();
-      }
-    }
-    
-    
-        </script-->
+        
         <script>const darkModeToggle = document.getElementById('dark-mode-toggle');
             const body = document.body;
             const allElements = document.querySelectorAll('*');

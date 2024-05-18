@@ -1,1 +1,97 @@
-0
+{
+  "currentTime": 1716062545393,
+  "version": 2,
+  "status": "OK",
+  "code": 200,
+  "text": "OK",
+  "data": {
+    "list": [
+      {
+        "routeId": "BKK_S",
+        "headsign": "Balatonfüred",
+        "stopTimes": [
+          {
+            "stopId": "BKK_005504358_0",
+            "stopHeadsign": "Balatonfüred",
+            "arrivalTime": 1716044340,
+            "departureTime": 1716044400,
+            "predictedArrivalTime": 1716044621,
+            "predictedDepartureTime": 1716044688,
+            "stopSequence": 7,
+            "tripId": "BKK_19716_309",
+            "serviceDate": "20240518",
+            "wheelchairAccessible": false,
+            "mayRequireBooking": false,
+            "alertIds": [
+              "BKK_máv-start-4202270"
+            ]
+          }
+          ]
+          }
+        ]
+      }
+    ],
+    "outOfRange": false,
+    "limitExceeded": false,
+    "references": {
+      "agencies": {
+        "BKK_START": {
+          "id": "BKK_START",
+          "name": "MÁV-START",
+          "url": "https://www.mavcsoport.hu/",
+          "timezone": "Europe/Budapest",
+          "lang": "hu",
+          "phone": "+36 (1) 3 49 49 49"
+        }
+      },
+      "routes": {
+        "BKK_Sz": {
+          "id": "BKK_Sz",
+          "shortName": "Sz",
+          "description": "Személyvonat",
+          "type": "RAIL",
+          "color": "2E5EA8",
+          "textColor": "FFFFFF",
+          "agencyId": "BKK_START",
+          "iconDisplayType": "BOX",
+          "iconDisplayText": "Sz",
+          "bikesAllowed": false,
+          "style": {
+            "color": "2E5EA8",
+            "icon": {
+              "type": "BOX",
+              "text": "Sz",
+              "textColor": "FFFFFF"
+            },
+            "vehicleIcon": {
+              "name": "rail"
+            },
+            "groupId": 4
+          },
+          "sortOrder": 51
+        },
+        "BKK_IR": {
+          "id": "BKK_IR",
+          "shortName": "IR",
+          "description": "InterRegió",
+          "type": "RAIL",
+          "color": "2E5EA8",
+          "textColor": "FFFFFF",
+          "agencyId": "BKK_START",
+          "iconDisplayType": "BOX",
+          "iconDisplayText": "IR",
+          "bikesAllowed": false,
+          "style": {
+            "color": "2E5EA8",
+            "icon": {
+              "type": "BOX",
+              "text": "IR",
+              "textColor": "FFFFFF"
+            },
+            "vehicleIcon": {
+              "name": "rail"
+            },
+            "groupId": 4
+          },
+          "sortOrder": 47
+        },
