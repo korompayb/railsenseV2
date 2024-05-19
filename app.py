@@ -1,75 +1,68 @@
 from flask import Flask, render_template, request, url_for
-from datetime import datetime
 import requests
+import time
 
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     manifest_url = url_for('static', filename='manifest.json')
-    url = "https://futar.bkk.hu/api/query/v1/ws/otp/api/where/arrivals-and-departures-for-location?&clientLon=18.057539&clientLat=47.046356&minutesBefore=10&minutesAfter=30&stopId=BKK_005504358_0&includeRouteId=BKK_VP06%2CBKK_0090&onlyDepartures=false&limit=60&lat=47.046356&lon=18.057539&radius=3000&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
+    url = "https://futar.bkk.hu/api/query/v1/ws/otp/api/where/arrivals-and-departures-for-location?&clientLon=18.057539&clientLat=47.046356&minutesAfter=20&stopId=BKK_005504358_0&onlyDepartures=false&limit=60&lat=47.046356&lon=18.057539&radius=3000&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
     response = requests.get(url)
     trainsdata = []
+    added_trains = set()  # Ez tárolja azokat a vonatokat, amelyeket már hozzáadtunk
+    result_status = 2  # Alapértelmezett érték: nincs vonat
+    message = ""
 
     if response.status_code == 200:
-        response.encoding = 'utf-8'
-        data = response.json()       
-        data_list = data.get("data", {}).get("list", [])
-
-        if not data_list:  # Check if the list is empty
-            return render_template('index.html', manifest_url=manifest_url, result_status=2)
-        else:
-            trainsdata = []
-            items = []
-            routes = []
-            for item in data_list:
-                stop_times = item.get("stopTimes", [])
-                headsign = item.get("headsign")
-                trainsdata.append(headsign)
-                        
-                for stop_time in stop_times:
-                    predictedArrivalTime = stop_time.get("predictedArrivalTime")
-                    if predictedArrivalTime:
-                        arrival_time = datetime.fromtimestamp(predictedArrivalTime).strftime('%H:%M')
-                    else:
-                        arrival_time = "N/A"
-                    items.append({
-                        'stopId': stop_time.get("stopId"),
-                        'stopHeadsign': stop_time.get("stopHeadsign"),
-                        'arrivalTime': stop_time.get("arrivalTime"),
-                        'departureTime': stop_time.get("departureTime"),
-                        'predictedArrivalTime': arrival_time,
-                        'predictedDepartureTime': stop_time.get("predictedDepartureTime"),
-                        'stopSequence': stop_time.get("stopSequence"),
-                        'tripId': stop_time.get("tripId"),
-                        'serviceDate': stop_time.get("serviceDate"),
-                        'wheelchairAccessible': stop_time.get("wheelchairAccessible"),
-                        'mayRequireBooking': stop_time.get("mayRequireBooking"),
-                        'alertIds': stop_time.get("alertIds")
-                    })
+        data = response.json()['data']['list']
+        routes_data = response.json()['data']['references']['routes']
+        
+        for item in data:
+            route_id = item['routeId']
+            headsign = item['headsign']
+            stop_times = item['stopTimes']
+            
+            if route_id in routes_data:
+                route_info = routes_data[route_id]
+                short_name = route_info.get('shortName', 'N/A')
+                description = route_info.get('description', 'N/A')
+                color = route_info.get('color', 'N/A')
+            else:
+                short_name = "N/A"
+                description = "N/A"
                 
-                # Retrieve routes data
-                routes_data = item.get("routes", {})
-                for route_id, route_info in routes_data.items():
-                    routes.append({
-                        'id': route_info.get("id"),
-                        'shortName': route_info.get("shortName"),
-                        'description': route_info.get("description"),
-                        'type': route_info.get("type"),
-                        'color': route_info.get("color"),
-                        'textColor': route_info.get("textColor"),
-                        'agencyId': route_info.get("agencyId"),
-                        'iconDisplayType': route_info.get("iconDisplayType"),
-                        'iconDisplayText': route_info.get("iconDisplayText"),
-                        'bikesAllowed': route_info.get("bikesAllowed"),
-                        'sortOrder': route_info.get("sortOrder")
+            for stop_time in stop_times:
+                train_id = stop_time['tripId']
+                if train_id not in added_trains:
+                    arrival_time = time.strftime(' %H:%M:%S', time.localtime(stop_time['arrivalTime']))
+                    departure_time = time.strftime('%H:%M:%S', time.localtime(stop_time['departureTime']))
+                    
+                    predicted_arrival_time = None
+                    if 'predictedArrivalTime' in stop_time:
+                        predicted_arrival_time = time.strftime('%H:%M:%S', time.localtime(stop_time['predictedArrivalTime']))
+                    else:
+                        predicted_arrival_time = arrival_time
+                    
+                    
+                    trainsdata.append({
+                        'route_id': route_id,
+                        'headsign': headsign,
+                        'stop_id': stop_time['stopId'],
+                        'arrival_time': arrival_time,
+                        'departure_time': departure_time,
+                        'predicted_arrival_time': predicted_arrival_time,
+                        'short_name': short_name,
+                        'description': description,
+                        'color': color
                     })
-
-            return render_template('index.html', trainsdata=trainsdata, items=items, routes=routes, manifest_url=manifest_url, result_status=1)
-    else:
+                    added_trains.add(train_id)
+                    result_status = 1  # Vonat észlelve
+    elif response.status_code != 200:
+        message = "404 Hiba az oldalon"
         result_status = 3
-        return render_template('index.html', message=f"   Hiba történt a kiszolgálóval való kapcsolodás közben:  {response.status_code}",
-                               result_status=result_status, update_time="update_time", manifest_url=manifest_url)
+    return render_template('index.html', trainsdata=trainsdata ,result_status=result_status, manifest_url = manifest_url, message = message)
+
 
 
 if __name__ == '__main__':
