@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def index():
     manifest_url = url_for('static', filename='manifest.json')
-    url = "https://futar.bkk.hu/api/query/v1/ws/otp/api/where/arrivals-and-departures-for-location?&clientLon=18.057539&clientLat=47.046356&minutesAfter=20&stopId=BKK_005504358_0&onlyDepartures=false&limit=60&lat=47.046356&lon=18.057539&radius=3000&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
+    url = "https://futar.bkk.hu/api/query/v1/ws/otp/api/where/arrivals-and-departures-for-location?&clientLon=18.057539&clientLat=47.046356&minutesAfter=10&stopId=BKK_005504358_0&onlyDepartures=false&limit=60&lat=47.046356&lon=18.057539&radius=2000&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
     response = requests.get(url)
     trainsdata = []
     added_trains = set()  # Ez tárolja azokat a vonatokat, amelyeket már hozzáadtunk
