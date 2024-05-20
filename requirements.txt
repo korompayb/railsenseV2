@@ -1,3 +1,4 @@
 flask
 Gunicorn
 requests
+aiohttp
