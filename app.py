@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, url_for
 import requests
-import time
 import datetime
 import pytz
 
@@ -9,12 +8,35 @@ app = Flask(__name__)
 # Set timezone to Hungary
 hungary_tz = pytz.timezone('Europe/Budapest')
 
+def get_weather_data(city):
+    api_key = 'c01a7a32d2b862992d67500569e20363'
+    weather_url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric&lang=hu"
+    response = requests.get(weather_url)
+    if response.status_code == 200:
+        data = response.json()
+        temperature = round(data['main']['temp'])
+        feels_like = round(data['main']['feels_like'])
+        icon_code = data['weather'][0]['icon']
+        desc = data['weather'][0]['description']
+        wind_speed = data['wind']['speed']  # Convert m/s to km/h
+        wind_speed = round(wind_speed, 2)  # Round the wind speed to 2 decimal places
+        return {
+            'temperature': temperature,
+            'description': desc.capitalize(),
+            'feels_like': feels_like,
+            'icon_code': icon_code,
+            'wind_speed': wind_speed * 3.6
+        }
+    else:
+        return None
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     manifest_url = url_for('static', filename='manifest.json')
     
-    # First API call
-    arrivals_url = "https://futar.bkk.hu/api/query/v1/ws/otp/api/where/arrivals-and-departures-for-location?&clientLon=18.057539&clientLat=47.046356&minutesAfter=20&onlyDepartures=false&limit=60&lat=47.046356&lon=18.057539&radius=2000&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
+    # Fetch train data
+    arrivals_url = "https://futar.bkk.hu/api/query/v1/ws/otp/api/where/arrivals-and-departures-for-location?&clientLon=18.057539&clientLat=47.046356&minutesAfter=30&onlyDepartures=false&limit=60&lat=47.046356&lon=18.057539&radius=2000&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
     arrivals_response = requests.get(arrivals_url)
     
     trainsdata = []
@@ -94,11 +116,17 @@ def index():
                     })
                     added_trains.add(train_id)
                     result_status = 1  # Train detected
+        sorted_trainsdata = sorted(trainsdata, key=lambda x: datetime.datetime.strptime(x['predicted_arrival_time'], '%H:%M'))
+
     elif arrivals_response.status_code != 200:
         message = "404 Error on the page"
         result_status = 3
     
-    return render_template('index.html', trainsdata=trainsdata, result_status=result_status, manifest_url=manifest_url, message=message)
+    # Fetch weather data
+    city = "Balatonfuzfo"
+    weather_data = get_weather_data(city)
+
+    return render_template('index.html', trainsdata=sorted_trainsdata, result_status=result_status, manifest_url=manifest_url, message=message, weather_data=weather_data)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=81, debug=True)

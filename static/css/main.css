@@ -28,6 +28,19 @@
 
     }
 
+
+    html,
+    body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE és Edge */
+    }
+
+    /* További stílusok Webkit-alapú böngészőkhöz */
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+    display: none; /* Webkit-alapú böngészők */
+    }
+
     .card-header {
         border: none !important;
     }
@@ -38,7 +51,6 @@
     
     .box-red{
         color: var(--tilos-másodlagos) !important;
-        border-color: var(--tilos-másodlagos) !important;
         fill: var(--tilos-ikon) !important;
 
     }
@@ -69,13 +81,12 @@
 
     .box-green{
                    color: var(--szabad-másodlagos) !important;
-            border-color: var(--szabad-másodlagos) !important;
+
                     fill: var(--szabad-ikon) !important;
     }
 
     .box-orange{
                    color: var(--hiba-másodlagos) !important;
-            border-color: var(--hiba-másodlagos) !important;
                     fill: var(--hiba-ikon) !important;
     }
 
@@ -103,7 +114,6 @@
 
     .dark-mode div  {
         background-color: transparent !important; /* Sötét háttérszín */
-        fill: white !important;
     }
 
     .dark-mode div p  {
@@ -119,6 +129,30 @@
     .dark-mode .btn {
         color: #343a40;
         border: 1px solid;
+    }
+
+
+    .card-footer {
+        color: #ffffff9e !important;
+
+    }
+
+    .card-footer .dark-mode {
+        color: #343a40b2 !important;
+
+    }
+
+
+    .rounded {
+        padding: 7px !important;
+    }
+
+    .svgtime {
+        fill: #ffffff9e;
+    }
+
+    .svgtime .dark-mode {
+        fill: #343a40b2;
     }
 
     .viszonylat {
@@ -201,3 +235,49 @@
         z-index: 1;
     }
       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
