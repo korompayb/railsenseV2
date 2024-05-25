@@ -73,9 +73,9 @@ def index():
                         predicted_arrival_time = datetime.datetime.fromtimestamp(stop_time['predictedArrivalTime'], tz=hungary_tz).strftime('%H:%M')
                         # If the headsign is 'Budapest-Déli', add 5 minutes, otherwise subtract 5 minutes
                         if headsign != "Budapest-Déli":
-                            predicted_arrival_time = (datetime.datetime.strptime(predicted_arrival_time, '%H:%M') - datetime.timedelta(minutes=5)).strftime('%H:%M')
+                            predicted_arrival_time = (datetime.datetime.strptime(predicted_arrival_time, '%H:%M') - datetime.timedelta(minutes=1.40)).strftime('%H:%M')
                         else:
-                            predicted_arrival_time = (datetime.datetime.strptime(predicted_arrival_time, '%H:%M') + datetime.timedelta(minutes=5)).strftime('%H:%M')
+                            predicted_arrival_time = (datetime.datetime.strptime(predicted_arrival_time, '%H:%M') + datetime.timedelta(minutes=1.40)).strftime('%H:%M')
                     else:
                         predicted_arrival_time = arrival_time
                     
