@@ -16,7 +16,16 @@
 
 </head>
 <style>
-
+    
+    .stops-line::before {
+        content: '';
+        position: absolute;
+        top: 15px;
+        left: 11px;
+        width: 8px;
+        height: 105%;
+        z-index: 1;
+    }
 </style>
 
 <body>
@@ -38,7 +47,7 @@
                         {{message}}</h2>
                 </div>
                 <div class="col-lg-1"><br><button class="btn btn-outline-light ms-3" id="dark-mode-toggle"
-                        data-bs-toggle="button" aria-pressed="false">Mód</button></div>
+                        data-bs-toggle="button" aria-pressed="false">Mód</button><br><a href="{{ url_for('search') }}" class="btn btn-outline-light ms-3" aria-pressed="false">Térkép</a></div>
 
             </div>
             <hr>
@@ -76,8 +85,8 @@
                             <div class="viszonylat" style="background-color: #{{train.color}} !important;">
                                 <span>{{train.short_name}}</span>
                             </div><br><br>
-                            <p><b>{{ train.description }}</b> vonat érkezik és halad tovább <b>{{ train.headsign }}</b>
-                                állomásra.</p>
+                            <p><b>{{ train.description }}</b> irányában érkezik és halad tovább <b>{{ train.headsign }}</b>
+                                megállóra.</p>
                             <div class="accordion accordion" id="accordionExample">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">

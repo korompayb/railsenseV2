@@ -1,9 +1,16 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, session, redirect
 import requests
 import datetime
 import pytz
 
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+radius = 2000
+
+
+lat = 47.046356
+lon = 18.057539
 
 # Set timezone to Hungary
 hungary_tz = pytz.timezone('Europe/Budapest')
@@ -31,12 +38,65 @@ def get_weather_data(city):
         return None
 
 
-@app.route('/', methods=['GET', 'POST'])
+
+@app.route('/update_radius', methods=['POST'])
+def update_radius():
+    radius = request.form.get('radius', '2000')  # Alapértelmezett érték: 2000
+    print(radius)
+    session['radius'] = radius
+    return render_template('maps.html')
+
+@app.route('/')
+def search():
+    return render_template('maps.html')
+
+@app.route('/update_coordinates', methods=['POST'])
+def update_coordinates():
+    try:
+        lat = request.form['lat']
+    except KeyError:
+        lat = 47.046356
+        return render_template("maps.html")
+    
+    try:
+        lon = request.form['lon']
+    except KeyError:
+        lon = 18.057539
+        return render_template("maps.html")
+
+    session['lat'] = lat
+    session['lon'] = lon
+
+    
+
+    print(lat, lon)
+    # Új koordináták használata az API-hívásokban
+    # Például:
+    # arrivals_url = f"https://futar.bkk.hu/api/query/v1/ws/otp/api/where/arrivals-and-departures-for-location?&clientLon={lon}&clientLat={lat}&minutesAfter=30&onlyDepartures=false&limit=60&lat={lat}&lon={lon}&radius=2000&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
+
+    # Vagy egy másik API-hívás módosítása:
+    # weather_data = get_weather_data(city, lat, lon)
+
+    return redirect('/')
+
+@app.route('/railsense', methods=['GET', 'POST'])
 def index():
+    lat = session.get('lat', 47.046356)
+    lon = session.get('lon', 18.057539)
+    radius = session.get('radius', 2000)
+    
+    # Például adjunk hozzá néhány értéket a session-hoz
+    session['lat'] = lat
+    session['lon'] = lon
+    session['radius'] = radius
+
     manifest_url = url_for('static', filename='manifest.json')
+
+    print(lat, lon, radius)
     
     # Fetch train data
-    arrivals_url = "https://futar.bkk.hu/api/query/v1/ws/otp/api/where/arrivals-and-departures-for-location?&clientLon=18.057539&clientLat=47.046356&minutesAfter=30&onlyDepartures=false&limit=60&lat=47.046356&lon=18.057539&radius=2000&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
+    arrivals_url = f"https://futar.bkk.hu/api/query/v1/ws/otp/api/where/arrivals-and-departures-for-location?&clientLon={lon}&clientLat={lat}&onlyDepartures=false&limit=60&lat={lat}&lon={lon}&radius={radius}&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
+
     arrivals_response = requests.get(arrivals_url)
     
     trainsdata = []
@@ -65,17 +125,19 @@ def index():
             for stop_time in stop_times:
                 train_id = stop_time['tripId']
                 if train_id not in added_trains:
-                    arrival_time = datetime.datetime.fromtimestamp(stop_time['arrivalTime'], tz=hungary_tz).strftime('%H:%M')
-                    departure_time = datetime.datetime.fromtimestamp(stop_time['departureTime'], tz=hungary_tz).strftime('%H:%M')
+                    if 'arrivalTime' in stop_time:
+                        arrival_time = datetime.datetime.fromtimestamp(stop_time['arrivalTime'], tz=hungary_tz).strftime('%H:%M')
+                    else:
+                        arrival_time = datetime.datetime.fromtimestamp(stop_time['departureTime'], tz=hungary_tz).strftime('%H:%M')
+
+                    if 'departureTime' in stop_time:
+                        departure_time = datetime.datetime.fromtimestamp(stop_time['departureTime'], tz=hungary_tz).strftime('%H:%M')
+                    else:
+                        departure_time = datetime.datetime.fromtimestamp(0000000, tz=hungary_tz).strftime('%H:%M')
                     
                     predicted_arrival_time = None
                     if 'predictedArrivalTime' in stop_time:
                         predicted_arrival_time = datetime.datetime.fromtimestamp(stop_time['predictedArrivalTime'], tz=hungary_tz).strftime('%H:%M')
-                        # If the headsign is 'Budapest-Déli', add 5 minutes, otherwise subtract 5 minutes
-                        if headsign != "Budapest-Déli":
-                            predicted_arrival_time = (datetime.datetime.strptime(predicted_arrival_time, '%H:%M') - datetime.timedelta(minutes=1.40)).strftime('%H:%M')
-                        else:
-                            predicted_arrival_time = (datetime.datetime.strptime(predicted_arrival_time, '%H:%M') + datetime.timedelta(minutes=1.40)).strftime('%H:%M')
                     else:
                         predicted_arrival_time = arrival_time
                     
@@ -116,7 +178,17 @@ def index():
                     })
                     added_trains.add(train_id)
                     result_status = 1  # Train detected
-        sorted_trainsdata = sorted(trainsdata, key=lambda x: datetime.datetime.strptime(x['predicted_arrival_time'], '%H:%M'))
+        try:
+            # Ellenőrizd, hogy a trainsdata lista megfelelő adatokat tartalmaz-e
+            if all('predicted_arrival_time' in train for train in trainsdata):
+                # Rendezd a trainsdata listát a 'predicted_arrival_time' alapján
+                sorted_trainsdata = sorted(trainsdata, key=lambda x: datetime.datetime.strptime(x['predicted_arrival_time'], '%H:%M'))
+            else:
+                # Ha az adatok nem megfelelőek, kezeld a hibát vagy hagyd ki a rendezést
+                sorted_trainsdata = trainsdata
+        except Exception as e:
+            # Kezeld a kivételt, ha szükséges
+            sorted_trainsdata = []
 
     elif arrivals_response.status_code != 200:
         message = "404 Error on the page"
@@ -126,7 +198,7 @@ def index():
     city = "Balatonfuzfo"
     weather_data = get_weather_data(city)
 
-    return render_template('index.html', trainsdata=sorted_trainsdata, result_status=result_status, manifest_url=manifest_url, message=message, weather_data=weather_data)
+    return render_template('index.html', trainsdata=trainsdata, result_status=result_status, manifest_url=manifest_url, message=message, weather_data=weather_data)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=81, debug=True)
