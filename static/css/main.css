@@ -277,14 +277,14 @@
 @media (max-width: 425px) {
     .card-title,
     .card-subtitle {
-        max-width: 240px; /* Állítsd be a kívánt maximális szélességet */
+        max-width: 230px; /* Állítsd be a kívánt maximális szélességet */
     }
 }
 
 @media (max-width: 375px) {
     .card-title,
     .card-subtitle {
-        max-width: 210px; /* Állítsd be a kívánt maximális szélességet */
+        max-width: 190px; /* Állítsd be a kívánt maximális szélességet */
     }
 }
 
