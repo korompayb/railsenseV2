@@ -231,7 +231,6 @@
         left: 11px;
         width: 8px;
         height: 105%;
-        background-color: ;
         z-index: 1;
     }
       
@@ -255,7 +254,7 @@
         vertical-align: middle;
     }
 
-    .marquee {
+    /*.marquee {
         display: inline-block;
         animation: marquee 10s linear infinite;
         white-space: nowrap;
@@ -266,14 +265,38 @@
         0% { transform: translateX(100%); }
         100% { transform: translateX(-100%); }
     }
+*/
+.card-title,
+.card-subtitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 360px; /* Állítsd be a kívánt maximális szélességet */
+}
 
+@media (max-width: 425px) {
     .card-title,
     .card-subtitle {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow:ellipsis;
-        max-width: 360px; /* Állítsd be a kívánt maximális szélességet */
+        max-width: 240px; /* Állítsd be a kívánt maximális szélességet */
     }
+}
+
+@media (max-width: 375px) {
+    .card-title,
+    .card-subtitle {
+        max-width: 220px; /* Állítsd be a kívánt maximális szélességet */
+    }
+}
+
+@media (max-width: 320px) {
+    .card-title,
+    .card-subtitle {
+        max-width: 175px; /* Állítsd be a kívánt maximális szélességet */
+    }
+}
+
+
+    
 
     
 
