@@ -236,8 +236,46 @@
     }
       
 
+    header {
+        background-color:#1e1e1e ;
+    }
 
 
+    .viszonylatdoboz {
+        text-align: center;
+        font-size: 24px;
+    }
+
+    .marquee-container {
+        display: inline-block;
+        position: relative;
+        max-width: 340px; /* Állítsd be a kívánt maximális szélességet */
+        white-space: nowrap;
+        overflow: hidden;
+        vertical-align: middle;
+    }
+
+    .marquee {
+        display: inline-block;
+        animation: marquee 10s linear infinite;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    
+    @keyframes marquee {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+
+    .card-title,
+    .card-subtitle {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        max-width: 360px; /* Állítsd be a kívánt maximális szélességet */
+    }
+
+    
 
 
 

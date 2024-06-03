@@ -16,7 +16,6 @@
 
 </head>
 <style>
-    
     .stops-line::before {
         content: '';
         position: absolute;
@@ -31,62 +30,75 @@
 <body>
 
     <main>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-11">
-                    <br>
-                    <h1 id="welcome"></h1>
+        <div class="container" id="content-container">
+            <header class="header sticky-top border-bottom" id="myHeader">
 
-                    <h3
-                        class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}">
-                        {% if result_status == 1 %}Az átkelés veszélyes!{% elif result_status == 2 or result_status ==
-                        4%}Az átkelés biztonságos!{% elif result_status == 3 %}Kiszolgálóhiba: 500{% endif %}</h3>
-                    <h6 id="date"></h6>
-                    <h2
-                        class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}">
-                        {{message}}</h2>
+                <div class="row">
+                    <div class="col-sm-11">
+                        <br>
+                        <h1 id="welcome"></h1>
+
+                        <h3
+                            class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}">
+                            {% if result_status == 1 %}Az átkelés veszélyes!{% elif result_status == 2 or result_status
+                            ==
+                            4%}Az átkelés biztonságos!{% elif result_status == 3 %}Kiszolgálóhiba: 500{% endif %} <a 
+                                href="{{ url_for('search') }}" class="btn btn-outline-light ms-3 justify-content-md-end"
+                                aria-pressed="false"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+                                  </svg> Térkép</a></h3>
+                        <h6 id="date"></h6>
+                        <h2
+                            class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}">
+                            {{message}}</h2>
+
+                        <!--button class="btn btn-outline-light ms-3" id="dark-mode-toggle" data-bs-toggle="button" aria-pressed="false">Mód</button--><br>
+
+                    </div>
+
                 </div>
-                <div class="col-lg-1"><br><button class="btn btn-outline-light ms-3" id="dark-mode-toggle"
-                        data-bs-toggle="button" aria-pressed="false">Mód</button><br><a href="{{ url_for('search') }}" class="btn btn-outline-light ms-3" aria-pressed="false">Térkép</a></div>
-
-            </div>
-            <hr>
-            <script
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqGUt5xRqPUA9QfUt9TTgN0TCsiMOvl64&callback=initMap&v=weekly&solution_channel=GMP_CCS_geocodingservice_v1"
-                defer></script>
+            </header>
+            <br>
             <div>
                 <div>
                     {% for train in trainsdata %}
-                    <div class="card swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}"
-                        style="max-width: 30rem;">
+                    <div class="card" style="max-width: 30rem;">
                         <div style="padding: 0px; overflow: hidden;" class="card-header">
                             <div style="float: left; padding: 13px;">
-                                <p class="card-title text-light">Átkelés-figyelő</p>
-                                <h4 class="card-subtitle swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}"
-                                    style="margin-bottom: 0px;margin-top: 5px;">
-                                    {% if result_status == 1 %}Az átkelés veszélyes!{% elif result_status == 2 or
-                                    result_status == 4%}Az átkelés szabad!{% elif result_status == 3 %}Kiszolgálóhiba:
-                                    500{% endif %}
-                                </h4>
+                                <p id="description" class="card-title text-light">{{ train.description }}</p>
+                                <h4 id="headsign" class="card-subtitle" style="margin-bottom: 0px; margin-top: 5px;">{{ train.headsign }} felé</h4>
                             </div>
-                            <div class="svgdoboz img-fluid swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}"
-                                style="float: right; padding: 10px; border-top-right-radius: 5px;">
-                                <svg width="65" height="70" viewBox="0 0 33 44" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M4.22601 43.5H5.29787C5.84231 43.5 6.16557 43.3179 6.45481 42.8711L7.40758 41.3649H25.5612L26.514 42.8711C26.8032 43.3179 27.1095 43.5 27.6539 43.5H28.6407C29.5765 43.5 30.0188 42.5897 29.5254 41.8118L26.2588 36.6644C30.206 36.5154 32.5369 33.8672 32.5369 30.0439V19.2525C32.5369 14.7009 32.0094 10.679 31.2949 7.79908C30.3761 3.72748 27.8241 1.34411 23.8939 0.864126C22.6008 0.715166 19.7085 0.5 16.5099 0.5C13.0391 0.5 10.419 0.715166 9.12597 0.864126C5.21281 1.34411 2.64373 3.72748 1.72499 7.79908C1.01041 10.679 0.5 14.5851 0.5 19.1201V30.0439C0.5 33.8507 2.79685 36.4823 6.693 36.6644L3.37532 41.8614C2.89894 42.6062 3.30727 43.5 4.22601 43.5ZM7.57771 33.9996C4.63434 33.9996 3.23921 32.2948 3.23921 29.8784V19.1201C3.23921 14.7009 3.76664 11.0431 4.43017 8.27906C5.0767 5.39915 6.79508 3.81024 9.50027 3.51232C10.7593 3.36336 13.2093 3.19784 16.5099 3.19784C19.5384 3.19784 22.2776 3.36336 23.5366 3.51232C26.2418 3.81024 27.9602 5.39915 28.6067 8.27906C29.2702 11.0431 29.7806 14.8168 29.7806 19.2525V29.8784C29.7806 32.2948 28.4025 33.9996 25.4592 33.9996H7.57771ZM12.1544 7.68322H20.8654C21.58 7.68322 22.0394 7.21978 22.0394 6.54119C22.0394 5.86259 21.58 5.39915 20.8654 5.39915H12.1544C11.4568 5.39915 10.9975 5.86259 10.9975 6.54119C10.9975 7.21978 11.4568 7.68322 12.1544 7.68322ZM16.5099 24.7144C20.7804 24.6978 24.013 24.5323 25.8164 24.3172C26.8883 24.1848 27.3647 23.4896 27.3647 22.5131V18.5574C27.3647 15.2968 26.9904 12.5493 26.7352 11.4238C26.565 10.6293 26.0376 10.0666 25.221 9.96728C23.3665 9.75212 21.2057 9.63626 16.5099 9.61971C11.8141 9.63626 9.65339 9.75212 7.76487 9.98383C6.96522 10.0666 6.45481 10.6293 6.28467 11.4238C6.02946 12.5493 5.67218 15.2968 5.67218 18.5574V22.5131C5.67218 23.4896 6.13155 24.1848 7.20341 24.3172C9.00687 24.5323 12.2395 24.6978 16.5099 24.7144ZM24.4894 31.5335C25.7994 31.5335 26.8373 30.5404 26.8373 29.2329C26.8373 27.9419 25.8164 26.9488 24.4894 26.9488C23.1283 26.9488 22.1074 27.9419 22.1074 29.2329C22.1074 30.5404 23.1283 31.5335 24.4894 31.5335ZM8.53048 31.5169C9.85756 31.5169 10.8784 30.557 10.8784 29.2329C10.8784 27.9253 9.89158 26.9654 8.53048 26.9654C7.1864 26.9654 6.1996 27.9253 6.1996 29.2329C6.1996 30.557 7.1864 31.5169 8.53048 31.5169ZM9.17701 38.6008L10.402 36.6809H22.5668L23.7748 38.6008H9.17701Z" />
-                                </svg>
+                            <div class="viszonylatdoboz d-flex justify-content-center align-items-center"
+                                style="float: right; padding: 10px; border-top-right-radius: 5px; background-color:#{{ train.color }} !important; width: 90px; height: 85px;">
+                                <span style=" font-weight: bold ;color: #{{ train.text_color }};">{{ train.short_name }}</span>
                             </div>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    function applyMarquee(element) {
+                                        if (element.scrollWidth > element.clientWidth) {
+                                            var container = document.createElement('div');
+                                            container.className = 'marquee-container';
+                                            var marquee = document.createElement('div');
+                                            marquee.className = 'marquee';
+                                            marquee.innerHTML = element.innerHTML;
+                                            container.appendChild(marquee);
+                                            element.innerHTML = '';
+                                            element.appendChild(container);
+                                        }
+                                    }
+                            
+                                    var description = document.getElementById('description');
+                                    var headsign = document.getElementById('headsign');
+                            
+                                    applyMarquee(description);
+                                    applyMarquee(headsign);
+                                });
+                            </script>
+                            
                         </div>
                         <div class="card-body text-light"
                             style="border-bottom: var(--bs-card-border-width) solid var();">
-                            <div class="vicon"
-                                style="background-size: 25px; background-position: 0, 0; background-image: url('https://go.bkk.hu/api/ui-service/v1/icon?name=rail&scale=0.375'); width: 25px; height: 25px">
-                            </div>
-                            <div class="viszonylat" style="background-color: #{{train.color}} !important;">
-                                <span>{{train.short_name}}</span>
-                            </div><br><br>
-                            <p><b>{{ train.description }}</b> irányában érkezik és halad tovább <b>{{ train.headsign }}</b>
-                                megállóra.</p>
+
                             <div class="accordion accordion" id="accordionExample">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
@@ -123,8 +135,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
 
                         </div>
                         <div class="card-footer" style="background-color: var(--primary-color); vertical-align: top;">
@@ -171,30 +181,31 @@
                             <div class="svgdoboz img-fluid swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}"
                                 style="float: right; padding: 10px; border-top-right-radius: 5px;">
                                 <img src="https://openweathermap.org/img/wn/{{ weather_data.icon_code }}@2x.png"
-                                    alt="Weather Icon" style="width: 65px; height: 70;"></img>                                
+                                    alt="Weather Icon" style="width: 65px; height: 70;"></img>
                             </div>
                         </div>
-                        <div class="card-body text-light" style="border-bottom: var(--bs-card-border-width) solid var();">
+                        <div class="card-body text-light"
+                            style="border-bottom: var(--bs-card-border-width) solid var();">
                             <span id="weather-data">
-                                {% if weather_data.temperature >= 0 and weather_data.temperature <= 16 %}
-                                    <h4 style="color: rgba(0, 0, 255, 0.496)">{{ weather_data.temperature }}&deg;C</h4>
-                                {% elif weather_data.temperature >= 17 and weather_data.temperature <= 30 %}
-                                    <h4 style="color: #ffa600a3">{{ weather_data.temperature }}&deg;C</h4>
-                                {% elif weather_data.temperature >= 31 %}
-                                    <h4 style="color: #ff000068">{{ weather_data.temperature }}&deg;C</h4>
-                                {% endif %}
+                                {% if weather_data.temperature >= 0 and weather_data.temperature <= 16 %} <h4
+                                    style="color: rgba(0, 0, 255, 0.496)">{{ weather_data.temperature }}&deg;C</h4>
+                                    {% elif weather_data.temperature >= 17 and weather_data.temperature <= 30 %} <h4
+                                        style="color: #ffa600a3">{{ weather_data.temperature }}&deg;C</h4>
+                                        {% elif weather_data.temperature >= 31 %}
+                                        <h4 style="color: #ff000068">{{ weather_data.temperature }}&deg;C</h4>
+                                        {% endif %}
                             </span>
                             <span id="wind">
-                                {% if weather_data.wind_speed >= 0 and weather_data.wind_speed <= 21 %}
-                                    <h4 style="color: #008000a6">{{ weather_data.wind_speed | round(2) }} km/h</h4>
-                                {% elif weather_data.wind_speed >= 22 and weather_data.wind_speed <= 23 %}
-                                    <h4 style="color: #ffa600a3">{{ weather_data.wind_speed | round(2) }} km/h</h4>
-                                {% elif weather_data.wind_speed >= 24 %}
-                                    <h4 style="color: #ff00008b">{{ weather_data.wind_speed | round(2) }} km/h</h4>
-                                {% endif %}
+                                {% if weather_data.wind_speed >= 0 and weather_data.wind_speed <= 21 %} <h4
+                                    style="color: #008000a6">{{ weather_data.wind_speed | round(2) }} km/h</h4>
+                                    {% elif weather_data.wind_speed >= 22 and weather_data.wind_speed <= 23 %} <h4
+                                        style="color: #ffa600a3">{{ weather_data.wind_speed | round(2) }} km/h</h4>
+                                        {% elif weather_data.wind_speed >= 24 %}
+                                        <h4 style="color: #ff00008b">{{ weather_data.wind_speed | round(2) }} km/h</h4>
+                                        {% endif %}
                             </span>
                             <p>{{ weather_data.description }}</p>
-                        </div>                        
+                        </div>
                         <div class="card-footer" style="background-color: var(--primary-color); vertical-align: top;">
                             <div class="rounded"
                                 style="padding: 5px; vertical-align: middle; width: fit-content; border: 1px solid;">
@@ -217,7 +228,18 @@
 
     </main>
 
+    <script>window.onscroll = function () { myFunction() };
 
+        var header = document.getElementById("myHeader");
+        var sticky = header.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }</script>
 
     <script>
         /* global bootstrap: false */
@@ -245,6 +267,11 @@
         });
 
     </script>
+   
+
+   
+
+
     <script>
 
         const openButton = document.querySelector("[data-open-modal]")
@@ -259,12 +286,82 @@
     </script>
 
 
-    <script>
-        // Refresh the page after a certain delay
-        setTimeout(function () {
-            location.reload();
-        }, 10000);
-    </script>
+<script>
+    // Az oldal betöltése után végrehajtandó kód
+    document.addEventListener("DOMContentLoaded", function () {
+        // Az idő és a köszöntés beállítása
+        updateDateTime();
+        
+        // Az idő és a köszöntés frissítése minden másodpercben
+        setInterval(updateDateTime, 3000);
+        
+        // AJAX kérés indítása 10 másodpercenként
+        setInterval(function () {
+            // XMLHttpRequest objektum létrehozása
+            var xhr = new XMLHttpRequest();
+            
+            // AJAX kérés konfigurálása
+            xhr.open('GET', '/railsense', true);
+            
+            // AJAX kérés sikerességének kezelése
+            xhr.onload = function () {
+                // Ellenőrizzük a válasz státuszát
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    // A válasz feldolgozása
+                    var response = xhr.responseText;
+                    
+                    // A konténer elem tartalmának frissítése
+                    document.getElementById('content-container').innerHTML = response;
+                } else {
+                    // Hibakezelés, ha a szerver hibát ad vissza
+                    console.error('Hiba történt az AJAX kérés során: ' + xhr.status);
+                }
+            };
+            
+            // Hibakezelés a hálózati problémák esetén
+            xhr.onerror = function () {
+                console.error('Hálózati hiba történt az AJAX kérés során.');
+            };
+            
+            // AJAX kérés küldése
+            xhr.send();
+        }, 30000); // 10 másodpercenkénti frissítés
+    });
+    
+    // Az idő és a köszöntés frissítése
+    function updateDateTime() {
+        // Jelenlegi dátum és idő lekérdezése
+        var currentDate = new Date();
+            var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+            var formattedDate = currentDate.toLocaleDateString('hu-HU', options);
+
+            // datum kiiras
+            var dateElement = document.getElementById('date');
+            dateElement.innerHTML = formattedDate;
+
+            // udvozlo uzenet az idotol fuggoen
+            var welcomeElement = document.getElementById('welcome');
+            var currentHour = currentDate.getHours();
+            var welcomeMessage = '';
+        
+        // Idő és dátum megjelenítése az oldalon
+        document.getElementById('date').innerText = formattedDate;
+        document.getElementById('welcome').innerText = getWelcomeMessage(currentDate.getHours());
+    }
+    
+    // Köszöntés üzenet kiválasztása az aktuális órától függően
+    function getWelcomeMessage(currentHour) {
+        if (currentHour >= 5 && currentHour < 12) {
+            return 'Jó reggelt!';
+        } else if (currentHour >= 12 && currentHour < 18) {
+            return 'Szép napot!';
+        } else {
+            return 'Jó estét!';
+        }
+    }
+</script>
+
+
 
 
 

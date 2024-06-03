@@ -12,19 +12,16 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         #map {
-            height: 220%;
+            height: 420px;
             width: 100%;
         }
 
         @media (max-width: 430px) {
             #map {
-            height: 140%;
-        }
-            
+                height: 140%;
+            }
         }
 
         div .leaflet-control-attribution {
@@ -34,87 +31,102 @@
         .box {
             background-color: #2b3035;
             border: 1px solid #495057;
-            margin: 1%;
-            padding: 10px;
+            margin-top: 3%;
+            margin-bottom: 3%;
+            padding: 2%;
             border-radius: 10px;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="input-group input-group-lg">
-                    <span class="input-group-text" id="inputGroup-sizing-lg">Hely keresés:</span>
-                    <input class="form-control" type="text" id="searchInput" placeholder="keresés"
-                        aria-describedby="inputGroup-sizing-lg">
-                    <button class="input-group-text" onclick="searchLocation()">Keresés</button> <br><a
-                        href="{{ url_for('index') }}" class="input-group-text" aria-pressed="false">Mentés</a>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-body position-relative">
+                <!-- Keresőmező gomb -->
+                
 
-                </div>
-                <div class="input-group input-group-lg" id="searchResults"></div>
-
-
-                <div id="map"></div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="box">
-                            <form id="radiusForm">
-                                <div class="input-group input-group-lg"></div>
-                                <label for="radiusInput" class="form-label">Rádiusz: <em id="rangeValLabel">2000</em>m</label>
-                                
-                                <input style="width: 100%;" id="radiusInput" name="radius" type="range" class="form-range"
-                                    min="0" max="2000" value="2000"  oninput="document.getElementById('rangeValLabel').innerHTML = this.value;" >
-                                <output for="radiusInput" onforminput="value = foo.valueAsNumber;"></output>
-    
-                                <button class="input-group-text" type="submit">Küldés</button>
+                <!-- Modal HTML -->
+                <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="searchModalLabel">Hely keresés</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="modalSearchInput" placeholder="Írjon ide...">
+                                    <button class="btn btn-primary" onclick="modalSearchLocation()">Keresés</button>
+                                </div>
+                                <div id="modalSearchResults"></div>
+                            </div>
                         </div>
-                        
                     </div>
-                    </form>
                 </div>
-                <div class="col-md-8">
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-text">Rögzített helyek:</span>
-                        <button class="form-control" onclick="selectLocation(47.047663150000005,18.057475161980424)">Füzfő</button>
-                        <span class="input-group-text"></span>
+
+                <!-- Térkép -->
+                <div id="map"></div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <button class="btn btn-outline-info-emphasis search-button" data-bs-toggle="modal" data-bs-target="#searchModal">
+                                Hely keresés
+                            </button><br><br>
+                            <div class="d-flex flex-wrap">
+                                <button class="btn btn-outline-secondary me-2 mb-2" onclick="selectLocation(47.047663150000005, 18.057475161980424)">Füzfő</button>
+                                <button class="btn btn-outline-secondary me-2 mb-2" onclick="selectLocation(46.8147826, 17.5714996)">Ábrahámhegy</button>
+                                <button class="btn btn-outline-secondary me-2 mb-2" onclick="selectLocation(46.72243,17.5186394)">Alsóbélatelep</button>
+                            </div>
+                            <hr>
+                            <form id="radiusForm">
+                                <div class="mb-3">
+                                    <label for="radiusInput" class="form-label">Rádiusz: <em id="rangeValLabel">2000</em>m</label>
+                                    <input type="range" class="form-range" id="radiusInput" name="radius" min="0" max="2000" value="2000" oninput="updateRadius(this.value)">
+                                </div>
+                            </form>
+                            <div class="d-inline-flex gap-2">
+                                <a type="button" class="btn btn-success" href="{{ url_for('index') }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
+                      <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z"></path>
+                      <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"></path></svg>
+                                    Mentés
+                                    </a>
+                                <a href="{{ url_for('index') }}" class="btn btn-outline-danger">Vissza</a>
+                            </div>
+                            
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    </div>
-
-
-
-
-
-    </div>
-
-
-
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
         var map = L.map('map').setView([47.4979, 19.0402], 10);
         var marker = null;
+        var selectedLat = null;
+        var selectedLon = null;
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
         }).addTo(map);
 
-        function searchLocation() {
-            var searchInput = document.getElementById('searchInput').value;
+        function modalSearchLocation() {
+            var searchInput = document.getElementById('modalSearchInput').value;
             fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + searchInput)
                 .then(response => response.json())
                 .then(data => {
-                    var resultsDiv = document.getElementById('searchResults');
+                    var resultsDiv = document.getElementById('modalSearchResults');
                     resultsDiv.innerHTML = '';
                     data.forEach(place => {
                         var result = document.createElement('div');
-                        result.innerHTML = '<button onclick="selectLocation(' + place.lat + ',' + place.lon + ')">' + place.display_name + '</button>';
+                        result.innerHTML = '<button class="btn btn-outline-secondary mb-2" onclick="selectLocation(' + place.lat + ',' + place.lon + ')">' + place.display_name + '</button>';
                         resultsDiv.appendChild(result);
                     });
                 });
@@ -126,8 +138,10 @@
             }
             marker = L.marker([lat, lon]).addTo(map);
             map.setView([lat, lon], 13);
+            selectedLat = lat;
+            selectedLon = lon;
 
-            // Elküldjük a koordinátákat a Flask szervernek
+            // Update coordinates on the server
             fetch('/update_coordinates', {
                 method: 'POST',
                 headers: {
@@ -135,65 +149,46 @@
                 },
                 body: 'lat=' + lat + '&lon=' + lon,
             })
-                .then(response => {
-                    if (response.ok) {
-                        return response.text();
-                    } else {
-                        throw new Error('Failed to update coordinates');
-                    }
-                })
-                .then(data => {
-                    console.log(data); // A Flask válaszának a logolása
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-
-        function updateSession() {
-            // Frissítjük a munkamenetet
-            fetch('/refresh_session', {
-                method: 'POST',
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Failed to update coordinates');
+                }
             })
-                .then(response => {
-                    if (response.ok) {
-                        return response.text();
-                    } else {
-                        throw new Error('Failed to refresh session');
-                    }
-                })
-                .then(data => {
-                    console.log(data); // A Flask válaszának a logolása
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
-    </script>
-    <script>
-        document.getElementById('radiusForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Az alapértelmezett formaküldés megakadályozása
 
-            var form = new FormData(this); // Az űrlap adatok összegyűjtése
-            var radius = form.get('radius'); // A sugár értékének kiolvasása
+        function updateRadius(radius) {
+            document.getElementById('rangeValLabel').innerHTML = radius;
 
-            // Küldjük el a sugár értékét a Flask szervernek egy POST kéréssel
+            // Update radius on the server
             fetch('/update_radius', {
                 method: 'POST',
-                body: form
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'radius=' + radius,
             })
-                .then(response => {
-                    if (response.ok) {
-                        // Ha a válasz státusza rendben van, akkor frissíthetjük az oldalt vagy végezhetünk más műveleteket
-                        window.location.reload();
-                    } else {
-                        throw new Error('Hiba történt a sugár frissítése közben');
-                    }
-                })
-                .catch(error => {
-                    console.error('Hiba:', error);
-                });
-        });
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Failed to update radius');
+                }
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

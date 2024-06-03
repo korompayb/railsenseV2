@@ -118,6 +118,7 @@ def index():
                 short_name = route_info.get('shortName', 'N/A')
                 description = route_info.get('description', 'N/A')
                 color = route_info.get('color', 'N/A')
+                text_color = route_info.get('textColor', 'FFFFFF')
             else:
                 short_name = "N/A"
                 description = "N/A"
@@ -174,7 +175,8 @@ def index():
                         'short_name': short_name,
                         'description': description,
                         'color': color,
-                        'trip_details': trip_details  # Add second API response
+                        'text_color': text_color,
+                        'trip_details': trip_details # Add second API response
                     })
                     added_trains.add(train_id)
                     result_status = 1  # Train detected
@@ -199,6 +201,13 @@ def index():
     weather_data = get_weather_data(city)
 
     return render_template('index.html', trainsdata=trainsdata, result_status=result_status, manifest_url=manifest_url, message=message, weather_data=weather_data)
+
+@app.errorhandler(requests.exceptions.ConnectionError)
+def handle_connection_error(error):
+    return render_template('connection_error.html'), 500
+
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=81, debug=True)
