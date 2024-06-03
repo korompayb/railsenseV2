@@ -63,9 +63,17 @@ def update_coordinates():
     except KeyError:
         lon = 18.057539
         return render_template("maps.html")
+    
+
+    try:
+        address = request.form['address']
+    except KeyError:
+        address = "Balatonfűzfő"
+        render_template("maps.html")
 
     session['lat'] = lat
     session['lon'] = lon
+    session['address'] = address
 
     
 
@@ -83,16 +91,18 @@ def update_coordinates():
 def index():
     lat = session.get('lat', 47.046356)
     lon = session.get('lon', 18.057539)
+    address = session.get('address', "Balatonfűzfő")
     radius = session.get('radius', 2000)
     
     # Például adjunk hozzá néhány értéket a session-hoz
     session['lat'] = lat
     session['lon'] = lon
     session['radius'] = radius
+    session['address'] = address
 
     manifest_url = url_for('static', filename='manifest.json')
 
-    print(lat, lon, radius)
+    print(lat, lon, radius, address)
     
     # Fetch train data
     arrivals_url = f"https://futar.bkk.hu/api/query/v1/ws/otp/api/where/arrivals-and-departures-for-location?&clientLon={lon}&clientLat={lat}&onlyDepartures=false&limit=60&lat={lat}&lon={lon}&radius={radius}&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
@@ -200,7 +210,7 @@ def index():
     city = "Balatonfuzfo"
     weather_data = get_weather_data(city)
 
-    return render_template('index.html', trainsdata=trainsdata, result_status=result_status, manifest_url=manifest_url, message=message, weather_data=weather_data)
+    return render_template('index.html', trainsdata=trainsdata, result_status=result_status, manifest_url=manifest_url, message=message, weather_data=weather_data, address = address)
 
 @app.errorhandler(requests.exceptions.ConnectionError)
 def handle_connection_error(error):

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenStreetMap with Geocoding Example</title>
+    <title>Térkép</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <meta name="theme-color" content="#1e1e1e">
     <link rel="manifest" href="{{ manifest_url }}" />
@@ -77,9 +77,9 @@
                                   </svg> Hely keresés 
                             </button><br><br>
                             <div class="d-flex flex-wrap">
-                                <button class="btn btn-outline-secondary me-2 mb-2" onclick="selectLocation(47.047663150000005, 18.057475161980424)">Füzfő</button>
-                                <button class="btn btn-outline-secondary me-2 mb-2" onclick="selectLocation(46.8147826, 17.5714996)">Ábrahámhegy</button>
-                                <button class="btn btn-outline-secondary me-2 mb-2" onclick="selectLocation(46.72243,17.5186394)">Alsóbélatelep</button>
+                                <button class="btn btn-outline-secondary me-2 mb-2" onclick="selectLocation(47.047663150000005, 18.057475161980424, 'Füzfő')">Füzfő</button>
+                                <button class="btn btn-outline-secondary me-2 mb-2" onclick="selectLocation(46.8147826, 17.5714996, 'Ábrahámhegy')">Ábrahámhegy</button>
+                                <button class="btn btn-outline-secondary me-2 mb-2" onclick="selectLocation(46.72243,17.5186394, 'Alsóbélatelep')">Alsóbélatelep</button>
                             </div>
                             <hr>
                             <form id="radiusForm">
@@ -92,7 +92,7 @@
                                 <a type="button" class="btn btn-success" href="{{ url_for('index') }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
                       <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z"></path>
-                      <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"></path></svg>
+                      <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"></svg>
                                     Mentés
                                     </a>
                                 <a href="{{ url_for('index') }}" class="btn btn-outline-danger">Vissza</a>
@@ -111,6 +111,7 @@
         var marker = null;
         var selectedLat = null;
         var selectedLon = null;
+        var selectedAddress = null;
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -125,13 +126,13 @@
                     resultsDiv.innerHTML = '';
                     data.forEach(place => {
                         var result = document.createElement('div');
-                        result.innerHTML = '<button class="btn btn-outline-secondary mb-2" onclick="selectLocation(' + place.lat + ',' + place.lon + ')">' + place.display_name + '</button>';
+                        result.innerHTML = '<button class="btn btn-outline-secondary mb-2" onclick="selectLocation(' + place.lat + ',' + place.lon + ', \'' + place.display_name + '\')">' + place.display_name + '</button>';
                         resultsDiv.appendChild(result);
                     });
                 });
         }
 
-        function selectLocation(lat, lon) {
+        function selectLocation(lat, lon, address) {
             if (marker) {
                 map.removeLayer(marker);
             }
@@ -139,14 +140,15 @@
             map.setView([lat, lon], 13);
             selectedLat = lat;
             selectedLon = lon;
+            selectedAddress = address;
 
-            // Update coordinates on the server
+            // Update coordinates and address on the server
             fetch('/update_coordinates', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: 'lat=' + lat + '&lon=' + lon,
+                body: 'lat=' + lat + '&lon=' + lon + '&address=' + encodeURIComponent(address),
             })
             .then(response => {
                 if (response.ok) {
