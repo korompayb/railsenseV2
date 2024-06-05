@@ -1,0 +1,212 @@
+.container {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+    border-radius: 0.25em;
+}
+
+h1 small,
+h2 small {
+    font-weight: 100;
+}
+
+li {
+    height: 1.55em;
+    margin-bottom: 0.2em;
+}
+
+/* Set the line station list */
+.line {
+    list-style-type: none;
+    padding: 0;
+    position: relative;
+}
+
+/* Line color */
+.line--m2 {
+    border-left: 4px solid #ed1633;
+    padding-left: 0.6em;
+}
+
+/* station--default: place the station name to the right of the line and add normal station circle */
+.station {
+    position: relative;
+    padding-left: 1em;
+    line-height: 1.75em;
+}
+
+.station--default::before,
+.station--start::before,
+.station--end::before,
+.station--end2::before {
+    content: "";
+    position: absolute;
+    left: -1em;
+    height: 0.5em;
+    width: 0.5em;
+    margin-top: 0.425em;
+    border: 2px solid black;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.station--start::before,
+.station--end::before {
+    height: 1em;
+    width: 1em;
+    border: 2px solid #ed1633;
+    border-radius: 999px;
+    left: -1.20em;
+    top: -0.5em;
+}
+
+.station--end2::before {
+    height: 1em;
+    width: 1em;
+    border: 2px solid #ed1633;
+    border-radius: 999px;
+    left: -1.20em;
+    top: -0.0em;
+}
+
+.station--end::before {
+    margin-top: 0.625em;
+}
+
+.station--end2::before {
+    margin-top: 0.625em;
+}
+
+/* Place connection list at the right of the line */
+.connections {
+    position: absolute;
+    display: inline;
+}
+
+/* Display lines inline and set the padding between each of them */
+.connections__line {
+    display: inline-block;
+    padding-left: 0.25em;
+    line-height: 1.75em;
+}
+
+.connections__line svg {
+    height: 1em;
+    width: 1em;
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    font-size: 0.8em;
+    line-height: 0.8em;
+    padding: 0.25em;
+    text-align: center;
+    color: #fff;
+    border: 1px solid rgba(75, 75, 75, 0.5);
+    text-shadow: rgba(75, 75, 75, 0.5) 1px 0px, rgba(75, 75, 75, 0.5) 0px 1px, rgba(75, 75, 75, 0.5) -1px 0px, rgba(75, 75, 75, 0.5) 0px -1px;
+}
+
+/* Style for metro */
+.badge--metro {
+    border-radius: 50%;
+}
+
+/* Colors for each lines */
+.badge--color-m1 {
+    background-color: #ed168c;
+}
+
+.badge--color-m2 {
+    background-color: #ed168c;
+}
+
+.badge--color-b1 {
+    background-color: #ee1d23;
+}
+
+.badge--color-b2 {
+    background-color: #fef135;
+}
+
+.badge--color-b3 {
+    background-color: #939598;
+}
+
+.badge--color-b6 {
+    background-color: #1daeef;
+}
+
+.badge--color-b7 {
+    background-color: #2e2f92;
+}
+
+.badge--color-b8 {
+    background-color: #8e52a1;
+}
+
+.badge--color-b18 {
+    background-color: #6acdf3;
+}
+
+.badge--color-b21 {
+    background-color: #8e52a1;
+}
+
+.badge--color-b22 {
+    background-color: #cb572b;
+}
+
+.badge--color-b25 {
+    background-color: #adc4e5;
+}
+
+.badge--color-b41 {
+    background-color: #b41e8d;
+}
+
+.badge--color-b42 {
+    background-color: #fedc32;
+}
+
+.badge--color-b45 {
+    background-color: #148c93;
+}
+
+.badge--color-b46 {
+    background-color: #b39c20;
+}
+
+.badge--color-b60 {
+    background-color: #cfe4ae;
+}
+
+.badge--color-b62 {
+    background-color: #e87eaa;
+}
+
+.badge--color-b64 {
+    background-color: #c0333b;
+}
+
+.badge--color-b65 {
+    background-color: #fcb82b;
+}
+
+.badge--color-b66 {
+    background-color: #f58344;
+}
+
+.badge--color-b75 {
+    background-color: #fef135;
+}
+
+.label {
+    background-color: #ccc;
+    border: 0.05em solid #000;
+    padding: 0.15em 0.4em;
+    border-radius: 0.25em;
+    font-size: 0.7em;
+}
