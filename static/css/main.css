@@ -267,7 +267,7 @@
     }
 */
 .card-title,
-.card-subtitle {
+    .card-subtitle, .stop-name {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -276,21 +276,21 @@
 
 @media (max-width: 425px) {
     .card-title,
-    .card-subtitle {
+    .card-subtitle, .stop-name {
         max-width: 230px; /* Állítsd be a kívánt maximális szélességet */
     }
 }
 
 @media (max-width: 375px) {
     .card-title,
-    .card-subtitle {
+    .card-subtitle, .stop-name{
         max-width: 190px; /* Állítsd be a kívánt maximális szélességet */
     }
 }
 
 @media (max-width: 320px) {
     .card-title,
-    .card-subtitle {
+    .card-subtitle, .stop-name {
         max-width: 145px; /* Állítsd be a kívánt maximális szélességet */
     }
 }

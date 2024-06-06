@@ -38,6 +38,8 @@
 }
 
 
+     
+
 </style>
 
 
@@ -127,28 +129,57 @@
                                         data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
                                             <table id="menetrend">
-                                                <tr>
-                                                    <th>Megállók</th>
-                                                    <th>Érkezik</th>
-                                                </tr>
+                                                
                                                 <ul class="line line--m2" style="--line-color: #{{train.color}} !important; border-color: var(--line-color);">
                                                     <li class="station station--start">
-                                                        <strong>{{ train.trip_details.0.stop_name }}</strong>
-                                                        <span class="arrival-time">{{ train.trip_details.0.arrival_time }}</span>
+                                                        <strong class="stop-name">{{ train.trip_details.0.stop_name }}</strong>
+                                                        <span style="float: inline-end;" class="arrival-time">{{ train.trip_details.0.arrival_time }}</span>
                                                     </li>
                                                     {% for stop in train.trip_details[1:-1] %}
                                                     <li class="station station--default">
-                                                        <span class="stop-name">{{ stop.stop_name }}</span>
-                                                        <span class="arrival-time">{{ stop.arrival_time }}</span>
+                                                        <span class="stop-name" style="max-width: 19px;">{{ stop.stop_name }}</span>
+                                                        <span style="float: inline-end; max-width: 10ch; /* Max 10 karakter szélesség */
+                                                        white-space: nowrap;
+                                                        overflow: hidden;
+                                                        text-overflow: ellipsis;" class="arrival-time">{{ stop.arrival_time }}</span>
                                                     </li>
                                                     {% endfor %}
                                                     <li class="station station--end2">
-                                                        <strong>{{ train.trip_details[-1].stop_name }}</strong>
-                                                        <span class="arrival-time">{{ train.trip_details[-1].arrival_time }}</span>
+                                                        <strong class="stop-name">{{ train.trip_details[-1].stop_name }}</strong>
+                                                        <span style="float: inline-end;" class="arrival-time">{{ train.trip_details[-1].arrival_time }}</span>
                                                     </li>
                                                 </ul>
                                                 
-                                                                                                
+                                                <script>
+                                                    function truncateText() {
+                                                        var maxChars = window.innerWidth <= 320 ? 10 : 20;
+                                                        var stopNames = document.querySelectorAll('.stop-name');
+                                                        stopNames.forEach(function(stopName) {
+                                                            var text = stopName.textContent;
+                                                            if (text.length > maxChars) {
+                                                                stopName.textContent = text.slice(0, maxChars) + '...';
+                                                            }
+                                                        });
+                                                    }
+                                                
+                                                    function refreshData() {
+                                                        // AJAX kérés futtatása, adatok frissítése
+                                                
+                                                        // Miután az adatok frissültek, újra alkalmazzuk a szöveg levágását
+                                                        truncateText();
+                                                    }
+                                                
+                                                    document.addEventListener('DOMContentLoaded', function() {
+                                                        // Oldal betöltésekor alkalmazzuk a szöveg levágását
+                                                        truncateText();
+                                                
+                                                        // Re-apply truncation on window resize
+                                                        window.addEventListener('resize', truncateText);
+                                                
+                                                        // AJAX frissítés esetén
+                                                        // refreshData függvény meghívása
+                                                    });
+                                                </script>                                             
                                                 
                                             </table>
                                         </div>
