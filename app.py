@@ -86,7 +86,6 @@ def update_coordinates():
     # weather_data = get_weather_data(city, lat, lon)
 
     return redirect('/')
-
 @app.route('/railsense', methods=['GET', 'POST'])
 def index():
     lat = session.get('lat', 47.046356)
@@ -94,7 +93,6 @@ def index():
     address = session.get('address', "Balatonfűzfő")
     radius = session.get('radius', 2000)
     
-    # Például adjunk hozzá néhány értéket a session-hoz
     session['lat'] = lat
     session['lon'] = lon
     session['radius'] = radius
@@ -102,16 +100,13 @@ def index():
 
     manifest_url = url_for('static', filename='manifest.json')
 
-    print(lat, lon, radius, address)
-    
-    # Fetch train data
     arrivals_url = f"https://futar.bkk.hu/api/query/v1/ws/otp/api/where/arrivals-and-departures-for-location?&clientLon={lon}&clientLat={lat}&onlyDepartures=false&limit=60&lat={lat}&lon={lon}&radius={radius}&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
 
     arrivals_response = requests.get(arrivals_url)
     
     trainsdata = []
-    added_trains = set()  # This stores trains that have already been added
-    result_status = 2  # Default value: no train
+    added_trains = set()  
+    result_status = 2  
     message = ""
 
     if arrivals_response.status_code == 200:
@@ -127,15 +122,17 @@ def index():
                 route_info = routes_data[route_id]
                 short_name = route_info.get('shortName', 'N/A')
                 description = route_info.get('description', 'N/A')
+                type = route_info.get('type', 'N/A')
                 color = route_info.get('color', 'N/A')
                 text_color = route_info.get('textColor', 'FFFFFF')
             else:
                 short_name = "N/A"
                 description = "N/A"
+                type = "N/A"
                 
             for stop_time in stop_times:
                 train_id = stop_time['tripId']
-                if train_id not in added_trains:
+                if train_id not in added_trains and type == 'RAIL':
                     if 'arrivalTime' in stop_time:
                         arrival_time = datetime.datetime.fromtimestamp(stop_time['arrivalTime'], tz=hungary_tz).strftime('%H:%M')
                     else:
@@ -144,7 +141,7 @@ def index():
                     if 'departureTime' in stop_time:
                         departure_time = datetime.datetime.fromtimestamp(stop_time['departureTime'], tz=hungary_tz).strftime('%H:%M')
                     else:
-                        departure_time = datetime.datetime.fromtimestamp(0000000, tz=hungary_tz).strftime('%H:%M')
+                        departure_time = 'N/A'
                     
                     predicted_arrival_time = None
                     if 'predictedArrivalTime' in stop_time:
@@ -152,15 +149,20 @@ def index():
                     else:
                         predicted_arrival_time = arrival_time
                     
-                    # Second API call
                     trip_details_url = f"https://futar.bkk.hu/api/query/v1/ws/otp/api/where/trip-details?tripId={train_id}&version=4&includeReferences=stops&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
                     trip_details_response = requests.get(trip_details_url)
                     
                     trip_details = []
+                    vehicle_name = 'N/A'
+                    vehicle_label = 'N/A'
                     if trip_details_response.status_code == 200:
                         trip_details_data = trip_details_response.json()['data']['entry']['stopTimes']
                         stops_data = trip_details_response.json()['data']['references']['stops']
+                        vehicles_data = trip_details_response.json()['data']['entry'].get('vehicle', {})
                         
+                        vehicle_name = vehicles_data.get('style', {}).get('icon', {}).get('name', '')
+                        vehicle_label = vehicles_data.get('model', '')
+
                         for stop in trip_details_data:
                             stop_id = stop['stopId']
                             stop_info = stops_data.get(stop_id, {})
@@ -184,33 +186,35 @@ def index():
                         'predicted_arrival_time': predicted_arrival_time,
                         'short_name': short_name,
                         'description': description,
+                        'type':type,
                         'color': color,
                         'text_color': text_color,
-                        'trip_details': trip_details # Add second API response
+                        'vehicle_name': vehicle_name,
+                        'vehicle_label': vehicle_label,
+                        'trip_details': trip_details  
                     })
                     added_trains.add(train_id)
-                    result_status = 1  # Train detected
+                    result_status = 1  
         try:
-            # Ellenőrizd, hogy a trainsdata lista megfelelő adatokat tartalmaz-e
             if all('predicted_arrival_time' in train for train in trainsdata):
-                # Rendezd a trainsdata listát a 'predicted_arrival_time' alapján
                 sorted_trainsdata = sorted(trainsdata, key=lambda x: datetime.datetime.strptime(x['predicted_arrival_time'], '%H:%M'))
             else:
-                # Ha az adatok nem megfelelőek, kezeld a hibát vagy hagyd ki a rendezést
                 sorted_trainsdata = trainsdata
         except Exception as e:
-            # Kezeld a kivételt, ha szükséges
             sorted_trainsdata = []
 
     elif arrivals_response.status_code != 200:
         message = "404 Error on the page"
         result_status = 3
     
-    # Fetch weather data
     city = "Balatonfuzfo"
     weather_data = get_weather_data(city)
 
-    return render_template('index.html', trainsdata=trainsdata, result_status=result_status, manifest_url=manifest_url, message=message, weather_data=weather_data, address = address)
+    return render_template('index.html', trainsdata=trainsdata, result_status=result_status, manifest_url=manifest_url, message=message, weather_data=weather_data, address=address)
+
+
+
+
 
 @app.errorhandler(requests.exceptions.ConnectionError)
 def handle_connection_error(error):

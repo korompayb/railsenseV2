@@ -18,7 +18,6 @@
             width: 100%;
         }
 
-
         div .leaflet-control-attribution {
             display: none !important;
         }
@@ -39,7 +38,6 @@
         <div class="card">
             <div class="card-body position-relative">
                 <!-- Keresőmező gomb -->
-                
 
                 <!-- Modal HTML -->
                 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
@@ -107,15 +105,31 @@
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        var map = L.map('map').setView([47.4979, 19.0402], 10);
+        var map = L.map('map').setView([47.4979, 19.0402], 7);
         var marker = null;
         var selectedLat = null;
         var selectedLon = null;
         var selectedAddress = null;
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
+        L.tileLayer('https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.{ext}', {
+            minZoom: 0,
+            maxZoom: 20,
+            attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            ext: 'png'
         }).addTo(map);
+
+        map.on('click', function(e) {
+            var lat = e.latlng.lat;
+            var lon = e.latlng.lng;
+
+            // Reverse geocoding to get the address
+            fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lon)
+                .then(response => response.json())
+                .then(data => {
+                    var address = data.display_name;
+                    selectLocation(lat, lon, address);
+                });
+        });
 
         function modalSearchLocation() {
             var searchInput = document.getElementById('modalSearchInput').value;
