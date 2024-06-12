@@ -46,7 +46,7 @@ def update_radius():
     session['radius'] = radius
     return render_template('maps.html')
 
-@app.route('/railsense')
+@app.route('/')
 def search():
     return render_template('maps.html')
 
@@ -80,8 +80,8 @@ def update_coordinates():
     print(lat, lon)
     
 
-    return redirect('/railsense')
-@app.route('/', methods=['GET', 'POST'])
+    return redirect('/')
+@app.route('/railsense', methods=['GET', 'POST'])
 def index():
     lat = session.get('lat', 47.046356)
     lon = session.get('lon', 18.057539)
