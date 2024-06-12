@@ -14,7 +14,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         #map {
-            height: 420px;
+            height: 300px;
             width: 100%;
         }
 
@@ -36,9 +36,17 @@
 <body>
     <div class="container mt-4">
         <div class="card">
-            <div class="card-body position-relative">
+            <div class="card-body position-relative ">
                 <!-- Keresőmező gomb -->
-
+                <div class="leaflet-top leaflet-right">
+                    <div class="leaflet-control-layers leaflet-control">
+                        <select class="form-select" id="mapStyleSelector" onchange="changeMapStyle(this.value)">
+                            <option value="osm">OpenStreetMap</option>
+                            <option value="jawg" selected>Jawg Maps</option>
+                        </select>
+                    </div>
+                    
+                </div>
                 <!-- Modal HTML -->
                 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -96,6 +104,9 @@
                                 <a href="{{ url_for('index') }}" class="btn btn-outline-danger">Vissza</a>
                             </div>
                             
+                            <!-- Térképstílus választó -->
+                            
+
                         </div>
                     </div>
                 </div>
@@ -107,16 +118,33 @@
     <script>
         var map = L.map('map').setView([47.4979, 19.0402], 7);
         var marker = null;
+        var circle = null;
         var selectedLat = null;
         var selectedLon = null;
         var selectedAddress = null;
 
-        L.tileLayer('https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.{ext}', {
+        var jawgLayer = L.tileLayer('https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+            attribution: '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             minZoom: 0,
-            maxZoom: 20,
-            attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            ext: 'png'
-        }).addTo(map);
+            maxZoom: 22,
+            accessToken: 'iGR4cAeILxmIyHrzUkdz1fKcfoWHenxaQdGtzAO6ZDkC6vGJ8SwVuT8Kyh7Mf8af'
+        });
+
+        var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        });
+
+        jawgLayer.addTo(map);
+
+        function changeMapStyle(style) {
+            if (style === 'jawg') {
+                map.removeLayer(osmLayer);
+                jawgLayer.addTo(map);
+            } else if (style === 'osm') {
+                map.removeLayer(jawgLayer);
+                osmLayer.addTo(map);
+            }
+        }
 
         map.on('click', function(e) {
             var lat = e.latlng.lat;
@@ -146,12 +174,31 @@
                 });
         }
 
+        var customIcon = L.icon({
+            iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Google_Maps_pin.svg/137px-Google_Maps_pin.svg.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41], // size of the icon
+            shadowSize: [41, 41], // size of the shadow
+            iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
+            shadowAnchor: [12, 41], // the same for the shadow
+            popupAnchor: [1, -34] // point from which the popup should open relative to the iconAnchor
+        });
+
         function selectLocation(lat, lon, address) {
             if (marker) {
                 map.removeLayer(marker);
             }
-            marker = L.marker([lat, lon]).addTo(map);
-            map.setView([lat, lon], 13);
+            if (circle) {
+                map.removeLayer(circle);
+            }
+            marker = L.marker([lat, lon], {icon: customIcon}).addTo(map);
+            circle = L.circle([lat, lon], {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                radius: parseInt(document.getElementById('radiusInput').value)
+            }).addTo(map);
+            map.setView([lat, lon], 16);
             selectedLat = lat;
             selectedLon = lon;
             selectedAddress = address;
@@ -182,6 +229,10 @@
         function updateRadius(radius) {
             document.getElementById('rangeValLabel').innerHTML = radius;
 
+            if (circle) {
+                circle.setRadius(parseInt(radius));
+            }
+
             // Update radius on the server
             fetch('/update_radius', {
                 method: 'POST',
@@ -204,6 +255,7 @@
                 console.error('Error:', error);
             });
         }
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

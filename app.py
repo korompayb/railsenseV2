@@ -46,7 +46,7 @@ def update_radius():
     session['radius'] = radius
     return render_template('maps.html')
 
-@app.route('/')
+@app.route('/railsense')
 def search():
     return render_template('maps.html')
 
@@ -78,15 +78,10 @@ def update_coordinates():
     
 
     print(lat, lon)
-    # Új koordináták használata az API-hívásokban
-    # Például:
-    # arrivals_url = f"https://futar.bkk.hu/api/query/v1/ws/otp/api/where/arrivals-and-departures-for-location?&clientLon={lon}&clientLat={lat}&minutesAfter=30&onlyDepartures=false&limit=60&lat={lat}&lon={lon}&radius=2000&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
+    
 
-    # Vagy egy másik API-hívás módosítása:
-    # weather_data = get_weather_data(city, lat, lon)
-
-    return redirect('/')
-@app.route('/railsense', methods=['GET', 'POST'])
+    return redirect('/railsense')
+@app.route('/', methods=['GET', 'POST'])
 def index():
     lat = session.get('lat', 47.046356)
     lon = session.get('lon', 18.057539)
@@ -100,8 +95,8 @@ def index():
 
     manifest_url = url_for('static', filename='manifest.json')
 
-    arrivals_url = f"https://futar.bkk.hu/api/query/v1/ws/otp/api/where/arrivals-and-departures-for-location?&clientLon={lon}&clientLat={lat}&onlyDepartures=false&limit=60&lat={lat}&lon={lon}&radius={radius}&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
-
+    arrivals_url = f"https://futar.bkk.hu/api/query/v1/ws/otp/api/where/arrivals-and-departures-for-location?&clientLon={lon}&clientLat={lat}&onlyDepartures=false&limit=60&lat={lat}&lon={lon}&radius={radius}&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&minutesAfter=30&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
+    print(arrivals_url)
     arrivals_response = requests.get(arrivals_url)
     
     trainsdata = []
@@ -117,6 +112,7 @@ def index():
             route_id = item['routeId']
             headsign = item['headsign']
             stop_times = item['stopTimes']
+           
             
             if route_id in routes_data:
                 route_info = routes_data[route_id]
@@ -124,6 +120,7 @@ def index():
                 description = route_info.get('description', 'N/A')
                 type = route_info.get('type', 'N/A')
                 color = route_info.get('color', 'N/A')
+                
                 text_color = route_info.get('textColor', 'FFFFFF')
             else:
                 short_name = "N/A"
@@ -132,7 +129,7 @@ def index():
                 
             for stop_time in stop_times:
                 train_id = stop_time['tripId']
-                if train_id not in added_trains and type == 'RAIL':
+                if train_id not in added_trains and type == 'RAIL' or type == "N/A":
                     if 'arrivalTime' in stop_time:
                         arrival_time = datetime.datetime.fromtimestamp(stop_time['arrivalTime'], tz=hungary_tz).strftime('%H:%M')
                     else:
@@ -157,11 +154,14 @@ def index():
                     vehicle_label = 'N/A'
                     if trip_details_response.status_code == 200:
                         trip_details_data = trip_details_response.json()['data']['entry']['stopTimes']
+                        
                         stops_data = trip_details_response.json()['data']['references']['stops']
                         vehicles_data = trip_details_response.json()['data']['entry'].get('vehicle', {})
                         
                         vehicle_name = vehicles_data.get('style', {}).get('icon', {}).get('name', '')
+                        vehicletype = vehicles_data.get('style', {}).get('vehicleIcon', {}).get('name', 'RAIL')
                         vehicle_label = vehicles_data.get('model', '')
+                        stop_sequence = vehicles_data.get('stopSequence')
 
                         for stop in trip_details_data:
                             stop_id = stop['stopId']
@@ -174,7 +174,8 @@ def index():
                                 'arrival_time': datetime.datetime.fromtimestamp(stop['arrivalTime'], tz=hungary_tz).strftime('%H:%M') if 'arrivalTime' in stop else datetime.datetime.fromtimestamp(stop['departureTime'], tz=hungary_tz).strftime('%H:%M'),
                                 'departure_time': datetime.datetime.fromtimestamp(stop['departureTime'], tz=hungary_tz).strftime('%H:%M') if 'departureTime' in stop else 'N/A',
                                 'predicted_arrival_time': datetime.datetime.fromtimestamp(stop['predictedArrivalTime'], tz=hungary_tz).strftime('%H:%M') if 'predictedArrivalTime' in stop else 'N/A',
-                                'predicted_departure_time': datetime.datetime.fromtimestamp(stop['predictedDepartureTime'], tz=hungary_tz).strftime('%H:%M') if 'predictedDepartureTime' in stop else 'N/A'
+                                'predicted_departure_time': datetime.datetime.fromtimestamp(stop['predictedDepartureTime'], tz=hungary_tz).strftime('%H:%M') if 'predictedDepartureTime' in stop else 'N/A',
+                                'stopseqe2': stop.get('stopSequence')
                             })
                     
                     trainsdata.append({
@@ -186,11 +187,13 @@ def index():
                         'predicted_arrival_time': predicted_arrival_time,
                         'short_name': short_name,
                         'description': description,
+                        'stop_sequence': stop_sequence,
                         'type':type,
                         'color': color,
                         'text_color': text_color,
                         'vehicle_name': vehicle_name,
                         'vehicle_label': vehicle_label,
+                        'vehicletype': vehicletype,
                         'trip_details': trip_details  
                     })
                     added_trains.add(train_id)
