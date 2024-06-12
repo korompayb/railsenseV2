@@ -96,7 +96,7 @@ def index():
     manifest_url = url_for('static', filename='manifest.json')
 
     arrivals_url = f"https://futar.bkk.hu/api/query/v1/ws/otp/api/where/arrivals-and-departures-for-location?&clientLon={lon}&clientLat={lat}&onlyDepartures=false&limit=60&lat={lat}&lon={lon}&radius={radius}&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&minutesAfter=30&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
-    print(arrivals_url)
+    
     arrivals_response = requests.get(arrivals_url)
     
     trainsdata = []
