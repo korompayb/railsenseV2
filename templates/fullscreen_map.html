@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullscreen Térkép</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <meta name="theme-color" content="#1e1e1e">
+    <link rel="manifest" href="{{ manifest_url }}" />
+    <link rel="icon" href="https://apiv2.phntm.hu/favicon.ico">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+
+        div .leaflet-control-attribution {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div class="leaflet-bottom leaflet-right">
+        <div class="leaflet-control-layers leaflet-control" aria-haspopup="true">
+            <a class="btn btn-dark text-50 btn-outline-light search-button position-absolute bottom-0 end-0 m-2" style="z-index: 1;" href="{{ url_for('search') }}">
+                Vissza
+            </a>
+        </div>
+    </div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([47.4979, 19.0402], 10);
+        var jawgLayer = L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+            attribution: '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            minZoom: 0,
+            maxZoom: 22,
+            accessToken: 'iGR4cAeILxmIyHrzUkdz1fKcfoWHenxaQdGtzAO6ZDkC6vGJ8SwVuT8Kyh7Mf8af'
+        });
+
+        jawgLayer.addTo(map);
+
+        var stopsLayerGroup = L.layerGroup().addTo(map); // LayerGroup létrehozása a megállók tárolására
+
+        // Függvény a térkép középpontjának frissítésére és megállók újra lekérésére
+        function updateStops() {
+            var center = map.getCenter(); // Aktuális térkép középpontja
+            var lat = center.lat.toFixed(7); // Latitúdó 7 tizedesjegyig kerekítve
+            var lon = center.lng.toFixed(7); // Hosszúság 7 tizedesjegyig kerekítve
+            var radius = 1000; // Sugar: 1000 méter
+
+            var apiUrl = `https://futar.bkk.hu/api/query/v1/ws/otp/api/where/stops-for-location?lat=${lat}&lon=${lon}&latSpan=0.013365429598373169&lonSpan=0.032126676908724505&radius=${radius}&minResult=5&appVersion=1.1.abc&version=2&includeReferences=stops&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69`;
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Töröljük a régi megállókat a térképről
+                    stopsLayerGroup.clearLayers();
+
+                    if (data.data && data.data.references && data.data.references.stops) {
+                        var stops = data.data.references.stops;
+                        Object.keys(stops).forEach(function (stopKey) {
+                            var stop = stops[stopKey];
+                            createMarkerWithPopup(stop);
+                        });
+                    } else {
+                        throw new Error('Stops data not found or invalid in API response');
+                    }
+                })
+                .catch(error => console.error('Error fetching stops:', error));
+        }
+
+        // Térkép mozgatásának eseményfigyelése
+        map.on('moveend', function () {
+            updateStops(); // Mozgatás után frissítjük a megállók lekérését
+        });
+
+        // Function to create markers and bind popups
+        function createMarkerWithPopup(stop) {
+            var marker = L.marker([stop.lat, stop.lon]).addTo(stopsLayerGroup);
+
+            var popupContent = `
+                <div>
+                    <p>${stop.name}</p>
+                    <button class="btn btn-primary" onclick="updateCoordinates(${stop.lat}, ${stop.lon}, '${stop.name}')">
+                        Koordináták frissítése
+                    </button>
+                    <a class="btn btn-success link-light" href="{{ url_for('index') }}">Mentés</a>
+                </div>
+            `;
+
+            marker.bindPopup(popupContent);
+        }
+
+        // Function to update coordinates via POST request
+        // Function to update coordinates via POST request and redirect
+            // Function to update coordinates via POST request and redirect
+        function updateCoordinates(lat, lon, name) {
+            fetch('/update_coordinates', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'lat=' + lat + '&lon=' + lon + '&address=' + name,
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Coordinates updated successfully:', data);
+                // Redirect to /railsense after successful update
+                window.location.href = '/railsense';
+            })
+            .catch(error => {
+                console.error('Error updating coordinates:', error);
+                // Optionally, handle error feedback here
+            });
+        }
+            </script>
+            
+            
+    
+    
+    
+</body>
+</html>

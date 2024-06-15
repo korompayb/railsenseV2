@@ -38,38 +38,46 @@
         <div class="card">
             <div class="card-body position-relative ">
                 <!-- Keresőmező gomb -->
-                <div class="leaflet-top leaflet-right">
-                    <div class="leaflet-control-layers leaflet-control">
-                        <select class="form-select" id="mapStyleSelector" onchange="changeMapStyle(this.value)">
-                            <option value="osm">OpenStreetMap</option>
-                            <option value="jawg" selected>Jawg Maps</option>
-                        </select>
-                    </div>
-                    
-                </div>
+
                 <!-- Modal HTML -->
-                <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+                <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel"
+                    aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title " id="searchModalLabel">Hely keresés</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" id="modalSearchInput" placeholder="Írjon ide...">
-                                    <button class="btn btn-light" onclick="modalSearchLocation()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
-                                      </svg></button>
+                                    <input type="text" class="form-control" id="modalSearchInput"
+                                        placeholder="Írjon ide...">
+                                    <button class="btn btn-light" onclick="modalSearchLocation()"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0">
+                                            </path>
+                                        </svg></button>
                                 </div>
                                 <div id="modalSearchResults"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                <div class="leaflet-bottom leaflet-right">
+                    <div class="leaflet-control-layers leaflet-control" aria-haspopup="true">
+                        <button class="btn btn-dark text-50 btn-outline-light search-button position-absolute bottom-0 end-0 m-2" style="z-index: 1;"
+                    onclick="fullscreenMap()">
+                    Fullscreen
+                </button>
+                    </div>
+                </div>
+                
                 <!-- Térkép -->
                 <div id="map"></div>
+
             </div>
 
             <div class="row mt-3">
@@ -77,35 +85,48 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <button class="btn btn-dark text-50 btn-outline-light search-button" data-bs-toggle="modal" data-bs-target="#searchModal">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                                  </svg> Hely keresés 
+                            <button class="btn btn-dark text-50 btn-outline-light search-button" data-bs-toggle="modal"
+                                data-bs-target="#searchModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-search" viewBox="0 0 16 16">
+                                    <path
+                                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                </svg> Hely keresés
                             </button><br><br>
                             <div class="d-flex flex-wrap">
-                                <button class="btn btn-outline-secondary me-2 mb-2" onclick="selectLocation(47.047663150000005, 18.057475161980424, 'Füzfő')">Füzfő</button>
-                                <button class="btn btn-outline-secondary me-2 mb-2" onclick="selectLocation(46.8147826, 17.5714996, 'Ábrahámhegy')">Ábrahámhegy</button>
-                                <button class="btn btn-outline-secondary me-2 mb-2" onclick="selectLocation(46.72243,17.5186394, 'Alsóbélatelep')">Alsóbélatelep</button>
+                                <button class="btn btn-outline-secondary me-2 mb-2"
+                                    onclick="selectLocation(47.047663150000005, 18.057475161980424, 'Füzfő')">Füzfő</button>
+                                <button class="btn btn-outline-secondary me-2 mb-2"
+                                    onclick="selectLocation(46.8147826, 17.5714996, 'Ábrahámhegy')">Ábrahámhegy</button>
+                                <button class="btn btn-outline-secondary me-2 mb-2"
+                                    onclick="selectLocation(46.72243,17.5186394, 'Alsóbélatelep')">Alsóbélatelep</button>
                             </div>
                             <hr>
                             <form id="radiusForm">
                                 <div class="mb-3">
-                                    <label for="radiusInput" class="form-label">Rádiusz: <em id="rangeValLabel">2000</em>m</label>
-                                    <input type="range" class="form-range" id="radiusInput" name="radius" min="0" max="2000" value="2000" oninput="updateRadius(this.value)">
+                                    <label for="radiusInput" class="form-label">Rádiusz: <em
+                                            id="rangeValLabel">2000</em>m</label>
+                                    <input type="range" class="form-range" id="radiusInput" name="radius" min="0"
+                                        max="2000" value="2000" oninput="updateRadius(this.value)">
                                 </div>
                             </form>
                             <div class="d-inline-flex gap-2">
                                 <a type="button" class="btn btn-success" href="{{ url_for('index') }}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
-                      <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z"></path>
-                      <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-floppy-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z">
+                                        </path>
+                                        <path
+                                            d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z">
+                                    </svg>
                                     Mentés
-                                    </a>
+                                </a>
                                 <a href="{{ url_for('index') }}" class="btn btn-outline-danger">Vissza</a>
                             </div>
-                            
+
                             <!-- Térképstílus választó -->
-                            
+
 
                         </div>
                     </div>
@@ -123,7 +144,14 @@
         var selectedLon = null;
         var selectedAddress = null;
 
-        var jawgLayer = L.tileLayer('https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+        var jawgLayer = L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+            attribution: '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            minZoom: 0,
+            maxZoom: 22,
+            accessToken: 'iGR4cAeILxmIyHrzUkdz1fKcfoWHenxaQdGtzAO6ZDkC6vGJ8SwVuT8Kyh7Mf8af'
+        });
+
+        var jawgLayerSUN = L.tileLayer('https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
             attribution: '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             minZoom: 0,
             maxZoom: 22,
@@ -136,17 +164,15 @@
 
         jawgLayer.addTo(map);
 
-        function changeMapStyle(style) {
-            if (style === 'jawg') {
-                map.removeLayer(osmLayer);
-                jawgLayer.addTo(map);
-            } else if (style === 'osm') {
-                map.removeLayer(jawgLayer);
-                osmLayer.addTo(map);
-            }
-        }
+        var baseMaps = {
+            "OpenStreetMap": osmLayer,
+            "Jawg Maps Dark": jawgLayer,
+            "Jawg Maps Light": jawgLayerSUN
+        };
 
-        map.on('click', function(e) {
+        L.control.layers(baseMaps).addTo(map);
+
+        map.on('click', function (e) {
             var lat = e.latlng.lat;
             var lon = e.latlng.lng;
 
@@ -174,6 +200,10 @@
                 });
         }
 
+        function fullscreenMap() {
+            window.location.href = "{{ url_for('fullscreen_map') }}";
+        }
+
         var customIcon = L.icon({
             iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Google_Maps_pin.svg/137px-Google_Maps_pin.svg.png',
             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -191,7 +221,7 @@
             if (circle) {
                 map.removeLayer(circle);
             }
-            marker = L.marker([lat, lon], {icon: customIcon}).addTo(map);
+            marker = L.marker([lat, lon], { icon: customIcon }).addTo(map);
             circle = L.circle([lat, lon], {
                 color: 'red',
                 fillColor: '#f03',
@@ -211,19 +241,19 @@
                 },
                 body: 'lat=' + lat + '&lon=' + lon + '&address=' + encodeURIComponent(address),
             })
-            .then(response => {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    throw new Error('Failed to update coordinates');
-                }
-            })
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Failed to update coordinates');
+                    }
+                })
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
 
         function updateRadius(radius) {
@@ -241,19 +271,19 @@
                 },
                 body: 'radius=' + radius,
             })
-            .then(response => {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    throw new Error('Failed to update radius');
-                }
-            })
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Failed to update radius');
+                    }
+                })
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
 
     </script>

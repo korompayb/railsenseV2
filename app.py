@@ -37,6 +37,9 @@ def get_weather_data(city):
     else:
         return None
 
+@app.route('/fullscreen_map')
+def fullscreen_map():
+   return render_template('fullscreen_map.html')
 
 
 @app.route('/update_radius', methods=['POST'])
