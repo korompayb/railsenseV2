@@ -41,7 +41,28 @@
             accessToken: 'iGR4cAeILxmIyHrzUkdz1fKcfoWHenxaQdGtzAO6ZDkC6vGJ8SwVuT8Kyh7Mf8af'
         });
 
-        jawgLayer.addTo(map);
+        var jawgLayerSUN = L.tileLayer('https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+            attribution: '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            minZoom: 0,
+            maxZoom: 22,
+            accessToken: 'iGR4cAeILxmIyHrzUkdz1fKcfoWHenxaQdGtzAO6ZDkC6vGJ8SwVuT8Kyh7Mf8af'
+        });
+
+        var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        });
+
+        jawgLayerSUN.addTo(map);
+
+        var baseMaps = {
+            "OpenStreetMap": osmLayer,
+            "Jawg Maps Dark": jawgLayer,
+            "Jawg Maps Light": jawgLayerSUN
+        };
+
+        L.control.layers(baseMaps).addTo(map);
+
+
 
         var stopsLayerGroup = L.layerGroup().addTo(map); // LayerGroup létrehozása a megállók tárolására
 

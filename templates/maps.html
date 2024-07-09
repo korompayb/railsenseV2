@@ -30,11 +30,16 @@
             padding: 2%;
             border-radius: 10px;
         }
+
+
+        
+        
     </style>
 </head>
 
 <body>
     <div class="container mt-4">
+       
         <div class="card">
             <div class="card-body position-relative ">
                 <!-- Keresőmező gomb -->
@@ -68,12 +73,15 @@
                 </div>
                 <div class="leaflet-bottom leaflet-right">
                     <div class="leaflet-control-layers leaflet-control" aria-haspopup="true">
-                        <button class="btn btn-dark text-50 btn-outline-light search-button position-absolute bottom-0 end-0 m-2" style="z-index: 1;"
+                        <button class="btn text-50 btn-light search-button position-absolute bottom-0 end-0 m-2" style="z-index: 1;"
                     onclick="fullscreenMap()">
                     Fullscreen
                 </button>
                     </div>
                 </div>
+                
+                        
+                
                 
                 <!-- Térkép -->
                 <div id="map"></div>
@@ -85,7 +93,7 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <button class="btn btn-dark text-50 btn-outline-light search-button" data-bs-toggle="modal"
+                            <button class="btn text-50 btn-outline-light search-button" data-bs-toggle="modal"
                                 data-bs-target="#searchModal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-search" viewBox="0 0 16 16">
@@ -123,6 +131,8 @@
                                     Mentés
                                 </a>
                                 <a href="{{ url_for('index') }}" class="btn btn-outline-danger">Vissza</a>
+                                <button class="btn text-50 btn-outline-light search-button" id="dark-mode-toggle"
+                        data-bs-toggle="button" aria-pressed="false">Mód</button>
                             </div>
 
                             <!-- Térképstílus választó -->
@@ -134,8 +144,8 @@
             </div>
         </div>
     </div>
-
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.6.0/Control.FullScreen.min.js"></script>
     <script>
         var map = L.map('map').setView([47.4979, 19.0402], 7);
         var marker = null;
@@ -144,25 +154,23 @@
         var selectedLon = null;
         var selectedAddress = null;
 
-        var jawgLayer = L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+        var jawgLayer = L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=iGR4cAeILxmIyHrzUkdz1fKcfoWHenxaQdGtzAO6ZDkC6vGJ8SwVuT8Kyh7Mf8af', {
             attribution: '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             minZoom: 0,
             maxZoom: 22,
-            accessToken: 'iGR4cAeILxmIyHrzUkdz1fKcfoWHenxaQdGtzAO6ZDkC6vGJ8SwVuT8Kyh7Mf8af'
         });
 
-        var jawgLayerSUN = L.tileLayer('https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+        var jawgLayerSUN = L.tileLayer('https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token=iGR4cAeILxmIyHrzUkdz1fKcfoWHenxaQdGtzAO6ZDkC6vGJ8SwVuT8Kyh7Mf8af', {
             attribution: '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             minZoom: 0,
             maxZoom: 22,
-            accessToken: 'iGR4cAeILxmIyHrzUkdz1fKcfoWHenxaQdGtzAO6ZDkC6vGJ8SwVuT8Kyh7Mf8af'
         });
 
         var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         });
 
-        jawgLayer.addTo(map);
+        jawgLayerSUN.addTo(map);
 
         var baseMaps = {
             "OpenStreetMap": osmLayer,
@@ -293,6 +301,34 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <script>
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const body = document.body;
+        const allElements = document.querySelectorAll('*');
+
+        darkModeToggle.addEventListener('click', () => {
+            const isDarkMode = body.classList.toggle('dark-mode');
+
+            allElements.forEach(element => {
+                if (isDarkMode) {
+                    element.classList.add('dark-mode');
+                } else {
+                    element.classList.remove('dark-mode');
+                }
+            });
+
+            localStorage.setItem('darkMode', isDarkMode.toString());
+        });
+
+        // Check for dark mode preference from local storage on page load
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        if (isDarkMode) {
+            body.classList.add('dark-mode');
+            allElements.forEach(element => {
+                element.classList.add('dark-mode');
+            });
+        }
+    </script>
 </body>
 
 </html>

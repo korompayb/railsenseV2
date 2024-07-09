@@ -105,6 +105,7 @@
     .dark-mode .card {
         background-color: white !important;
         fill: #343a40;
+        border-color: #343a40;
     }
 
     .dark-mode body{
@@ -113,7 +114,13 @@
     }
 
     .dark-mode div  {
-        background-color: transparent !important; /* Sötét háttérszín */
+        
+        color: #343a40 !important; 
+    }
+
+    .dark-mode .accordion-button  {
+        background-color: whitesmoke !important; /* Sötét háttérszín */
+        color: #343a40 !important; 
     }
 
     .dark-mode div p  {
@@ -235,10 +242,7 @@
     }
       
 
-    header {
-        background-color:#1e1e1e ;
-    }
-
+    
 
     .viszonylatdoboz {
         text-align: center;
