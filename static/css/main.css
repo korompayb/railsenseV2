@@ -41,6 +41,14 @@
     display: none; /* Webkit-alapú böngészők */
     }
 
+    header {
+        background-color: var(--szabad-fő);
+    }
+
+    .dark-mode header {
+        background-color: white;
+    }
+
     .card-header {
         border: none !important;
     }
@@ -113,13 +121,18 @@
         color: #343a40 !important; /* Világos szövegszín */
     }
 
-    .dark-mode div  {
+    .dark-mode h4  {
         
         color: #343a40 !important; 
     }
 
     .dark-mode .accordion-button  {
         background-color: whitesmoke !important; /* Sötét háttérszín */
+        color: #343a40 !important; 
+    }
+
+    .dark-mode .accordion-body  {
+        background-color: white !important; /* Sötét háttérszín */
         color: #343a40 !important; 
     }
 
@@ -154,11 +167,11 @@
         padding: 7px !important;
     }
 
-    .svgtime {
+    svg {
         fill: #ffffff9e;
     }
 
-    .svgtime .dark-mode {
+    svg .dark-mode {
         fill: #343a40b2;
     }
 
@@ -189,7 +202,10 @@
         color: white !important;
     }
 
-
+    .dark-mode DIV {
+        color: #1e1e1e;
+        fill:  #1e1e1e ;
+    }
 
     #menetrend {
         font-family: Arial, Helvetica, sans-serif;
