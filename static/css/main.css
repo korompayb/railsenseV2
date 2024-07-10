@@ -26,6 +26,8 @@
     --kontraszt-ikon: #ffffff;
     --kontraszt-szoveg: black;
 
+    --data-bs-bg1: #1e1e1e !important;
+
     }
 
 
@@ -42,7 +44,7 @@
     }
 
     header {
-        background-color: var(--szabad-fő);
+        background-color: var(--data-bs-bg1);
     }
 
     .dark-mode header {
@@ -62,6 +64,8 @@
         fill: var(--tilos-ikon) !important;
 
     }
+
+
 
     .box-red .svgdoboz {
         background-color: var(--tilos-másodlagos) !important;
@@ -98,9 +102,8 @@
                     fill: var(--hiba-ikon) !important;
     }
 
-    body {
-        background-color: #1e1e1e !important;
-    }
+    
+    
 
     hr {
         border: 1px solid var(--secondary-color);
@@ -205,6 +208,7 @@
     .dark-mode DIV {
         color: #1e1e1e;
         fill:  #1e1e1e ;
+        fill: #343a40b2;
     }
 
     #menetrend {
@@ -258,7 +262,13 @@
     }
       
 
-    
+    main {
+        background-color: var(--data-bs-bg1);
+    }
+
+    .dark-mode main {
+        background-color: white;
+    }
 
     .viszonylatdoboz {
         text-align: center;
@@ -314,96 +324,3 @@
         max-width: 145px; /* Állítsd be a kívánt maximális szélességet */
     }
 }
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

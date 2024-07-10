@@ -42,10 +42,6 @@
 
         font-weight: bold;
     }
-
-    svg {
-        fill: var(--line-color) !important;
-    }
 </style>
 
 
@@ -64,17 +60,19 @@
                             class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}">
                             {% if result_status == 1 %}Az átkelés veszélyes!{% elif result_status == 2 or result_status
                             ==
-                            4%}Az átkelés biztonságos!{% elif result_status == 3 %}Kiszolgálóhiba: 500{% endif %} <div class="d-inline-flex gap-2">
-                                <a
-                                href="{{ url_for('search') }}" class="btn btn-outline-light ms-3 justify-content-md-end"
-                                aria-pressed="false"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
-                                </svg> Térkép</a><button class="btn btn-outline-light" id="dark-mode-toggle"
-                                data-bs-toggle="button" aria-pressed="false">Mód</button>
-                            </div></h3>
-                                
+                            4%}Az átkelés biztonságos!{% elif result_status == 3 %}Kiszolgálóhiba: 500{% endif %} <div
+                                class="d-inline-flex gap-2">
+                                <a href="{{ url_for('search') }}"
+                                    class="btn btn-outline-light ms-3 justify-content-md-end" aria-pressed="false"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
+                                    </svg> Térkép</a><button class="btn btn-outline-light" id="toggle-dark-mode"
+                                    data-bs-toggle="button" aria-pressed="false">Mód</button>
+                            </div>
+                        </h3>
+
                         <h6 id="date"></h6>
                         <h2
                             class="swipeable-box {% if result_status == 1 %}box-red{% elif result_status == 2 or result_status == 4 %}box-green {% elif result_status == 3 %}box-orange{% endif %}">
@@ -194,7 +192,7 @@
                                         class="svgdoboz2" width="22" height="22" viewBox="0 0 22 19"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
-                                            d="M9.0791 18.7334C10.292 18.7334 11.4697 18.4873 12.5508 18.0303C12.1377 17.582 11.8213 17.0547 11.5928 16.4922C10.8105 16.7822 9.9668 16.9492 9.0791 16.9492C5.03613 16.9492 1.79297 13.6973 1.79297 9.6543C1.79297 5.61133 5.02734 2.36816 9.07031 2.36816C12.7266 2.36816 15.7412 5.04004 16.2686 8.54688C16.8135 8.45898 17.5342 8.48535 18.0879 8.62598C17.5693 4.12598 13.6934 0.575195 9.07031 0.575195C4.0957 0.575195 0 4.68848 0 9.6543C0 14.6289 4.10449 18.7334 9.0791 18.7334ZM4.63184 10.7441H9.07031C9.46582 10.7441 9.76465 10.4365 9.76465 10.0498V4.28418C9.76465 3.89746 9.46582 3.58984 9.07031 3.58984C8.68359 3.58984 8.37598 3.89746 8.37598 4.28418V9.35547H4.63184C4.23633 9.35547 3.9375 9.6543 3.9375 10.0498C3.9375 10.4365 4.23633 10.7441 4.63184 10.7441ZM16.875 18.7773C19.3359 18.7773 21.4014 16.7207 21.4014 14.251C21.4014 11.7725 19.3535 9.7334 16.875 9.7334C14.3965 9.7334 12.3486 11.7725 12.3486 14.251C12.3486 16.7383 14.3965 18.7773 16.875 18.7773ZM16.3477 16.9229C16.1807 16.9229 15.9785 16.8525 15.8467 16.7119L14.1943 14.9014C14.1064 14.8135 14.0449 14.6377 14.0449 14.4883C14.0449 14.1104 14.335 13.8643 14.6689 13.8643C14.8711 13.8643 15.0293 13.9434 15.1436 14.0664L16.3125 15.3496L18.5537 12.2295C18.6768 12.0713 18.8613 11.957 19.0811 11.957C19.4238 11.957 19.7139 12.2295 19.7139 12.5811C19.7139 12.6865 19.6699 12.8271 19.582 12.9414L16.8662 16.6855C16.7607 16.8262 16.5586 16.9229 16.3477 16.9229Z"/>
+                                            d="M9.0791 18.7334C10.292 18.7334 11.4697 18.4873 12.5508 18.0303C12.1377 17.582 11.8213 17.0547 11.5928 16.4922C10.8105 16.7822 9.9668 16.9492 9.0791 16.9492C5.03613 16.9492 1.79297 13.6973 1.79297 9.6543C1.79297 5.61133 5.02734 2.36816 9.07031 2.36816C12.7266 2.36816 15.7412 5.04004 16.2686 8.54688C16.8135 8.45898 17.5342 8.48535 18.0879 8.62598C17.5693 4.12598 13.6934 0.575195 9.07031 0.575195C4.0957 0.575195 0 4.68848 0 9.6543C0 14.6289 4.10449 18.7334 9.0791 18.7334ZM4.63184 10.7441H9.07031C9.46582 10.7441 9.76465 10.4365 9.76465 10.0498V4.28418C9.76465 3.89746 9.46582 3.58984 9.07031 3.58984C8.68359 3.58984 8.37598 3.89746 8.37598 4.28418V9.35547H4.63184C4.23633 9.35547 3.9375 9.6543 3.9375 10.0498C3.9375 10.4365 4.23633 10.7441 4.63184 10.7441ZM16.875 18.7773C19.3359 18.7773 21.4014 16.7207 21.4014 14.251C21.4014 11.7725 19.3535 9.7334 16.875 9.7334C14.3965 9.7334 12.3486 11.7725 12.3486 14.251C12.3486 16.7383 14.3965 18.7773 16.875 18.7773ZM16.3477 16.9229C16.1807 16.9229 15.9785 16.8525 15.8467 16.7119L14.1943 14.9014C14.1064 14.8135 14.0449 14.6377 14.0449 14.4883C14.0449 14.1104 14.335 13.8643 14.6689 13.8643C14.8711 13.8643 15.0293 13.9434 15.1436 14.0664L16.3125 15.3496L18.5537 12.2295C18.6768 12.0713 18.8613 11.957 19.0811 11.957C19.4238 11.957 19.7139 12.2295 19.7139 12.5811C19.7139 12.6865 19.6699 12.8271 19.582 12.9414L16.8662 16.6855C16.7607 16.8262 16.5586 16.9229 16.3477 16.9229Z" />
                                     </svg>
                                     <span style="padding-left: 5px !important;"> Érkezik: <b>{{
                                             train.predicted_arrival_time }}</b></span>
@@ -504,49 +502,254 @@
 
     <script src="/service-worker.js"></script>
     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function () {
-                navigator.serviceWorker.register('/service-worker.js')
-                    .then(function (registration) {
-                        console.log('Service Worker registered with scope:', registration.scope);
-                    })
-                    .catch(function (error) {
-                        console.error('Service Worker registration failed:', error);
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleDarkModeButton = document.getElementById('toggle-dark-mode');
+
+            // Ellenőrizzük, hogy van-e mentett dark mode állapot a localStorage-ban
+            const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+
+            // Alkalmazzuk a dark mode-ot, ha be van kapcsolva
+            if (isDarkMode) {
+                enableDarkMode();
+            }
+
+            // Gomb eseménykezelője
+            if (toggleDarkModeButton) {
+                toggleDarkModeButton.addEventListener('click', () => {
+                    const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+                    if (isDarkMode) {
+                        disableDarkMode();
+                    } else {
+                        enableDarkMode();
+                    }
+                });
+            }
+
+            // Dark mode engedélyezése
+            function enableDarkMode() {
+                addDarkModeClass(document.body);
+                localStorage.setItem('darkMode', 'enabled');
+                applyDarkModeToAjaxContent(); // Alkalmazza a dark mode-ot az AJAX tartalomra is
+                setBootstrapTheme('light');
+            }
+
+            // Dark mode letiltása
+            function disableDarkMode() {
+                removeDarkModeClass(document.body);
+                localStorage.setItem('darkMode', 'disabled');
+                applyDarkModeToAjaxContent(); // Alkalmazza a dark mode-ot az AJAX tartalomra is
+                setBootstrapTheme('dark');
+            }
+
+            // Dark mode osztály hozzáadása egy elemhez és annak összes gyermekéhez
+            function addDarkModeClass(element) {
+                element.classList.add('dark-mode');
+                element.querySelectorAll('*').forEach(child => {
+                    child.classList.add('dark-mode');
+                });
+            }
+
+            // Dark mode osztály eltávolítása egy elemből és annak összes gyermekéből
+            function removeDarkModeClass(element) {
+                element.classList.remove('dark-mode');
+                element.querySelectorAll('*').forEach(child => {
+                    child.classList.remove('dark-mode');
+                });
+            }
+
+            // Bootstrap témaváltás beállítása
+            function setBootstrapTheme(theme) {
+                const root = document.querySelector(':root');
+                root.setAttribute('data-bs-theme', theme); // Az új Bootstrap 5 változatban a data-bs-theme helyett data-theme használata
+            }
+
+            // Dark mode alkalmazása az AJAX-szal betöltött tartalomra
+            function applyDarkModeToAjaxContent() {
+                const ajaxContentElements = document.querySelectorAll('.ajax-content');
+                ajaxContentElements.forEach(element => {
+                    const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+                    if (isDarkMode) {
+                        addDarkModeClass(element);
+                        setBootstrapTheme('dark'); // Bootstrap témaváltás dark mode-ra
+                    } else {
+                        removeDarkModeClass(element);
+                        setBootstrapTheme('light'); // Bootstrap témaváltás light mode-ra
+                    }
+
+                    // SVG elemek kezelése dark mode esetén
+                    const svgElements = element.querySelectorAll('svg');
+                    svgElements.forEach(svg => {
+                        if (isDarkMode) {
+                            svg.classList.add('dark-mode');
+                        } else {
+                            svg.classList.remove('dark-mode');
+                        }
                     });
+                });
+            }
+
+            // AJAX frissítések kezelése
+            document.addEventListener('ajaxComplete', () => {
+                applyDarkModeToAjaxContent();
             });
-        }
 
-    </script>
+            // Alkalmazza a dark mode-ot az oldal betöltéskor és AJAX után
+            applyDarkModeToAjaxContent();
 
-    <script>
-        
-        const darkModeToggle = document.getElementById('dark-mode-toggle');
-        const body = document.body;
-        const allElements = document.querySelectorAll('*');
-
-        darkModeToggle.addEventListener('click', () => {
-            const isDarkMode = body.classList.toggle('dark-mode');
-
-            allElements.forEach(element => {
-                if (isDarkMode) {
-                    element.classList.add('dark-mode');
+            // Szöveg levágása a megadott méret alapján
+            function truncateText() {
+                let maxChars;
+                if (window.innerWidth <= 320) {
+                    maxChars = 10;
+                } else if (window.innerWidth <= 768) {
+                    maxChars = 18;
                 } else {
-                    element.classList.remove('dark-mode');
+                    maxChars = 30;
+                }
+
+                const stopNames = document.querySelectorAll('.stop-name');
+                stopNames.forEach(stopName => {
+                    const text = stopName.textContent;
+                    if (text.length > maxChars) {
+                        stopName.textContent = text.slice(0, maxChars) + '...';
+                    }
+                });
+            }
+
+            // Oldal betöltésekor alkalmazzuk a szöveg levágást
+            document.addEventListener('DOMContentLoaded', function () {
+                truncateText();
+            });
+
+            // Szöveg levágás újra alkalmazása ablak átméretezésekor
+            window.addEventListener('resize', truncateText);
+
+            // AJAX frissítés után is alkalmazzuk a szöveg levágást
+            document.addEventListener('ajaxComplete', truncateText);
+
+            // Dátum frissítése és kiírása
+            let lastUpdateTime = new Date();
+            const dateElement = document.getElementById('update_time');
+
+            function updateDateDisplay() {
+                const now = new Date();
+                const diffInMinutes = Math.floor((now - lastUpdateTime) / 60000); // Perc alapú különbség
+
+                let displayText;
+                if (diffInMinutes === 0) {
+                    displayText = 'Most frissítve';
+                } else if (diffInMinutes === 1) {
+                    displayText = '1 perce frissítve';
+                } else {
+                    displayText = diffInMinutes + ' perce frissítve';
+                }
+                dateElement.textContent = displayText;
+
+                if (diffInMinutes > 0) {
+                    highlight();
+                }
+            }
+
+            function highlight() {
+                dateElement.classList.add('highlight');
+                setTimeout(() => {
+                    dateElement.classList.remove('highlight');
+                }, 2000);
+            }
+
+            // Dátum frissítése minden percenként
+            setInterval(updateDateDisplay, 60000);
+
+            // AJAX-szimuláció frissítése
+            function refreshData() {
+                setTimeout(() => {
+                    lastUpdateTime = new Date();
+                    updateDateDisplay();
+                }, 1000); // 1 másodperc késleltetés AJAX-hoz
+            }
+
+            refreshData();
+            setInterval(refreshData, 60000); // 60 másodpercenkénti AJAX frissítés
+
+            // Scrollra rögzített elem kezelése
+            window.onscroll = function () {
+                const header = document.getElementById('myHeader');
+                const sticky = header.offsetTop;
+                if (window.pageYOffset > sticky) {
+                    header.classList.add('sticky');
+                } else {
+                    header.classList.remove('sticky');
+                }
+            };
+
+            // Bootstrap tooltip inicializálása
+            document.addEventListener('DOMContentLoaded', function () {
+                const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                tooltipTriggerList.forEach(tooltipTriggerEl => {
+                    new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+            });
+
+            // Akkordion indexének mentése
+            $('.accordion-button').on('click', function () {
+                const index = $(this).data('index');
+                localStorage.setItem('activeAccordionIndex', index);
+            });
+
+            // Oldal betöltésekor az akkordion megnyitása
+            $(document).ready(function () {
+                const activeIndex = localStorage.getItem('activeAccordionIndex');
+                if (activeIndex !== null) {
+                    $('#collapse' + activeIndex).collapse('show');
                 }
             });
 
-            localStorage.setItem('darkMode', isDarkMode);
+            // Service worker regisztráció
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('/service-worker.js')
+                        .then(function (registration) {
+                            console.log('Service Worker registered with scope:', registration.scope);
+                        })
+                        .catch(function (error) {
+                            console.error('Service Worker registration failed:', error);
+                        });
+                });
+            }
+
+            // Idő és köszöntés frissítése
+            function updateDateTime() {
+                const currentDate = new Date();
+                const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+                const formattedDate = currentDate.toLocaleDateString('hu-HU', options);
+
+                document.getElementById('date').innerText = formattedDate;
+                document.getElementById('welcome').innerText = getWelcomeMessage(currentDate.getHours());
+            }
+
+            // Köszöntő üzenet kiválasztása az időtől függően
+            function getWelcomeMessage(currentHour) {
+                if (currentHour >= 5 && currentHour < 12) {
+                    return 'Jó reggelt!';
+                } else if (currentHour >= 12 && currentHour < 18) {
+                    return 'Szép napot!';
+                } else {
+                    return 'Jó estét!';
+                }
+            }
+
+            // Idő és köszöntés frissítése minden 3 másodpercben
+            setInterval(updateDateTime, 3000);
+
+            // Swipeable box kezelése
+            const swipeableBox = document.getElementById('swipeable-box');
+            swipeableBox.addEventListener('click', function () {
+                swipeableBox.classList.toggle('expanded');
+            });
+
         });
 
-        // Check for dark mode preference from local storage on page load
-        const isDarkMode = localStorage.getItem('darkMode') === 'true';
-        if (isDarkMode) {
-            body.classList.add('dark-mode');
-            allElements.forEach(element => {
-                element.classList.add('dark-mode');
-            });
-        }
-        </script>
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -556,40 +759,6 @@
         crossorigin="anonymous"></script>
 
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // jelenlegi datum
-            var currentDate = new Date();
-            var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-            var formattedDate = currentDate.toLocaleDateString('hu-HU', options);
-
-            // datum kiiras
-            var dateElement = document.getElementById('date');
-            dateElement.innerHTML = formattedDate;
-
-            // udvozlo uzenet az idotol fuggoen
-            var welcomeElement = document.getElementById('welcome');
-            var currentHour = currentDate.getHours();
-            var welcomeMessage = '';
-
-            if (currentHour >= 5 && currentHour < 12) {
-                welcomeMessage = 'Jó reggelt!';
-            } else if (currentHour >= 12 && currentHour < 18) {
-                welcomeMessage = 'Szép napot!';
-            } else {
-                welcomeMessage = 'Jó estét!';
-            }
-
-            welcomeElement.innerHTML = welcomeMessage;
-
-
-        });
-
-        var swipeableBox = document.getElementById('swipeable-box');
-        swipeableBox.addEventListener('click', function () {
-            swipeableBox.classList.toggle('expanded');
-        });
-    </script>
 
 </body>
 
