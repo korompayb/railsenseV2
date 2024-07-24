@@ -115,6 +115,21 @@
                 .catch(error => console.error('Error fetching vehicles:', error));
         }
 
+
+        var customIcon = L.icon({
+            iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Google_Maps_pin.svg/137px-Google_Maps_pin.svg.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41], // Az ikon mérete
+            shadowSize: [41, 41], // Az árnyék mérete
+            iconAnchor: [12, 41], // Az ikon horgony pontja
+            shadowAnchor: [12, 41], // Az árnyék horgony pontja
+            popupAnchor: [1, -34] // A pont, ahonnan a popup nyílik az ikon horgonyához képest
+        });
+
+        // Statikus marker hozzáadása az egyedi ikonnal
+        L.marker([47.047017, 18.056852], { icon: customIcon }).addTo(map).bindPopup("Én vagyok az átkelő pont");
+
+
         // Funkció a tripId alapján történő részletes lekéréshez
         function fetchTripDetails(tripId, marker) {
             var apiUrl = `https://futar.bkk.hu/api/query/v1/ws/otp/api/where/trip-details?tripId=${tripId}&version=4&includeReferences=stops&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69`;
@@ -165,6 +180,9 @@
 
         // Kezdeti frissítés a térkép betöltésekor
         updateVehicles();
+
+        // Járművek frissítése 10 másodpercenként
+        setInterval(updateVehicles, 10000);
     </script>
 </body>
 </html>
