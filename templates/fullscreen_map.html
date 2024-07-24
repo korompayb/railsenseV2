@@ -20,60 +20,53 @@
         div .leaflet-control-attribution {
             display: none !important;
         }
+
+        .custom-marker {
+            background-color: transparent;
+            border-radius: 50%;
+            border: 2px solid transparent;
+        }
+
+        .marker-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
     <div id="map"></div>
     <div class="leaflet-bottom leaflet-right">
         <div class="leaflet-control-layers leaflet-control" aria-haspopup="true">
-            <a class="btn btn-dark text-50 btn-outline-light search-button position-absolute bottom-0 end-0 m-2" style="z-index: 1;" href="{{ url_for('search') }}">
+            <a class="btn btn-dark text-50 btn-outline-light search-button position-absolute bottom-0 end-0 m-2"
+                style="z-index: 1;" href="{{ url_for('search') }}">
                 Vissza
             </a>
         </div>
     </div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        var map = L.map('map').setView([47.4979, 19.0402], 10);
-        var jawgLayer = L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+        var map = L.map('map').setView([47.046356, 18.057539], 13);
+        var jawgLayer = L.tileLayer('https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
             attribution: '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             minZoom: 0,
             maxZoom: 22,
             accessToken: 'iGR4cAeILxmIyHrzUkdz1fKcfoWHenxaQdGtzAO6ZDkC6vGJ8SwVuT8Kyh7Mf8af'
         });
 
-        var jawgLayerSUN = L.tileLayer('https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
-            attribution: '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            minZoom: 0,
-            maxZoom: 22,
-            accessToken: 'iGR4cAeILxmIyHrzUkdz1fKcfoWHenxaQdGtzAO6ZDkC6vGJ8SwVuT8Kyh7Mf8af'
-        });
+        jawgLayer.addTo(map);
 
-        var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        });
+        var stopsLayerGroup = L.layerGroup().addTo(map); // LayerGroup létrehozása a járművek tárolására
 
-        jawgLayerSUN.addTo(map);
-
-        var baseMaps = {
-            "OpenStreetMap": osmLayer,
-            "Jawg Maps Dark": jawgLayer,
-            "Jawg Maps Light": jawgLayerSUN
-        };
-
-        L.control.layers(baseMaps).addTo(map);
-
-
-
-        var stopsLayerGroup = L.layerGroup().addTo(map); // LayerGroup létrehozása a megállók tárolására
-
-        // Függvény a térkép középpontjának frissítésére és megállók újra lekérésére
-        function updateStops() {
+        // Függvény a térkép középpontjának frissítésére és járművek újra lekérésére
+        function updateVehicles() {
             var center = map.getCenter(); // Aktuális térkép középpontja
             var lat = center.lat.toFixed(7); // Latitúdó 7 tizedesjegyig kerekítve
             var lon = center.lng.toFixed(7); // Hosszúság 7 tizedesjegyig kerekítve
-            var radius = 1000; // Sugar: 1000 méter
+            var radius = 20000; // Sugár: 20000 méter
 
-            var apiUrl = `https://futar.bkk.hu/api/query/v1/ws/otp/api/where/stops-for-location?lat=${lat}&lon=${lon}&latSpan=0.013365429598373169&lonSpan=0.032126676908724505&radius=${radius}&minResult=5&appVersion=1.1.abc&version=2&includeReferences=stops&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69`;
+            var apiUrl = `https://futar.bkk.hu/api/query/v1/ws/otp/api/where/vehicles-for-location?clientLon=${lon}&clientLat=${lat}&onlyDepartures=false&limit=60&lat=${lat}&lon=${lon}&radius=${radius}&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&minutesAfter=60&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69`;
 
             fetch(apiUrl)
                 .then(response => {
@@ -83,76 +76,95 @@
                     return response.json();
                 })
                 .then(data => {
-                    // Töröljük a régi megállókat a térképről
+                    // Töröljük a régi járműveket a térképről
                     stopsLayerGroup.clearLayers();
 
-                    if (data.data && data.data.references && data.data.references.stops) {
-                        var stops = data.data.references.stops;
-                        Object.keys(stops).forEach(function (stopKey) {
-                            var stop = stops[stopKey];
-                            createMarkerWithPopup(stop);
+                    if (data.data && data.data.list) {
+                        var vehicles = data.data.list;
+                        vehicles.forEach(function (vehicle) {
+                            // Szűrés: csak RAIL típusú járművek
+                            if (vehicle.vehicleRouteType === 'RAIL') {
+                                var color = '#2E5EA8'; // Sötétkék
+                                var direction = vehicle.bearing || 0; // Jármű iránya, alapértelmezett érték 0
+
+                                // Jármű hozzáadása a térképhez
+                                L.marker([vehicle.location.lat, vehicle.location.lon], {
+                                    icon: L.divIcon({
+                                        className: 'custom-marker',
+                                        html: `<svg width="26" height="32" viewBox="0 0 26 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(${direction}deg);">
+<path d="M23.9395 18.7344C23.9395 24.8689 18.8493 29.959 12.7148 29.959C6.5909 29.959 1.5 24.8696 1.5 18.7344C1.5 12.6082 6.58187 7.51953 12.7051 7.51953C18.8418 7.51953 23.9395 12.6119 23.9395 18.7344Z" fill="white" stroke="#2E5EA8" stroke-width="3"/>
+<path d="M21 6L15 4.875L13 4.5L11 4.875L5 6L13 0L21 6Z" fill="black"/>
+</svg>
+`
+                                    })
+                                })
+                                .addTo(stopsLayerGroup)
+                                .bindPopup(`<strong>${vehicle.label}</strong><br>
+                                    <em>Route ID: ${vehicle.routeId}</em><br>
+                                    <em>Status: ${vehicle.status}</em><br>
+                                    <em>Direction: ${vehicle.bearing}°</em>`)
+                                .on('click', function () {
+                                    fetchTripDetails(vehicle.tripId, this);
+                                });
+                            }
                         });
                     } else {
-                        throw new Error('Stops data not found or invalid in API response');
+                        throw new Error('Vehicles data not found in API response');
                     }
                 })
-                .catch(error => console.error('Error fetching stops:', error));
+                .catch(error => console.error('Error fetching vehicles:', error));
+        }
+
+        // Funkció a tripId alapján történő részletes lekéréshez
+        function fetchTripDetails(tripId, marker) {
+            var apiUrl = `https://futar.bkk.hu/api/query/v1/ws/otp/api/where/trip-details?tripId=${tripId}&version=4&includeReferences=stops&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69`;
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.data && data.data.stops) {
+                        var stops = data.data.stops;
+                        var content = `<strong>Trip Details</strong><br><table class="table table-sm"><thead><tr><th>Stop</th><th>Arrival</th><th>Departure</th><th>Predicted Arrival</th><th>Predicted Departure</th></tr></thead><tbody>`;
+                        
+                        stops.forEach(stop => {
+                            var stopInfo = stop.stop;
+                            var arrivalTime = stop.arrivalTime ? new Date(stop.arrivalTime * 1000).toLocaleTimeString('hu-HU', { hour: '2-digit', minute: '2-digit' }) : 'N/A';
+                            var departureTime = stop.departureTime ? new Date(stop.departureTime * 1000).toLocaleTimeString('hu-HU', { hour: '2-digit', minute: '2-digit' }) : 'N/A';
+                            var predictedArrival = stop.predictedArrivalTime ? new Date(stop.predictedArrivalTime * 1000).toLocaleTimeString('hu-HU', { hour: '2-digit', minute: '2-digit' }) : 'N/A';
+                            var predictedDeparture = stop.predictedDepartureTime ? new Date(stop.predictedDepartureTime * 1000).toLocaleTimeString('hu-HU', { hour: '2-digit', minute: '2-digit' }) : 'N/A';
+                            
+                            content += `<tr>
+                                <td>${stopInfo.name || 'N/A'}</td>
+                                <td>${arrivalTime}</td>
+                                <td>${departureTime}</td>
+                                <td>${predictedArrival}</td>
+                                <td>${predictedDeparture}</td>
+                            </tr>`;
+                        });
+
+                        content += `</tbody></table>`;
+
+                        // Popup frissítése a trip details-szal
+                        marker.bindPopup(content).openPopup();
+                    } else {
+                        throw new Error('Trip details data not found in API response');
+                    }
+                })
+                .catch(error => console.error('Error fetching trip details:', error));
         }
 
         // Térkép mozgatásának eseményfigyelése
         map.on('moveend', function () {
-            updateStops(); // Mozgatás után frissítjük a megállók lekérését
+            updateVehicles(); // Mozgatás után frissítjük a járművek lekérését
         });
 
-        // Function to create markers and bind popups
-        function createMarkerWithPopup(stop) {
-            var marker = L.marker([stop.lat, stop.lon]).addTo(stopsLayerGroup);
-
-            var popupContent = `
-                <div>
-                    <p>${stop.name}</p>
-                    <button class="btn btn-primary" onclick="updateCoordinates(${stop.lat}, ${stop.lon}, '${stop.name}')">
-                        Koordináták frissítése
-                    </button>
-                    <a class="btn btn-success link-light" href="{{ url_for('index') }}">Mentés</a>
-                </div>
-            `;
-
-            marker.bindPopup(popupContent);
-        }
-
-        // Function to update coordinates via POST request
-        // Function to update coordinates via POST request and redirect
-            // Function to update coordinates via POST request and redirect
-        function updateCoordinates(lat, lon, name) {
-            fetch('/update_coordinates', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'lat=' + lat + '&lon=' + lon + '&address=' + name,
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Coordinates updated successfully:', data);
-                // Redirect to /railsense after successful update
-                window.location.href = '/railsense';
-            })
-            .catch(error => {
-                console.error('Error updating coordinates:', error);
-                // Optionally, handle error feedback here
-            });
-        }
-            </script>
-            
-            
-    
-    
-    
+        // Kezdeti frissítés a térkép betöltésekor
+        updateVehicles();
+    </script>
 </body>
 </html>

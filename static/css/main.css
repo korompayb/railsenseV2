@@ -171,11 +171,20 @@
     }
 
     svg {
-        fill: #ffffff9e;
+        fill: #ffffff9e !important;
     }
 
     svg .dark-mode {
-        fill: #343a40b2;
+        fill: #343a40b2 !important;
+    }
+
+
+    .svgtime {
+        fill: #ffffff9e !important;
+    }
+
+    .svgtime .dark-mode {
+        fill: #343a40b2 !important;
     }
 
     .viszonylat {

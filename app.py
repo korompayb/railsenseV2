@@ -7,8 +7,6 @@ app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 radius = 2000
-
-
 lat = 47.046356
 lon = 18.057539
 
@@ -37,10 +35,9 @@ def get_weather_data(city):
     else:
         return None
 
-@app.route('/fullscreen_map')
+@app.route('/')
 def fullscreen_map():
    return render_template('fullscreen_map.html')
-
 
 @app.route('/update_radius', methods=['POST'])
 def update_radius():
@@ -49,7 +46,7 @@ def update_radius():
     session['radius'] = radius
     return render_template('maps.html')
 
-@app.route('/')
+@app.route('/fullscreen_map')
 def search():
     return render_template('maps.html')
 
@@ -67,7 +64,6 @@ def update_coordinates():
         lon = 18.057539
         return render_template("maps.html")
     
-
     try:
         address = request.form['address']
     except KeyError:
@@ -78,12 +74,9 @@ def update_coordinates():
     session['lon'] = lon
     session['address'] = address
 
-    
-
     print(lat, lon)
-    
-
     return redirect('/')
+
 @app.route('/railsense', methods=['GET', 'POST'])
 def index():
     lat = session.get('lat', 47.046356)
@@ -99,31 +92,36 @@ def index():
     manifest_url = url_for('static', filename='manifest.json')
 
     arrivals_url = f"https://futar.bkk.hu/api/query/v1/ws/otp/api/where/arrivals-and-departures-for-location?&clientLon={lon}&clientLat={lat}&onlyDepartures=false&limit=60&lat={lat}&lon={lon}&radius={radius}&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&minutesAfter=30&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
+    vehicles_url = f"https://futar.bkk.hu/api/query/v1/ws/otp/api/where/vehicles-for-location?&clientLon={lon}&clientLat={lat}&onlyDepartures=false&limit=60&lat={lat}&lon={lon}&radius={radius}&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&minutesAfter=60&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69"
     
     arrivals_response = requests.get(arrivals_url)
+    vehicles_response = requests.get(vehicles_url)
     
     trainsdata = []
     added_trains = set()  
     result_status = 2  
     message = ""
 
-    if arrivals_response.status_code == 200:
-        data = arrivals_response.json()['data']['list']
+    if arrivals_response.status_code == 200 and vehicles_response.status_code == 200:
+        arrivals_data = arrivals_response.json()['data']['list']
+        vehicles_data = vehicles_response.json()['data']['list']
+        
+        # Print vehicles_data to check its structure
+        print(vehicles_data)
+        
         routes_data = arrivals_response.json()['data']['references']['routes']
         
-        for item in data:
+        for item in arrivals_data:
             route_id = item['routeId']
             headsign = item['headsign']
             stop_times = item['stopTimes']
            
-            
             if route_id in routes_data:
                 route_info = routes_data[route_id]
                 short_name = route_info.get('shortName', 'N/A')
                 description = route_info.get('description', 'N/A')
                 type = route_info.get('type', 'N/A')
                 color = route_info.get('color', 'N/A')
-                
                 text_color = route_info.get('textColor', 'FFFFFF')
             else:
                 short_name = "N/A"
@@ -132,7 +130,7 @@ def index():
                 
             for stop_time in stop_times:
                 train_id = stop_time['tripId']
-                if train_id not in added_trains and type == 'RAIL' or type == "N/A":
+                if train_id not in added_trains and (type == 'RAIL' or type == "N/A"):
                     if 'arrivalTime' in stop_time:
                         arrival_time = datetime.datetime.fromtimestamp(stop_time['arrivalTime'], tz=hungary_tz).strftime('%H:%M')
                     else:
@@ -159,12 +157,12 @@ def index():
                         trip_details_data = trip_details_response.json()['data']['entry']['stopTimes']
                         
                         stops_data = trip_details_response.json()['data']['references']['stops']
-                        vehicles_data = trip_details_response.json()['data']['entry'].get('vehicle', {})
+                        vehicle = trip_details_response.json()['data']['entry'].get('vehicle', {})
                         
-                        vehicle_name = vehicles_data.get('style', {}).get('icon', {}).get('name', '')
-                        vehicletype = vehicles_data.get('style', {}).get('vehicleIcon', {}).get('name', 'RAIL')
-                        vehicle_label = vehicles_data.get('model', '')
-                        stop_sequence = vehicles_data.get('stopSequence')
+                        vehicle_name = vehicle.get('style', {}).get('icon', {}).get('name', '')
+                        vehicletype = vehicle.get('style', {}).get('vehicleIcon', {}).get('name', 'RAIL')
+                        vehicle_label = vehicle.get('model', '')
+                        stop_sequence = vehicle.get('stopSequence')
 
                         for stop in trip_details_data:
                             stop_id = stop['stopId']
@@ -181,6 +179,11 @@ def index():
                                 'stopseqe2': stop.get('stopSequence')
                             })
                     
+                    # Find vehicle coordinates
+                    vehicle_data = next((v for v in vehicles_data if v.get('tripId') == train_id), {})
+                    vehicle_lat = vehicle_data.get('lat', 'N/A')
+                    vehicle_lon = vehicle_data.get('lon', 'N/A')
+
                     trainsdata.append({
                         'route_id': route_id,
                         'headsign': headsign,
@@ -191,16 +194,19 @@ def index():
                         'short_name': short_name,
                         'description': description,
                         'stop_sequence': stop_sequence,
-                        'type':type,
+                        'type': type,
                         'color': color,
                         'text_color': text_color,
                         'vehicle_name': vehicle_name,
                         'vehicle_label': vehicle_label,
                         'vehicletype': vehicletype,
-                        'trip_details': trip_details  
+                        'trip_details': trip_details,
+                        'vehicle_lat': vehicle_lat,
+                        'vehicle_lon': vehicle_lon
                     })
                     added_trains.add(train_id)
                     result_status = 1  
+        
         try:
             if all('predicted_arrival_time' in train for train in trainsdata):
                 sorted_trainsdata = sorted(trainsdata, key=lambda x: datetime.datetime.strptime(x['predicted_arrival_time'], '%H:%M'))
@@ -209,25 +215,18 @@ def index():
         except Exception as e:
             sorted_trainsdata = []
 
-    elif arrivals_response.status_code != 200:
-        message = "404 Error on the page"
+    else:
+        message = "Error fetching data from the APIs"
         result_status = 3
     
     city = "Balatonfuzfo"
     weather_data = get_weather_data(city)
 
-    return render_template('index.html', trainsdata=trainsdata, result_status=result_status, manifest_url=manifest_url, message=message, weather_data=weather_data, address=address)
-
-
-
-
+    return render_template('index.html', trainsdata=sorted_trainsdata, result_status=result_status, manifest_url=manifest_url, message=message, weather_data=weather_data, address=address)
 
 @app.errorhandler(requests.exceptions.ConnectionError)
 def handle_connection_error(error):
     return render_template('connection_error.html'), 500
-
-
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=81, debug=True)
