@@ -74,8 +74,8 @@
                 <div class="leaflet-bottom leaflet-right">
                     <div class="leaflet-control-layers leaflet-control" aria-haspopup="true">
                         <button class="btn text-50 btn-light search-button position-absolute bottom-0 end-0 m-2" style="z-index: 1;"
-                    onclick="fullscreenMap()">
-                    Fullscreen
+                    onclick="listaNEZET()">
+                    Listanézet
                 </button>
                     </div>
                 </div>
@@ -119,7 +119,7 @@
                                 </div>
                             </form>
                             <div class="d-inline-flex gap-2">
-                                <a type="button" class="btn btn-success" href="{{ url_for('index') }}">
+                                <a type="button" class="btn btn-success" href="{{ url_for('fullscreen_map') }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-floppy-fill" viewBox="0 0 16 16">
                                         <path
@@ -130,7 +130,7 @@
                                     </svg>
                                     Mentés
                                 </a>
-                                <a href="{{ url_for('index') }}" class="btn btn-outline-danger">Vissza</a>
+                                <a href="{{ url_for('fullscreen_map') }}" class="btn btn-outline-danger">Vissza</a>
                                 <button class="btn text-50 btn-outline-light search-button" id="dark-mode-toggle"
                         data-bs-toggle="button" aria-pressed="false">Mód</button>
                             </div>
@@ -147,7 +147,11 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.6.0/Control.FullScreen.min.js"></script>
     <script>
-        var map = L.map('map').setView([47.4979, 19.0402], 7);
+
+        const latitude = {{ lat }};
+        const longitude = {{ lon }};
+
+        var map = L.map('map').setView([latitude, longitude], 13);
         var marker = null;
         var circle = null;
         var selectedLat = null;
@@ -178,7 +182,18 @@
             "Jawg Maps Light": jawgLayerSUN
         };
 
+        var customIcon = L.icon({
+            iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Google_Maps_pin.svg/137px-Google_Maps_pin.svg.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41], // size of the icon
+            shadowSize: [41, 41], // size of the shadow
+            iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
+            shadowAnchor: [12, 41], // the same for the shadow
+            popupAnchor: [1, -34] // point from which the popup should open relative to the iconAnchor
+        });
+
         L.control.layers(baseMaps).addTo(map);
+        marker1 = L.marker([latitude, longitude], { icon: customIcon }).addTo(map);
 
         map.on('click', function (e) {
             var lat = e.latlng.lat;
@@ -208,8 +223,8 @@
                 });
         }
 
-        function fullscreenMap() {
-            window.location.href = "{{ url_for('fullscreen_map') }}";
+        function listaNEZET() {
+            window.location.href = "{{ url_for('index') }}";
         }
 
         var customIcon = L.icon({

@@ -34,11 +34,23 @@
             display: inline-block;
         }
 
+        .custom-marker {
+            margin-left: -14px !important;
+            margin-top: -10px !important;
+            width: 12px;
+            height: 12px;
+            transform: translate3d(627px, 419px, 0px);
+            z-index: 419;
+            outline-style: none;
+        }
 
     </style>
 </head>
 <body>
     <div id="map"></div>
+    <div class="leaflet-top leaflet-right" style="padding: 1%; color: #000;">
+        <h4>{{ address }}</h4>
+    </div>
     <div class="leaflet-bottom leaflet-right">
         <div class="leaflet-control-layers leaflet-control" aria-haspopup="true">
             <a class="btn btn-dark text-50 btn-outline-light search-button position-absolute bottom-0 end-0 m-2"
@@ -59,7 +71,11 @@
     </div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        var map = L.map('map').setView([47.046356, 18.057539], 13);
+
+        const latitude = {{ lat }};
+        const longitude = {{ lon }};
+
+        var map = L.map('map').setView([latitude, longitude], 13);
         var jawgLayer = L.tileLayer('https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
             attribution: '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             minZoom: 0,
@@ -107,15 +123,20 @@
                                     icon: L.divIcon({
                                         className: 'custom-marker',
                                         html: `<svg width="26" height="32" viewBox="0 0 26 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(${direction}deg);">
-<path d="M23.9395 18.7344C23.9395 24.8689 18.8493 29.959 12.7148 29.959C6.5909 29.959 1.5 24.8696 1.5 18.7344C1.5 12.6082 6.58187 7.51953 12.7051 7.51953C18.8418 7.51953 23.9395 12.6119 23.9395 18.7344Z" fill="white" stroke="#2E5EA8" stroke-width="3"/>
+<path d="M23.9395 18.7344C23.9395 24.8689 18.8493 29.959 12.7148 29.959C6.5909 29.959 1.5 24.8696 1.5 18.7344C1.5 12.6082 6.58187 7.51953 12.7051 7.51953C18.8418 7.51953 23.9395 12.6119 23.9395 18.7344Z" fill="white" stroke="#${routes[vehicle.routeId].color}" stroke-width="3"/>
 <path d="M21 6L15 4.875L13 4.5L11 4.875L5 6L13 0L21 6Z" fill="black"/>
 </svg>
 `
                                     })
                                 })
                                 .addTo(stopsLayerGroup)
-                                .bindPopup(`<strong>${routes[vehicle.routeId].description}</strong><br>
-                                    <em>${vehicle.status === 'IN_TRANSIT_TO' ? `${stops[vehicle.stopId].name} felé közeledik` : vehicle.status === 'STOPPED_AT' ? `${stops[vehicle.stopId].name} megállóhelyen áll` : vehicle.status}</em><br>`)
+                                .bindPopup(`<h6>
+                                    <div class="viszonylatdoboz d-flex justify-content-center align-items-center"
+                                style=" padding: 5px; border-radius: 5px; background-color:#${routes[vehicle.routeId].color}!important; width: 50px; height: 30px;">
+                                <span style=" font-weight: bold ;color: #${routes[vehicle.routeId].textColor};">${routes[vehicle.routeId].shortName}</span>
+                            </div>${routes[vehicle.routeId].description}</h6>
+                                    <strong>${vehicle.status === 'IN_TRANSIT_TO' ? `${stops[vehicle.stopId].name} felé közeledik` : vehicle.status === 'STOPPED_AT' ? `${stops[vehicle.stopId].name} megállóhelyen áll` : vehicle.status}</strong><br>
+                                    <em>${vehicle.label}</em><br>`)
                                 .on('click', function () {
                                     fetchTripDetails(vehicle.tripId, this);
                                 });
@@ -127,22 +148,78 @@
                 })
                 .catch(error => console.error('Error fetching vehicles:', error));
         }
+        // Alapértelmezett marker koordináták
+        var markerLatLng = [latitude, longitude];
 
+        // Egyedi ikon beállítása
         var customIcon = L.icon({
             iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/ce/Apple_Dropped_Pin_Icon.svg',
             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-            iconSize: [25, 41], // Az ikon mérete
-            shadowSize: [41, 41], // Az árnyék mérete
-            iconAnchor: [12, 41], // Az ikon horgony pontja
-            shadowAnchor: [12, 41], // Az árnyék horgony pontja
-            popupAnchor: [1, -34] // A pont, ahonnan a popup nyílik az ikon horgonyához képest
+            iconSize: [25, 41],
+            shadowSize: [41, 41],
+            iconAnchor: [12, 41],
+            shadowAnchor: [12, 41],
+            popupAnchor: [1, -34]
         });
 
-        // Statikus marker hozzáadása az egyedi ikonnal
-        L.marker([47.047017, 18.056852], { icon: customIcon }).addTo(map).bindPopup("Én vagyok az átkelő pont");
+                // Marker létrehozása
+        var marker = L.marker(markerLatLng, { icon: customIcon }).addTo(map).bindPopup("{{address}}");
 
-        // Funkció a tripId alapján történő részletes lekéréshez
-       
+        // Hosszú kattintás időzítő
+        var longPressTimer;
+
+        // Kattintás kezdetének ideje
+        var pressStart;
+
+        // Küszöbérték (ms)
+        var longPressThreshold = 500;
+
+        // Hosszú kattintás esemény kezelése
+        map.on('mousedown', function(e) {
+            pressStart = Date.now();
+
+            longPressTimer = setTimeout(function() {
+                // Ha hosszú kattintás
+                var newLatLng = e.latlng;
+                marker.setLatLng(newLatLng); // Marker pozíció frissítése
+                marker.bindPopup("Gombostű áthelyezése...").openPopup(); // Popup frissítése
+
+                // Visszafelé geokódolás az új cím megállapításához
+                fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + newLatLng.lat + '&lon=' + newLatLng.lng)
+                    .then(response => response.json())
+                    .then(data => {
+                        var address = data.display_name;
+
+                        // Küldjük az új koordinátákat és címet a Flask backendnek
+                        var params = new URLSearchParams();
+                        params.append('lat', newLatLng.lat);
+                        params.append('lon', newLatLng.lng);
+                        params.append('address', address);
+
+                        fetch('/update_coordinates', {
+                            method: 'POST',
+                            body: params
+                        })
+                        .then(response => response.redirected ? window.location.href = response.url : response.json())
+                        .then(data => {
+                            console.log('Success:', data);
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
+                    });
+            }, longPressThreshold);
+        });
+
+        map.on('mouseup', function() {
+            clearTimeout(longPressTimer); // Ha nem hosszú kattintás
+        });
+
+        map.on('mousemove', function() {
+            clearTimeout(longPressTimer); // Ha a felhasználó mozgatja az egeret
+        });
+
+        
 
         // Térkép mozgatásának eseményfigyelése
         map.on('moveend', function () {

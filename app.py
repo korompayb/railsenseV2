@@ -35,10 +35,6 @@ def get_weather_data(city):
     else:
         return None
 
-@app.route('/')
-def fullscreen_map():
-   return render_template('fullscreen_map.html')
-
 @app.route('/update_radius', methods=['POST'])
 def update_radius():
     radius = request.form.get('radius', '2000')  # Alapértelmezett érték: 2000
@@ -48,7 +44,10 @@ def update_radius():
 
 @app.route('/fullscreen_map')
 def search():
-    return render_template('maps.html')
+    lat = session.get('lat', 47.046356)
+    lon = session.get('lon', 18.057539)
+
+    return render_template('maps.html', lat = lat, lon = lon)
 
 @app.route('/update_coordinates', methods=['POST'])
 def update_coordinates():
@@ -76,6 +75,19 @@ def update_coordinates():
 
     print(lat, lon)
     return redirect('/')
+
+
+
+@app.route('/')
+def fullscreen_map():
+    lat = session.get('lat', 47.046356)
+    lon = session.get('lon', 18.057539)
+    address = session.get('address', "Balatonfűzfő")
+    
+    
+    
+    return render_template('fullscreen_map.html', lat = lat, lon = lon, address = address )
+
 
 @app.route('/railsense', methods=['GET', 'POST'])
 def index():
