@@ -175,56 +175,68 @@
         var marker = L.marker(markerLatLng, { icon: customIcon }).addTo(map).bindPopup("{{address}}");
 
         // Hosszú kattintás időzítő
-        var longPressTimer;
-
-        // Kattintás kezdetének ideje
         var pressStart;
+        var longPressTimer;
+        var longPressThreshold = 1000; // Milliseconds
 
-        // Küszöbérték (ms)
-        var longPressThreshold = 500;
+        function onLongPress(latlng) {
+            var newLatLng = latlng;
+            marker.setLatLng(newLatLng); // Marker pozíció frissítése
+            marker.bindPopup("Gombostű áthelyezése...").openPopup(); // Popup frissítése
 
-        // Hosszú kattintás esemény kezelése
-        map.on('mousedown', function(e) {
-            pressStart = Date.now();
+            // Visszafelé geokódolás az új cím megállapításához
+            fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + newLatLng.lat + '&lon=' + newLatLng.lng)
+                .then(response => response.json())
+                .then(data => {
+                    var address = data.display_name;
 
-            longPressTimer = setTimeout(function() {
-                // Ha hosszú kattintás
-                var newLatLng = e.latlng;
-                marker.setLatLng(newLatLng); // Marker pozíció frissítése
-                marker.bindPopup("Gombostű áthelyezése...").openPopup(); // Popup frissítése
+                    // Küldjük az új koordinátákat és címet a Flask backendnek
+                    var params = new URLSearchParams();
+                    params.append('lat', newLatLng.lat);
+                    params.append('lon', newLatLng.lng);
+                    params.append('address', address);
 
-                // Visszafelé geokódolás az új cím megállapításához
-                fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + newLatLng.lat + '&lon=' + newLatLng.lng)
-                    .then(response => response.json())
+                    fetch('/update_coordinates', {
+                        method: 'POST',
+                        body: params
+                    })
+                    .then(response => response.redirected ? window.location.href = response.url : response.json())
                     .then(data => {
-                        var address = data.display_name;
-
-                        // Küldjük az új koordinátákat és címet a Flask backendnek
-                        var params = new URLSearchParams();
-                        params.append('lat', newLatLng.lat);
-                        params.append('lon', newLatLng.lng);
-                        params.append('address', address);
-
-                        fetch('/update_coordinates', {
-                            method: 'POST',
-                            body: params
-                        })
-                        .then(response => response.redirected ? window.location.href = response.url : response.json())
-                        .then(data => {
-                            console.log('Success:', data);
-                        })
-                        .catch((error) => {
-                            console.error('Error:', error);
-                        });
+                        console.log('Success:', data);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
                     });
+                });
+        }
+
+        function startLongPressTimer(e, latlng) {
+            pressStart = Date.now();
+            longPressTimer = setTimeout(function() {
+                onLongPress(latlng);
             }, longPressThreshold);
-        });
+        }
 
-        map.on('mouseup', function() {
-            clearTimeout(longPressTimer); // Ha nem hosszú kattintás
-        });
+        function clearLongPressTimer() {
+            clearTimeout(longPressTimer);
+        }
 
-        
+        // Egér események
+        map.on('mousedown', function(e) {
+            startLongPressTimer(e, e.latlng);
+        });
+        map.on('mouseup', clearLongPressTimer);
+        map.on('mouseout', clearLongPressTimer); // Mindenképp töröljük, ha az egér elhagyja a térképet
+
+        // Érintés események
+        map.on('touchstart', function(e) {
+            if (e.touches.length === 1) { // Csak egyetlen érintést kezelünk
+                var latlng = map.mouseEventToLatLng(e.touches[0]);
+                startLongPressTimer(e, latlng);
+            }
+        });
+        map.on('touchend', clearLongPressTimer);
+        map.on('touchcancel', clearLongPressTimer); // Ha az érintés megszakad
 
         
 
