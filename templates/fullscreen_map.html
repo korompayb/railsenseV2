@@ -49,7 +49,8 @@
 <body>
     <div id="map"></div>
     <div class="leaflet-top leaflet-right" style="padding: 1%; color: #000;">
-        <h4>{{ address }}</h4>
+        <h6>RailSense v2.6</h6>
+        <h6 style="text-align: right;">BETA</h6>
     </div>
     <div class="leaflet-bottom leaflet-right">
         <div class="leaflet-control-layers leaflet-control" aria-haspopup="true">
@@ -94,9 +95,14 @@
             var lon = center.lng.toFixed(7); // Hosszúság 7 tizedesjegyig kerekítve
             var radius = 20000; // Sugár: 20000 méter
 
+            var selectedVehicleType = 'RAIL'; // Alapértelmezett filter
+
+                    
+
             var apiUrl = `https://futar.bkk.hu/api/query/v1/ws/otp/api/where/vehicles-for-location?clientLon=${lon}&clientLat=${lat}&onlyDepartures=false&limit=60&lat=${lat}&lon=${lon}&radius=${radius}&minResult=1&appVersion=1.1.abc&version=2&includeReferences=true&minutesAfter=60&key=7ff7c954-05d3-4dd2-93b6-cb714dcdca69`;
 
             fetch(apiUrl)
+            
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -104,6 +110,10 @@
                     return response.json();
                 })
                 .then(data => {
+                    
+                    
+
+
                     // Töröljük a régi járműveket a térképről
                     stopsLayerGroup.clearLayers();
 
@@ -114,8 +124,7 @@
 
                         vehicles.forEach(function (vehicle) {
                             // Szűrés: csak RAIL típusú járművek
-                            if (vehicle.vehicleRouteType === 'RAIL') {
-                                var color = '#2E5EA8'; // Sötétkék
+                            if (vehicle.vehicleRouteType === selectedVehicleType) {
                                 var direction = vehicle.bearing || 0; // Jármű iránya, alapértelmezett érték 0
 
                                 // Jármű hozzáadása a térképhez
@@ -215,9 +224,7 @@
             clearTimeout(longPressTimer); // Ha nem hosszú kattintás
         });
 
-        map.on('mousemove', function() {
-            clearTimeout(longPressTimer); // Ha a felhasználó mozgatja az egeret
-        });
+        
 
         
 
