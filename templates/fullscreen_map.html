@@ -95,7 +95,7 @@
             var lon = center.lng.toFixed(7); // Hosszúság 7 tizedesjegyig kerekítve
             var radius = 20000; // Sugár: 20000 méter
 
-            var selectedVehicleType = 'RAIL'; // Alapértelmezett filter
+            const selectedVehicleTypes = ["RAIL", "COACH", ""]; // Alapértelmezett filter
 
                     
 
@@ -124,7 +124,7 @@
 
                         vehicles.forEach(function (vehicle) {
                             // Szűrés: csak RAIL típusú járművek
-                            if (vehicle.vehicleRouteType === selectedVehicleType) {
+                            if (selectedVehicleTypes.includes(vehicle.vehicleRouteType)) {
                                 var direction = vehicle.bearing || 0; // Jármű iránya, alapértelmezett érték 0
 
                                 // Jármű hozzáadása a térképhez
@@ -141,7 +141,7 @@
                                 .addTo(stopsLayerGroup)
                                 .bindPopup(`<h6>
                                     <div class="viszonylatdoboz d-flex justify-content-center align-items-center"
-                                style=" padding: 5px; border-radius: 5px; background-color:#${routes[vehicle.routeId].color}!important; width: 50px; height: 30px;">
+                                style=" padding: 5px; border-radius: 5px; background-color:#${routes[vehicle.routeId].color}!important; width: fit-content; height: fit-content;">
                                 <span style=" font-weight: bold ;color: #${routes[vehicle.routeId].textColor};">${routes[vehicle.routeId].shortName}</span>
                             </div>${routes[vehicle.routeId].description}</h6>
                                     <strong>${vehicle.status === 'IN_TRANSIT_TO' ? `${stops[vehicle.stopId].name} felé közeledik` : vehicle.status === 'STOPPED_AT' ? `${stops[vehicle.stopId].name} megállóhelyen áll` : vehicle.status}</strong><br>
