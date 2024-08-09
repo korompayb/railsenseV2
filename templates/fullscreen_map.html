@@ -93,7 +93,7 @@
         var center = map.getCenter(); // Aktuális térkép középpontja
         var lat = center.lat.toFixed(7); // Latitúdó 7 tizedesjegyig kerekítve
         var lon = center.lng.toFixed(7); // Hosszúság 7 tizedesjegyig kerekítve
-        var radius = 20000; // Sugár: 20000 méter
+        var radius = 2000; // Sugár: 20000 méter
 
         const selectedVehicleTypes = ["RAIL"]; // Alapértelmezett filter
 
@@ -167,7 +167,7 @@
             .then(response => response.json())
             .then(data => {
                 var address = data.display_name;
-                userMarker.bindPopup(`Your current location: ${address}`).openPopup();
+                userMarker.bindPopup(`Your current location: ${address}`);
             })
             .catch(error => console.error('Error fetching address:', error));
     }
