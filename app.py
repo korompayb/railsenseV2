@@ -83,10 +83,11 @@ def fullscreen_map():
     lat = session.get('lat', 47.046356)
     lon = session.get('lon', 18.057539)
     address = session.get('address', "Balatonfűzfő")
+    manifest_url = url_for('static', filename='manifest.json')
     
     
     
-    return render_template('fullscreen_map.html', lat = lat, lon = lon, address = address )
+    return render_template('fullscreen_map.html', lat = lat, lon = lon, address = address, manifest_url = manifest_url )
 
 
 @app.route('/railsense', methods=['GET', 'POST'])
