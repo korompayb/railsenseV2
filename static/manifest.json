@@ -21,21 +21,21 @@
   ],
   "screenshots": [
     {
-      "src": "img/ok.png",
+      "src": "img/map.png",
       "type": "image/png",
-      "sizes": "429x952",
+      "sizes": "688x1496",
       "purpose": "any"
     },
     {
-      "src": "img/no.png",
+      "src": "img/map2.png",
       "type": "image/png",
-      "sizes": "429x952",
+      "sizes": "676x1484",
       "purpose": "any"
     },
     {
-      "src": "img/okwide.png",
+      "src": "img/wide2.9.png",
       "type": "image/png",
-      "sizes": "1992x1352",
+      "sizes": "2244x1638",
       "purpose": "any",
       "form_factor": "wide"
     }
