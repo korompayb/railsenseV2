@@ -90,7 +90,6 @@ def fullscreen_map():
     return render_template('fullscreen_map.html', lat = lat, lon = lon, address = address, manifest_url = manifest_url )
 
 
-
 @app.route('/railsense', methods=['GET', 'POST'])
 def index():
     lat = session.get('lat', 47.046356)
@@ -115,14 +114,12 @@ def index():
     added_trains = set()  
     result_status = 2  
     message = ""
-    
-    # Initialize sorted_trainsdata early to avoid UnboundLocalError
-    sorted_trainsdata = []
 
     if arrivals_response.status_code == 200 and vehicles_response.status_code == 200:
         arrivals_data = arrivals_response.json()['data']['list']
         vehicles_data = vehicles_response.json()['data']['list']
         
+        # Print vehicles_data to check its structure
         print(vehicles_data)
         
         routes_data = arrivals_response.json()['data']['references']['routes']
@@ -195,6 +192,7 @@ def index():
                                 'stopseqe2': stop.get('stopSequence')
                             })
                     
+                    # Find vehicle coordinates
                     vehicle_data = next((v for v in vehicles_data if v.get('tripId') == train_id), {})
                     vehicle_lat = vehicle_data.get('lat', 'N/A')
                     vehicle_lon = vehicle_data.get('lon', 'N/A')
@@ -238,7 +236,6 @@ def index():
     weather_data = get_weather_data(city)
 
     return render_template('index.html', trainsdata=sorted_trainsdata, result_status=result_status, manifest_url=manifest_url, message=message, weather_data=weather_data, address=address)
-
 
 @app.errorhandler(requests.exceptions.ConnectionError)
 def handle_connection_error(error):
