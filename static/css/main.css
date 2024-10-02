@@ -316,20 +316,21 @@
 @media (max-width: 425px) {
     .card-title,
     .card-subtitle, .stop-name {
-        max-width: 230px; /* Állítsd be a kívánt maximális szélességet */
+        max-width: 230px;
     }
 }
 
 @media (max-width: 375px) {
     .card-title,
     .card-subtitle, .stop-name{
-        max-width: 190px; /* Állítsd be a kívánt maximális szélességet */
+        max-width: 190px; 
     }
 }
 
 @media (max-width: 320px) {
     .card-title,
     .card-subtitle, .stop-name {
-        max-width: 145px; /* Állítsd be a kívánt maximális szélességet */
+        max-width: 145px; 
     }
 }
+ 

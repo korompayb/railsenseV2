@@ -54,7 +54,7 @@ li {
 .station--end::before {
     height: 20px;
     width: 20px;
-    border: 2px solid #ed1633;
+    border: 2px solid #ed163300;
     border-radius: 999px;
     left: -1.35em;
     top: -0.5em;
@@ -64,7 +64,7 @@ li {
 .station--end2::before {
     height: 20px;
     width: 20px;
-    border: 2px solid #ed1633;
+    border: 2px solid #ed163300;
     border-radius: 999px;
     left: -1.35em;
     top: -0.2em;
