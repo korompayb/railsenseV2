@@ -17,25 +17,36 @@
         #map {
             height: 60vh;
             width: 100%;
-            
         }
 
         .top-container {
-            height: 41vh; /* Fills the top half of the screen */
-            background-color: rgb(30, 30, 30); /* Slightly transparent dark background */
+            height: auto; /* Engedi, hogy a magasság automatikusan igazodjon a tartalomhoz */
+            min-height: 45vh; /* Minimális magasság beállítása */
+            background-color: rgb(30, 30, 30);
             color: white;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: center; /* A tartalom fent kezdődik, és lefelé bővül */
             align-items: center;
-            position: fixed; /* Change to fixed to keep it at the top */
-            bottom: 0; /* Position it at the top of the screen */
+            position:sticky; /* A konténer rögzítése a képernyő tetején marad */
+            bottom: 0;
             left: 0;
             right: 0;
-            border-top-left-radius: 20px; /* Rounded bottom left corner */
-            border-top-right-radius: 20px; /* Rounded bottom right corner */
-            z-index: 9999; /* High z-index to ensure it's above the map */
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            z-index: 9999;
+            overflow-y: auto; /* Görgethetővé teszi a tartalmat, ha az túl nagy */
         }
+
+        #card-container {
+            width: 100%; /* A szélesség kitöltése */
+            padding: 20px; /* Párnázás */
+        }
+
+        p {
+            text-align: center;
+        }
+
 
         div .leaflet-control-attribution {
             display: none !important;
