@@ -103,7 +103,7 @@ def fullscreen_map():
                         <div style="padding: 0px; overflow: hidden;" class="card-header">
                             <div style="float: left; padding: 13px;">
                                 <p id="description" class="card-title text-light description">Nincs semmi a láthatáron</p>
-                                <h4 id="headsign" class="card-subtitle headsign" style="margin-bottom: 0px; margin-top: 5px; color: #3FC555">Szabadon átkelhet</h4>
+                                <h3 id="headsign" class="card-subtitle headsign" style="margin-bottom: 0px; margin-top: 5px; color: #3FC555">Szabadon átkelhet</h3>
                             </div>
                             <div class="viszonylatdoboz d-flex justify-content-center align-items-center" style="float: right; padding: 10px; border-top-right-radius: 5px; background-color: #3FC555 !important; width: 90px; height: 85px;">
                                 <span class="shortname" style=" font-weight: bolder ;color: #3C3C3C;">✔️</span>

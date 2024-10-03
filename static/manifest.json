@@ -1,7 +1,7 @@
 {
   "background_color": "#1e1e1e",
   "description": "A vonatok váratlan érkezése az életébe kerülhet. Vigyázzon magára!",
-  "display": "standalone",
+  "display": "fullscreen",
   "icons": [
     {
       "src": "img/512x512.png",
