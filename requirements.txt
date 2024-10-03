@@ -2,4 +2,4 @@ flask
 Gunicorn
 requests
 pytz
-BeautifulSoup
+beautifulsoup4
