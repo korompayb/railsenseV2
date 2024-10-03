@@ -184,18 +184,32 @@ def fullscreen_map():
     return render_template('fullscreen_map.html', lat=lat, lon=lon, address=address, manifest_url=manifest_url, card_html=card_html)
 
 
-
 @app.route('/railsense', methods=['GET', 'POST'])
 def index():
+    if request.method == 'POST':
+        # Get latitude and longitude from POST request
+        data = request.get_json()
+        lat = data.get('lat', 47.046356)  # Default value if not provided
+        lon = data.get('lon', 18.057539)  # Default value if not provided
+
+        # Save the data in session
+        session['lat'] = lat
+        session['lon'] = lon
+
+        return jsonify({'status': 'success', 'lat': lat, 'lon': lon})
+
+    # Default values for GET request
     lat = session.get('lat', 47.046356)
     lon = session.get('lon', 18.057539)
     address = session.get('address', "Balatonfűzfő")
     radius = session.get('radius', 2000)
-    
+
+    # Update session
     session['lat'] = lat
     session['lon'] = lon
     session['radius'] = radius
     session['address'] = address
+
 
     manifest_url = url_for('static', filename='manifest.json')
 
