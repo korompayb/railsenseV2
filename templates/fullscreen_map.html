@@ -189,7 +189,7 @@
         <div id="card-container" style="min-width: 45vh; padding-bottom: 20px;">
             {{ card_html|safe }}
         </div>
-        <p style="text-align: center;">A program tévedhet, mindig győzödjön meg a mielőtt átmenne!!</p>
+        <p style="text-align: center;">A program tévedhet, mindig győzödjön meg a mielőtt <a href="{{ url_for('search') }}"> átmenne!!</a></p>
     </div>
     
 
@@ -213,7 +213,7 @@
                     <div style="padding-top: 10px;">
                         <h2>Vigyázat!</h2>
                         <p id="time" class="close">Ma 1:10</p>
-                        <p>Vonat van a közelben, óvatosan az átkeléssel!</p>
+                        <p>Vonat van a közelben, óvatosan az átkeléssel! </p>
 
                     </div>
 
