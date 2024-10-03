@@ -351,4 +351,4 @@ def handle_connection_error(error):
     return render_template('connection_error.html'), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8050, debug=True)
+    app.run(host='0.0.0.0', port=10000, debug=True)
