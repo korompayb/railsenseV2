@@ -10,64 +10,129 @@
     <link rel="manifest" href="{{ manifest_url }}" />
     <link rel="icon" href="{{ url_for('static', filename='img/512x512.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/menetrend.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <style>
-           #map {
-                position: relative;
-                width: 100%;
-                height: calc(60vh + env(safe-area-inset-bottom)); /* 60vh magasság és figyelembe veszi a notch alatti területet */
-                padding-top: env(safe-area-inset-top); /* A notch melletti biztonsági zónához igazodik */
-                box-sizing: border-box; /* Biztosítja, hogy a padding ne növelje a méretet */
-            }
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
     
-            .accordion-button {
-                background-color: #303030 !important;
-            }
-    
-            .top-container {
-                height: auto; /* Engedi, hogy a magasság automatikusan igazodjon a tartalomhoz */
-                min-height: 45vh; /* Minimális magasság beállítása */
-                background-color: #414141;
+
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #121212;
+      /* sötét mód háttér */
+      color: #e0e0e0;
+      /* világos szöveg */
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #map {
+      position: fixed;
+      top: 56px;
+      /* navbar magassága */
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('https://placehold.co/1920x1080?text=Map+Background+Placeholder&bg=1e293b&fg=94a3b8') center center/cover no-repeat;
+      z-index: 0;
+      filter: brightness(0.85);
+    }
+
+    /* Navbar fixálva fent */
+    nav.navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1030;
+      background-color: #1f2937cc;
+      /* áttetsző sötét */
+      backdrop-filter: saturate(180%) blur(10px);
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.7);
+    }
+
+    main {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1050;
+      width: 95vw;
+      max-width: 420px;
+      background: #1f2937;
+      /* sötét kártya */
+      border-radius: 1.5rem 1.5rem 0 0;
+      box-shadow: 0 -8px 24px rgb(0 0 0 / 0.8);
+      padding: 1.5rem 2rem 2rem;
+      user-select: none;
+      color: #d1d5db;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .train-info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .train-type {
+      background-color: #{{ color }};
+      /* zöld */
+      color: white;
+      font-weight: 900;
+      font-size: 2.5rem;
+      padding: 1rem 2.5rem;
+      border-radius: 1rem 0 0 1rem;
+      user-select: none;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px #{{ color }};
+      flex-shrink: 0;
+      margin-right: -33px;
+    }
+
+    .train-alert {
+                position: fixed;
+                width: fit-content;
+                top: -100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #0000003a;
                 color: white;
-                display: flex;
-                flex-direction: column;
-                justify-content: center; /* A tartalom fent kezdődik, és lefelé bővül */
-                align-items: center;
-                position:sticky; /* A konténer rögzítése a képernyő tetején marad */
-                bottom: 0;
-                left: 0;
-                right: 0;
-                border-top-left-radius: 20px;
-                border-top-right-radius: 20px;
-                z-index: 9999;
-                overflow-y: auto; /* Görgethetővé teszi a tartalmat, ha az túl nagy */
+                border-radius: 10px;
+                padding: 3px;
+                margin: auto;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                backdrop-filter: blur(10px);
+                opacity: 1;
+                transition: opacity 0.5s ease-out, top 0.5s ease-out;
+                width: max-content;
             }
     
-            #card-container {
-                width: 100%; /* A szélesség kitöltése */
-                padding: 20px; /* Párnázás */
-    
+            .leaflet-circle {
+                stroke: #FF5733;
+                /* Kör színe */
+                stroke-width: 2px;
+                /* Kör vonalának vastagsága */
+                fill: rgba(255, 87, 51, 0.3);
+                /* Kör belsejének színe és átlátszósága */
             }
     
-            .card-header {
-                background-color: #303030;
+            .train-alert.show {
+                top: 70px;
+                opacity: 1;
             }
-    
-            .card-body {
-                background-color: #535353;
-            }
-    
-            .card-footer {
-                background-color: #535353 !important;
-            }
-    
-            .card {
-                border-color: #939393;
-            }
-    
-            p {
+
+            .train-alert p {
                 text-align: center;
             }
     
@@ -99,46 +164,8 @@
                 z-index: 419;
                 outline-style: none;
             }
-    
-            .train-alert {
-                position: fixed;
-                width: fit-content;
-                top: -100px;
-                left: 50%;
-                transform: translateX(-50%);
-                background-color: #0000003a;
-                color: white;
-                border-radius: 10px;
-                padding: 3px;
-                margin: auto;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                backdrop-filter: blur(10px);
-                opacity: 0;
-                transition: opacity 0.5s ease-out, top 0.5s ease-out;
-                width: max-content;
-            }
-    
-            .leaflet-circle {
-                stroke: #FF5733;
-                /* Kör színe */
-                stroke-width: 2px;
-                /* Kör vonalának vastagsága */
-                fill: rgba(255, 87, 51, 0.3);
-                /* Kör belsejének színe és átlátszósága */
-            }
-    
-            .train-alert.show {
-                top: 50px;
-                /* Adjust as needed for the final position */
-                opacity: 1;
-            }
-    
-            .leaflet-control-zoom {
-                display: none !important;
-                opacity: 0 !important;
-            }
-    
-    
+
+
             :host(.mk-controls-container) div.mk-logo-control img.mk-logo {
                 width: var(--logo-width);
                 height: var(--logo-height);
@@ -204,24 +231,208 @@
                         background-color: #f59e0b;
                     }
                 }
-        </style>
+    }
+    
+
+    .train-line-input {
+      border: none;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ef4444;
+      /* piros */
+      background: transparent;
+      width: 100%;
+      max-width: 100%;
+      outline: none;
+      user-select: none;
+      cursor: none;
+      padding-left: 1rem;
+      text-shadow: 0 0 6px #dc2626aa;
+    }
+
+    .train-line-input:focus {
+      box-shadow: none;
+      border: none;
+    }
+
+    .btn-schedule {
+      background-color: #047857;
+      border: none;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgb(4 120 87 / 0.8);
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+      width: 100%;
+      margin-top: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .btn-schedule:hover,
+    .btn-schedule:focus {
+      background-color: #065f46;
+      color: #bbf7d0;
+      outline: none;
+      box-shadow: 0 0 14px #22c55e;
+    }
+
+    .schedule-info {
+      margin-top: 1rem;
+      background-color: #064e3b;
+      border-radius: 0.75rem;
+      padding: 0.75rem 1.25rem;
+      color: #bbf7d0;
+      font-weight: 600;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      user-select: none;
+      box-shadow: 0 4px 10px rgb(6 95 70 / 0.6);
+    }
+
+    .footer-text {
+      font-size: 0.9rem;
+      text-align: center;
+      color: #22c55e;
+      margin-top: 1.5rem;
+      user-select: none;
+    }
+
+    .footer-text a {
+      color: #22c55e;
+      text-decoration: underline;
+    }
+
+    .footer-text a:hover {
+      color: #4ade80;
+      text-decoration: underline;
+    }
+
+    .train-info-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    @media (max-width: 400px) {
+      main {
+        padding: 1rem 1rem 1.5rem;
+        width: 100vw;
+        border-radius: 1rem 1rem 0 0;
+      }
+
+      .btn-schedule {
+        font-size: 1rem;
+        padding: 0.6rem 1rem;
+        margin-left: 0.5rem;
+      }
+
+      .train-type {
+        font-size: 2rem;
+        padding: 0.75rem 1.75rem;
+        margin-right: -15px;
+      }
+
+      .train-line-input {
+        font-size: 1.5rem;
+        padding-left: 0.75rem;
+      }
+    }
+  </style>
 </head>
 
-<body>
-
+<body style="margin-bottom: 0px !important;">
+    <nav class="navbar navbar-expand-md navbar-dark">
+    <div class="container-fluid px-3">
+      <a class="navbar-brand fw-bold text-light" href="#">RailSense</a>
+      <button class="navbar-toggler bg-dark " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Menü megnyitása">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto fw-semibold">
+          <li class="nav-item">
+            <a class="nav-link text-light" href="/fullscreen_map">Főoldal</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="/railsense">Menetrend</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#">Jelentések</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#">Kapcsolat</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
     <div id="map"></div>
-    <div class="top-container">
+     <main>
+    <section class="train-info-card" role="dialog" aria-live="polite" aria-label="Érkező vonat információk">
+      <div class="train-info-row">
+        <div style="flex-grow:1;">
+          <div class="text-light small mb-1">{{ description }}</div>
+          <input type="text" class="train-line-input" aria-label="Vasutvonal" readonly="" value="{{ headsign }}       ">
+        </div>
+
+        <div class="train-type" aria-label="Vonat típus IR">{{ short_name }}</div>
+      </div>
+
+      <!-- accordion button -->
+      <button class="btn-schedule" type="button" id="toggle-schedule" aria-expanded="false"
+        aria-controls="schedule-info">
+        <span><i class="far fa-calendar-alt me-2"></i>Menetrend</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <!-- accordion body -->
+        <div style="display: none;" class="train-info-row" id="train-info">
+            {{ accordion_html|safe }}
+        </div>
+        <!-- only show the train info row when clicked script -->
+        <script> 
+            document.getElementById('toggle-schedule').addEventListener('click', function() {
+                const scheduleInfo = document.getElementById('train-info');
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', !isExpanded);
+                scheduleInfo.style.display = isExpanded ? 'none' : 'block';
+            });
+        </script>
+        
+
+
+      
+      <div class="schedule-info" id="schedule-info">
+        <i class="far fa-clock"></i>
+        Érkezik: <strong id="arrival-time">{{ arrival_time }}</strong>
+      </div>
+
+      <!-- <p class="footer-text">
+        A program tévedhet, mindig győződjön meg a mielőtt
+        <a href="#">átmenne!!</a>
+      </p> -->
+    </section>
+  </main>
+    <!-- <div class="top-container">
         <div id="card-container" style="min-width: 45vh; padding-bottom: 20px;">
             {{ card_html|safe }}
         </div>
         <p style="text-align: center;">A program tévedhet, mindig győzödjön meg a mielőtt <a href="{{ url_for('search') }}"> átmenne!!</a></p>
-    </div>
+    </div> -->
     
 
     
     <div class="leaflet-bottom leaflet-right">
         <div class="leaflet-control-layers leaflet-control" aria-haspopup="true">
-            <div id="trainAlert" class="train-alert">
+            <div id="trainAlert" class="train-alert show">
                 <div class="notification-inner">
                     <div class="icon warning">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -258,18 +469,18 @@
         </div>
     </div>
 
-    <div class="leaflet-top leaflet-right" style="padding: 1%; color: #000;">
-        <h6>RailSense v3.0</h6>
+    <div class="leaflet-top leaflet-right" style="padding-top: 20%; padding-left: 2%; color: #000; z-index: 10;">
+        <h6>RailSense v4.0</h6>
         <h6 style="text-align: right;">BETA</h6>
     </div>
-    <div class="leaflet-bottom leaflet-right">
+    <!-- <div class="leaflet-bottom leaflet-right">
         <div class="leaflet-control-layers leaflet-control" aria-haspopup="true">
             <a class="btn btn-dark text-50 btn-outline-light search-button position-absolute bottom-0 end-0 m-2"
                 style="z-index: 1;" href="{{ url_for('search') }}">
                 Vissza
             </a>
         </div>
-    </div>
+    </div> -->
     <div class="leaflet-bottom leaflet-left" style="left: 5rem !important;">
         <br>
         <div style=" bottom: 0; left: 5px;">
@@ -286,6 +497,45 @@
 
     </div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const trainLineInput = document.querySelector('.train-line-input');
+    let isPaused = false;
+    let cycleComplete = false;
+    let pauseTimeout;
+    
+    function scrollText() {
+      if (trainLineInput.value.length > 12 && !isPaused) {
+        const text = trainLineInput.value;
+        trainLineInput.value = text.substring(1) + text.charAt(0);
+        
+        // Check if we've completed one full cycle
+        if (!cycleComplete && text === trainLineInput.getAttribute('data-original-text')) {
+          isPaused = true;
+          cycleComplete = true;
+          pauseTimeout = setTimeout(() => {
+            isPaused = false;
+            cycleComplete = false;
+          }, 2000);
+        }
+      }
+    }
+
+    trainLineInput.addEventListener('input', function () {
+      // Store original text for comparison
+      const originalText = this.value;
+      trainLineInput.setAttribute('data-original-text', originalText);
+      // Add extra spaces for better scrolling effect
+      if (originalText.length > 12) {
+        this.value = originalText + "___________     " + originalText;
+      }
+    });
+
+    // Scroll continuously every 150ms 
+    setInterval(scrollText, 150);
+  });
+</script>
+
     <script>
         function updateTime() {
             // Calculate the time elapsed since the notification was displayed
