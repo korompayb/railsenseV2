@@ -77,83 +77,74 @@ def update_coordinates():
     print(lat, lon)
     return redirect('/')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
+@app.route('/connection_error')
+def connection_error():
+    return render_template('connection_error.html')
 
 @app.route('/')
 def fullscreen_map():
-    # Az URL, ahonnan le kell kérni a HTML tartalmat
-    # A railsense route hívása
-    railsense_html = index()  # A railsense() funkció helyi hívása
-    # A BeautifulSoup használata a HTML kinyeréséhez
+    # Get HTML content from railsense route
+    railsense_html = index()
     soup = BeautifulSoup(railsense_html, 'html.parser')
     card_div = soup.find('div', {'class': 'card', 'style': 'max-width: 30rem;'})
 
-    # Ellenőrzés, hogy megtaláltuk-e a kért divet
+    # Initialize variables with default "no train" values
+    description = "Nincs vonat a közelben"
+    headsign = "Szabad az átkelés "
+    arrival_time = "A közeljövőben nem várható vonat"
+    color = "#3FC555"  # Default green color
+    short_name = '<i class="fa-solid fa-check"></i>'
+    accordion_html = ""
+
+    # Only try to scrape if card_div exists
     if card_div:
-        # Extract only description, headsign and arrival time from first train
-        description = ""
-        headsign = ""
-        arrival_time = ""
-        color = ""
-
-        # Get accordion body elements
-        accordion_bodies = soup.find_all('div', class_='accordion-body') 
-        #to scrape the full div to view
+        accordion_bodies = soup.find_all('div', class_='accordion-body')
+        
         # Create accordion_html for each train's schedule
-        accordion_html = ''
-        for train in soup.find_all('div', class_='accordion-body'):
-            schedule_table = train.find('table', id='menetrend')
+        if accordion_bodies:
+            first_accordion = accordion_bodies[0]
+            schedule_table = first_accordion.find('table', id='menetrend')
             if schedule_table:
-                accordion_html += str(schedule_table)
+                accordion_html = str(schedule_table)
 
-        for train in soup.find_all('div', class_='card'):
-            description = train.find('p', class_='description').text.strip()
-            headsign = train.find('h4', class_='headsign').text.strip() 
-            color = train.find('div', class_='viszonylatdoboz')['style'].split('background-color:#')[1].split()[0]
-            short_name = train.find('span', class_='shortname').text.strip() if train.find('span', class_='shortname') else ''
-            arrival_time_span = train.find('span', class_='arrival-time')
-            
+        # Try to find first train data
+        train = soup.find('div', class_='card')
+        if train:
+            desc_elem = train.find('p', class_='description')
+            head_elem = train.find('h4', class_='headsign')
+            color_elem = train.find('div', class_='viszonylatdoboz')
+            short_name_elem = train.find('span', class_='shortname')
+            arrival_time_span = train.find('span', class_='erkezik')
 
+            if desc_elem:
+                description = desc_elem.text.strip()
+            if head_elem:
+                headsign = head_elem.text.strip()
+            if color_elem and 'style' in color_elem.attrs:
+                style = color_elem['style']
+                if 'background-color:#' in style:
+                    color = '#' + style.split('background-color:#')[1].split()[0]
+            if short_name_elem:
+                short_name = short_name_elem.text.strip()
             if arrival_time_span:
                 arrival_time = arrival_time_span.text.strip()
-            break # Only get first train
-            
-        card_html = f'''
-        <div class="card" style="max-width: 30rem;">
-            <div style="padding: 0px; overflow: hidden;" class="card-header">
-                <div style="float: left; padding: 13px;">
-                    <p id="description" class="card-title text-light description">{description}</p>
-                    <h3 id="headsign" class="card-subtitle headsign" style="margin-bottom: 0px; margin-top: 5px; color: #FC2F44">{headsign}</h3>
-                </div>
-                <div class="viszonylatdoboz d-flex justify-content-center align-items-center" style="float: right; padding: 10px; border-top-right-radius: 5px; background-color: #3FC555 !important; width: 90px; height: 85px;">
-                    <span class="shortname" style="font-weight: bolder;color: #3C3C3C;">{arrival_time}</span>
-                </div>
-            </div>
-        </div>
-        '''
-    else:
-        card_html = '''
-        <div class="card" style="max-width: 30rem;">
-            <div style="padding: 0px; overflow: hidden;" class="card-header">
-                <div style="float: left; padding: 13px;">
-                    <p id="description" class="card-title text-light description">Nincs vonatadat</p>
-                    <h3 id="headsign" class="card-subtitle headsign" style="margin-bottom: 0px; margin-top: 5px; color: #3FC555">Szabadon átkelhet</h3>
-                </div>
-                <div class="viszonylatdoboz d-flex justify-content-center align-items-center" style="float: right; padding: 10px; border-top-right-radius: 5px; background-color: #3FC555 !important; width: 90px; height: 85px;">
-                    <span class="shortname" style="font-weight: bolder;color: #3C3C3C;">✔️</span>
-                </div>
-            </div>
-        </div>
-        '''
 
-    # Sessionből további adatok
+    
+    # Get session data
     lat = session.get('lat', 47.046356)
     lon = session.get('lon', 18.057539)
     address = session.get('address', "Balatonfűzfő")
     manifest_url = url_for('static', filename='manifest.json')
 
-    # Az adatokat a HTML sablonnak adjuk át
-    return render_template('fullscreen_map.html', lat=lat, lon=lon, address=address, manifest_url=manifest_url, card_html=card_html, headsign=headsign, description=description, arrival_time=arrival_time, color=color, short_name=short_name, accordion_html=accordion_html)
+    return render_template('fullscreen_map.html', lat=lat, lon=lon, address=address, 
+                         manifest_url=manifest_url, 
+                         headsign=headsign, description=description, 
+                         arrival_time=arrival_time, color=color, 
+                         short_name=short_name, accordion_html=accordion_html)
 
 
 @app.route('/railsense', methods=['GET', 'POST'])

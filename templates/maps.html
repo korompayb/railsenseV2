@@ -31,13 +31,48 @@
             border-radius: 10px;
         }
 
-
+        nav.navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+            background-color: #1f293798;
+            /* áttetsző sötét */
+            backdrop-filter: saturate(180%) blur(10px);
+            box-shadow: 0 2px 8px rgb(0 0 0 / 0.7);
+        }
         
         
     </style>
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-md navbar-dark">
+    <div class="container-fluid px-3">
+      <a class="navbar-brand fw-bold text-light" href="#">RailSense</a>
+      <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Menü megnyitása">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto fw-semibold">
+          <li class="nav-item">
+            <a class="nav-link text-light" href="/">Főoldal</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="/railsense">Menetrend</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="/connection_error">Jelentések</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="/about">Kapcsolat</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
     <div class="container mt-4">
        
         <div class="card">
