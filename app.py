@@ -269,6 +269,21 @@ def index():
                     vehicle_lat = vehicle_data.get('lat', 'N/A')
                     vehicle_lon = vehicle_data.get('lon', 'N/A')
 
+                    # Calculate minutes until predicted arrival
+                    now = datetime.datetime.now(tz=hungary_tz)
+                    if 'predictedArrivalTime' in stop_time:
+                        predicted_arrival_dt = datetime.datetime.fromtimestamp(stop_time['predictedArrivalTime'], tz=hungary_tz)
+                    else:
+                        predicted_arrival_dt = datetime.datetime.fromtimestamp(stop_time['arrivalTime'], tz=hungary_tz)
+                    predicted_arrival_minutes = int((predicted_arrival_dt - now).total_seconds() // 60)
+                    if predicted_arrival_minutes > 0:
+                        predicted_arrival_minutes = f"{predicted_arrival_minutes} perc múlva érkezik"
+                    elif predicted_arrival_minutes == 0:
+                        predicted_arrival_minutes = "Most érkezik"
+                    else:  # This covers all cases where predicted_arrival_minutes is less than 0
+                        predicted_arrival_minutes = "Már elment"
+
+
                     trainsdata.append({
                         'route_id': route_id,
                         'headsign': headsign,
@@ -276,6 +291,8 @@ def index():
                         'arrival_time': arrival_time,
                         'departure_time': departure_time,
                         'predicted_arrival_time': predicted_arrival_time,
+                        'predicted_departure_time': stop_time.get('predictedDepartureTime', 'N/A'),
+                        'predicted_arrival_minutes': predicted_arrival_minutes,
                         'short_name': short_name,
                         'description': description,
                         'stop_sequence': stop_sequence,
