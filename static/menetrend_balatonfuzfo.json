@@ -1,0 +1,1490 @@
+[
+  {
+    "routeId": "BAGOLYVONAT_0015_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "00:15",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_00",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "BAGOLYVONAT",
+    "type": "TRAIN",
+    "color": "000000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "00:15",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "BAGOLYVONAT_0127_SZÉKESFEHÉRVÁR",
+    "headsign": "Székesfehérvár",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "01:27",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_01",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "BAGOLYVONAT",
+    "type": "TRAIN",
+    "color": "000000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "01:27",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "BAGOLYVONAT_0220_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "02:20",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_02",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "BAGOLYVONAT",
+    "type": "TRAIN",
+    "color": "000000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "02:20",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "BAGOLYVONAT_0327_BUDAPESTDÉLI",
+    "headsign": "Budapest-Déli",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "03:27",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_03",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "BAGOLYVONAT",
+    "type": "TRAIN",
+    "color": "000000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "03:27",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "SEBESVONAT_0413_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "04:13",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_04",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "04:13",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "SEBESVONAT_0511_SZÉKESFEHÉRVÁR",
+    "headsign": "Székesfehérvár",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "05:11",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_05",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "05:11",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "SEBESVONAT_0513_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "05:13",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_06",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "05:13",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "SEBESVONAT_0613_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "06:13",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_07",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "06:13",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "SEBESVONAT_0626_SZÉKESFEHÉRVÁR",
+    "headsign": "Székesfehérvár",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "06:26",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_08",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "06:26",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_0735_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "07:35",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_09",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "07:35",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_0815_BUDAPESTDÉLI",
+    "headsign": "Budapest-Déli",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "08:15",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_10",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "08:15",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "VIZIPÓK_SEBESVONAT_0857_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "08:57",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_11",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "VIZIPÓK Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "08:57",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "VIZIPÓK_SEBESVONAT_0859_BUDAPESTDÉLI",
+    "headsign": "Budapest-Déli",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "08:59",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_12",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "VIZIPÓK Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "08:59",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_0935_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "09:35",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_13",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "09:35",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "CSABAI_TEKERGŐ_0937_BÉKÉSCSABA",
+    "headsign": "Békéscsaba",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "09:37",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_14",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "Ex",
+    "description": "Csabai Tekergő",
+    "type": "TRAIN",
+    "color": "ED2F2F",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "09:37",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_1015_BUDAPESTDÉLI",
+    "headsign": "Budapest-Déli",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "10:15",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_15",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "10:15",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "VIZIPÓK_SEBESVONAT_1057_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "10:57",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_16",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "VIZIPÓK Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "10:57",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "VIZIPÓK_SEBESVONAT_1059_BUDAPESTDÉLI",
+    "headsign": "Budapest-Déli",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "10:59",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_17",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "VIZIPÓK Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "10:59",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_1135_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "11:35",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_18",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "11:35",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "SZABOLCSI_TEKERGŐ_1137_ZÁHONY",
+    "headsign": "Záhony",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "11:37",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_19",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "Ex",
+    "description": "Szabolcsi Tekergő",
+    "type": "TRAIN",
+    "color": "ED2F2F",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "11:37",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_1215_BUDAPESTDÉLI",
+    "headsign": "Budapest-Déli",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "12:15",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_20",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "12:15",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "VIZIPÓK_SEBESVONAT_1257_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "12:57",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_21",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "VIZIPÓK Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "12:57",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "VIZIPÓK_SEBESVONAT_1259_BUDAPESTDÉLI",
+    "headsign": "Budapest-Déli",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "12:59",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_22",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "VIZIPÓK Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "12:59",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_1335_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "13:35",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_23",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "13:35",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "SZABOLCSI_TEKERGŐ_1413_ZÁNKAERZSÉBETTÁBOR",
+    "headsign": "Zánka-Erzsébettábor",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "14:13",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_24",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "Ex",
+    "description": "Szabolcsi Tekergő",
+    "type": "TRAIN",
+    "color": "ED2F2F",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "14:13",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_1415_BUDAPESTDÉLI",
+    "headsign": "Budapest-Déli",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "14:15",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_25",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "14:15",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "VIZIPÓK_SEBESVONAT_1457_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "14:57",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_26",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "VIZIPÓK Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "14:57",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "VIZIPÓK_SEBESVONAT_1459_BUDAPESTDÉLI",
+    "headsign": "Budapest-Déli",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "14:59",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_27",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "VIZIPÓK Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "14:59",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_1535_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "15:35",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_28",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "15:35",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "TEKERGŐ_1609_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "16:09",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_29",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "Tekergő",
+    "type": "TRAIN",
+    "color": "ED2F2F",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "16:09",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_1615_BUDAPESTDÉLI",
+    "headsign": "Budapest-Déli",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "16:15",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_30",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "16:15",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "VIZIPÓK_SEBESVONAT_1657_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "16:57",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_31",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "VIZIPÓK Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "16:57",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "VIZIPÓK_SEBESVONAT_1659_BUDAPESTDÉLI",
+    "headsign": "Budapest-Déli",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "16:59",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_32",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "VIZIPÓK Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "16:59",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_1735_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "17:35",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_33",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "17:35",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "CSABAI_TEKERGŐ_1813_TAPOLCA",
+    "headsign": "Tapolca",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "18:13",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_34",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "Ex",
+    "description": "Csabai Tekergő",
+    "type": "TRAIN",
+    "color": "ED2F2F",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "18:13",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_1815_BUDAPESTDÉLI",
+    "headsign": "Budapest-Déli",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "18:15",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_35",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "18:15",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "VIZIPÓK_SEBESVONAT_1857_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "18:57",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_36",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "VIZIPÓK Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "18:57",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "VIZIPÓK_SEBESVONAT_1859_BUDAPESTDÉLI",
+    "headsign": "Budapest-Déli",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "18:59",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_37",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "VIZIPÓK Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "18:59",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_1935_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "19:35",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_38",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "19:35",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_2015_BUDAPESTDÉLI",
+    "headsign": "Budapest-Déli",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "20:15",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_39",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "20:15",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "VIZIPÓK_SEBESVONAT_2057_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "20:57",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_40",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "VIZIPÓK Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "20:57",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "VIZIPÓK_SEBESVONAT_2059_BUDAPESTDÉLI",
+    "headsign": "Budapest-Déli",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "20:59",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_41",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "VIZIPÓK Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "20:59",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_2135_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "21:35",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_42",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "21:35",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_2215_BUDAPESTDÉLI",
+    "headsign": "Budapest-Déli",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "22:15",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_43",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "22:15",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "SEBESVONAT_2234_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "22:34",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_44",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "Sebesvonat",
+    "type": "TRAIN",
+    "color": "274F96",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "22:34",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "VONAT_2234_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "22:34",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_45",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "Vonat",
+    "type": "TRAIN",
+    "color": "000000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "22:34",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "BAGOLYVONAT_2346_SZÉKESFEHÉRVÁR",
+    "headsign": "Székesfehérvár",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "23:46",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_46",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "S",
+    "description": "BAGOLYVONAT",
+    "type": "TRAIN",
+    "color": "000000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "23:46",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  },
+  {
+    "routeId": "KATICA_INTERRÉGIÓ_2359_BALATONFÜRED",
+    "headsign": "Balatonfüred",
+    "stopTimes": [
+      {
+        "stopId": "STOP_FUZFO_ALLOMAS",
+        "arrivalTime": "23:59",
+        "departureTime": null,
+        "tripId": "OFFLINE_TRIP_47",
+        "stopSequence": 1
+      }
+    ],
+    "shortName": "IR",
+    "description": "KATICA InterRégió",
+    "type": "TRAIN",
+    "color": "008000",
+    "textColor": "FFFFFF",
+    "vehicleName": "Vonat",
+    "vehicletype": "RAIL",
+    "tripDetails": [
+      {
+        "stop_id": "STOP_FUZFO_ALLOMAS",
+        "stop_name": "Balatonfűzfő, vasútállomás",
+        "stop_lat": 47.046356,
+        "stop_lon": 18.057539,
+        "arrival_time": "23:59",
+        "departure_time": null,
+        "stopSequence": 1
+      }
+    ]
+  }
+]
