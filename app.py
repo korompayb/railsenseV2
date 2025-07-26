@@ -389,7 +389,7 @@ def index():
                         time_until_arrival_minutes = int((predicted_arrival_dt - now).total_seconds() // 60)
                         
                         # Fontos: Csak akkor adjuk hozzá, ha az idő a jövőben van ÉS 60 percen belül van
-                        if 0 <= time_until_arrival_minutes <= 60:
+                        if 0 <= time_until_arrival_minutes <= 20:
                             predicted_arrival_minutes_text = f"{time_until_arrival_minutes} perc múlva érkezik"
                             if time_until_arrival_minutes == 0:
                                 predicted_arrival_minutes_text = "Most érkezik"
