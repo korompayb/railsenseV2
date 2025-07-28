@@ -358,13 +358,12 @@
     <nav class="navbar navbar-expand-md navbar-dark">
     <div class="container-fluid px-3">
       <a class="navbar-brand fw-bold text-light" href="#">RailSense</a>
-      <button type="button" class="btn btn-dark" onclick="location.reload(true);">Frissítés</button>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Menü megnyitása">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-         
+         <button type="button" class="btn btn-dark" onclick="location.reload(true);">Frissítés</button>
         <ul class="navbar-nav ms-auto fw-semibold">
           <li class="nav-item">
             <a class="nav-link text-light" href="/fullscreen_map">Főoldal</a>
@@ -711,6 +710,90 @@ function sendLocationToBackend(lat, lon) {
     .catch((error) => {
         console.error('Error:', error);
     });
+}
+
+function selectLocation(lat, lon, address) {
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            if (circle) {
+                map.removeLayer(circle);
+            }
+            marker = L.marker([lat, lon], { icon: customIcon }).addTo(map);
+            circle = L.circle([lat, lon], {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                radius: parseInt(document.getElementById('radiusInput').value)
+            }).addTo(map);
+            map.setView([lat, lon], 16);
+            selectedLat = lat;
+            selectedLon = lon;
+            selectedAddress = address;
+
+            // Update coordinates and address on the server
+            fetch('/update_coordinates', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'lat=' + lat + '&lon=' + lon + '&address=' + encodeURIComponent(address),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Failed to update coordinates');
+                    }
+                })
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+
+function updateCoordinatesOnGeolocation(lat, lon, address) {
+    fetch('/update_coordinates_json', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ lat: lat, lon: lon, address: address }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Coordinates updated:', data);
+        // After updating coordinates, fetch updated train info and update the page
+        fetchTrainData();
+    })
+    .catch(error => {
+        console.error('Error updating coordinates:', error);
+    });
+}
+
+
+
+// Example usage after geolocation and reverse geocoding:
+function showPosition(position) {
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+    map.setView([lat, lon], 13);
+    userMarker.setLatLng([lat, lon]);
+
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+        .then(response => response.json())
+        .then(data => {
+            var address = data.display_name || '';
+            userMarker.bindPopup(`Your current location: ${address}`);
+            updateCoordinatesOnGeolocation(lat, lon, address);
+        })
+        .catch(error => {
+            console.error('Error fetching address:', error);
+            updateCoordinatesOnGeolocation(lat, lon, '');
+        });
 }
 
 function handleError(error) {
