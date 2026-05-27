@@ -10,447 +10,409 @@
     <link rel="manifest" href="{{ manifest_url }}" />
     <link rel="icon" href="{{ url_for('static', filename='img/512x512.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/menetrend.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
-    
 
-    body,
-    html {
-      height: 100%;
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: #121212;
-      /* sötét mód háttér */
-      color: #e0e0e0;
-      /* világos szöveg */
-      overflow-x: hidden;
-      position: relative;
-    }
 
-    #map {
-      position: fixed;
-      top: 1px;
-      /* navbar magassága */
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('https://placehold.co/1920x1080?text=Map+Background+Placeholder&bg=1e293b&fg=94a3b8') center center/cover no-repeat;
-      z-index: 0;
-      filter: brightness(0.85);
-    }
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: #121212;
+            /* sötét mód háttér */
+            color: #e0e0e0;
+            /* világos szöveg */
+            overflow-x: hidden;
+            position: relative;
+        }
 
-    /* Navbar fixálva fent */
-    nav.navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1030;
-      background-color: #1f29376e;
-      /* áttetsző sötét */
-      backdrop-filter: saturate(180%) blur(5px);
-      box-shadow: 0 2px 8px rgb(0 0 0 / 0.7);
-    }
+        #map {
+            position: fixed;
+            top: 1px;
+            /* navbar magassága */
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://placehold.co/1920x1080?text=Map+Background+Placeholder&bg=1e293b&fg=94a3b8') center center/cover no-repeat;
+            z-index: 0;
+            filter: brightness(0.85);
+        }
 
-    main {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1050;
-      width: 95vw;
-      max-width: 420px;
-      background: #1f2937;
-      /* sötét kártya */
-      border-radius: 1.5rem 1.5rem 0 0;
-      box-shadow: 0 -8px 24px rgb(0 0 0 / 0.8);
-      padding: 1.5rem 2rem 2rem;
-      user-select: none;
-      color: #d1d5db;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
+        /* Navbar fixálva fent */
+        nav.navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+            background-color: #1f29376e;
+            /* áttetsző sötét */
+            backdrop-filter: saturate(180%) blur(5px);
+            box-shadow: 0 2px 8px rgb(0 0 0 / 0.7);
+        }
 
-    .train-info-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
+        main {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1050;
+            width: 95vw;
+            max-width: 480px;
+            background: #1f2937;
+            border-radius: 1.5rem 1.5rem 0 0;
+            box-shadow: 0 -8px 24px rgb(0 0 0 / 0.8);
+            padding: 0 1.25rem .75rem;
+            color: #d1d5db;
+            max-height: 220px;
+            overflow: hidden;
+            transition: max-height .38s cubic-bezier(.4, 0, .2, 1);
+        }
 
-    .train-type {
-      background-color: {{ color }};
-      /* zöld */
-      color: white;
-      font-weight: 900;
-      font-size: 2.5rem;
-      padding: 1rem 2.5rem;
-      border-radius: 1rem 0 0 1rem;
-      user-select: none;
-      white-space: nowrap;
-      box-shadow: 0 4px 12px {{ color }};
-      flex-shrink: 0;
-      margin-right: -42px;
-    }
+        main.expanded {
+            max-height: 82vh;
+            overflow: hidden;
+        }
 
-    .train-alert {
-                position: fixed;
-                width: fit-content;
-                top: -100px;
-                left: 50%;
-                transform: translateX(-50%);
-                background-color: #0000003a;
-                color: white;
-                border-radius: 10px;
-                padding: 3px;
-                margin: auto;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                backdrop-filter: blur(10px);
-                opacity: 1;
-                transition: opacity 0.5s ease-out, top 0.5s ease-out;
-                width: max-content;
+        #sheet-handle {
+            text-align: center;
+            padding: .65rem 0 .35rem;
+            cursor: pointer;
+        }
+
+        .handle-pill {
+            width: 3rem;
+            height: .3rem;
+            background: #4b5563;
+            border-radius: 9999px;
+            margin: 0 auto;
+            transition: background .2s;
+        }
+
+        #sheet-handle:hover .handle-pill {
+            background: #6b7280;
+        }
+
+        .hero-badge {
+            font-weight: 900;
+            font-size: 1.35rem;
+            padding: .45rem 1rem;
+            border-radius: .6rem;
+            min-width: 58px;
+            text-align: center;
+            flex-shrink: 0;
+            line-height: 1.2;
+        }
+
+        #sheet-body {
+            display: none;
+            padding-top: .25rem;
+        }
+
+        main.expanded #sheet-body {
+            display: block;
+        }
+
+        #trains-list .card {
+            max-width: 100% !important;
+            margin-bottom: .6rem;
+        }
+
+        .status-badge {
+            border-radius: .5rem;
+            padding: .3rem .75rem;
+            font-size: .82rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: .45rem;
+        }
+
+        .status-safe {
+            background: #064e3b;
+            color: #6ee7b7;
+        }
+
+        .status-danger {
+            background: #7f1d1d;
+            color: #fca5a5;
+        }
+
+        .status-warn {
+            background: #78350f;
+            color: #fcd34d;
+        }
+
+        .train-alert {
+            position: fixed;
+            width: fit-content;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #0000003a;
+            color: white;
+            border-radius: 10px;
+            padding: 3px;
+            margin: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            opacity: 1;
+            transition: opacity 0.5s ease-out, top 0.5s ease-out;
+            width: max-content;
+        }
+
+        .leaflet-circle {
+            stroke: #FF5733;
+            /* Kör színe */
+            stroke-width: 2px;
+            /* Kör vonalának vastagsága */
+            fill: rgba(255, 87, 51, 0.3);
+            /* Kör belsejének színe és átlátszósága */
+        }
+
+        .train-alert.show {
+            top: 70px;
+            opacity: 1;
+        }
+
+        .train-alert p {
+            text-align: center;
+        }
+
+
+        div .leaflet-control-attribution {
+            display: none !important;
+        }
+
+        .custom-marker {
+            background-color: transparent;
+            border-radius: 50%;
+            border: 2px solid transparent;
+        }
+
+        .marker-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+
+        .custom-marker {
+            margin-left: -14px !important;
+            margin-top: -10px !important;
+            width: 12px;
+            height: 12px;
+            transform: translate3d(627px, 419px, 0px);
+            z-index: 419;
+            outline-style: none;
+        }
+
+
+        :host(.mk-controls-container) div.mk-logo-control img.mk-logo {
+            width: var(--logo-width);
+            height: var(--logo-height);
+            margin: 0;
+            transition: width .3s ease-in-out, height .3s ease-in-out;
+        }
+
+
+        .notification-inner {
+            backdrop-filter: blur(0.5rem);
+            backdrop-filter: blur(0.5rem);
+            padding: 0 1rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+
+            h2 {
+                font-weight: bold;
+                font-size: 0.9rem;
             }
-    
-            .leaflet-circle {
-                stroke: #FF5733;
-                /* Kör színe */
-                stroke-width: 2px;
-                /* Kör vonalának vastagsága */
-                fill: rgba(255, 87, 51, 0.3);
-                /* Kör belsejének színe és átlátszósága */
-            }
-    
-            .train-alert.show {
-                top: 70px;
-                opacity: 1;
+
+            p {
+                margin-top: 0.5rem;
+                font-size: 0.8rem;
             }
 
-            .train-alert p {
-                text-align: center;
-            }
-    
-    
-            div .leaflet-control-attribution {
-                display: none !important;
-            }
-    
-            .custom-marker {
-                background-color: transparent;
-                border-radius: 50%;
-                border: 2px solid transparent;
-            }
-    
-            .marker-color {
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                display: inline-block;
-            }
-    
-    
-            .custom-marker {
-                margin-left: -14px !important;
-                margin-top: -10px !important;
-                width: 12px;
-                height: 12px;
-                transform: translate3d(627px, 419px, 0px);
-                z-index: 419;
-                outline-style: none;
+            .close {
+                background: none;
+                border: none;
+                position: absolute;
+                right: 0;
+                top: 0;
+                font-size: 0.8rem;
+                padding-right: 0.5rem;
+                cursor: pointer;
+                display: flex;
             }
 
-
-            :host(.mk-controls-container) div.mk-logo-control img.mk-logo {
-                width: var(--logo-width);
-                height: var(--logo-height);
-                margin: 0;
-                transition: width .3s ease-in-out, height .3s ease-in-out;
-            }
-    
-    
-            .notification-inner {
-                backdrop-filter: blur(0.5rem);
-                backdrop-filter: blur(0.5rem);
-                padding: 0 1rem;
-                border-radius: 0.5rem;
+            .icon {
                 display: flex;
                 align-items: center;
-    
-                h2 {
-                    font-weight: bold;
-                    font-size: 0.9rem;
+                justify-content: center;
+                width: 3.5rem;
+                height: 3.5rem;
+                border-radius: 0.5rem;
+                margin-right: 1rem;
+                font-size: 1rem;
+                color: white;
+
+                &.error {
+                    background-color: #f87171;
                 }
-    
-                p {
-                    margin-top: 0.5rem;
-                    font-size: 0.8rem;
+
+                &.success {
+                    background-color: #10b981;
                 }
-    
-                .close {
-                    background: none;
-                    border: none;
-                    position: absolute;
-                    right: 0;
-                    top: 0;
-                    font-size: 0.8rem;
-                    padding-right: 0.5rem;
-                    cursor: pointer;
-                    display: flex;
+
+                &.info {
+                    background-color: #60a5fa;
                 }
-    
-                .icon {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 3.5rem;
-                    height: 3.5rem;
-                    border-radius: 0.5rem;
-                    margin-right: 1rem;
-                    font-size: 1rem;
-                    color: white;
-    
-                    &.error {
-                        background-color: #f87171;
-                    }
-    
-                    &.success {
-                        background-color: #10b981;
-                    }
-    
-                    &.info {
-                        background-color: #60a5fa;
-                    }
-    
-                    &.warning {
-                        background-color: #f59e0b;
-                    }
+
+                &.warning {
+                    background-color: #f59e0b;
                 }
-    }
-    
+            }
+        }
 
-    .train-line-input {
-      border: none;
-      font-size: 2rem;
-      font-weight: 700;
-      color: #ef4444;
-      /* piros */
-      background: transparent;
-      width: 100%;
-      max-width: 100%;
-      outline: none;
-      user-select: none;
-      cursor: none;
-      text-shadow: 0 0 6px #dc2626aa;
-    }
 
-    .train-line-input:focus {
-      box-shadow: none;
-      border: none;
-    }
+        @media (max-width: 400px) {
+            main {
+                padding: 0 .75rem .5rem;
+                width: 100vw;
+                border-radius: 1rem 1rem 0 0;
+            }
+        }
 
-    .btn-schedule {
-      background-color: #047857;
-      border: none;
-      color: white;
-      font-weight: 600;
-      font-size: 1.1rem;
-      padding: 0.75rem 1.5rem;
-      border-radius: 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 12px rgb(4 120 87 / 0.8);
-      transition: background-color 0.3s ease;
-      cursor: pointer;
-      user-select: none;
-      width: 100%;
-      margin-top: 1.5rem;
-      flex-shrink: 0;
-    }
+        /* Cards inside the sheet match the sheet's dark palette */
+        #trains-list .card {
+            background: #243347 !important;
+            border: 1px solid #374151 !important;
+            border-radius: .75rem !important;
+        }
 
-    .btn-schedule:hover,
-    .btn-schedule:focus {
-      background-color: #065f46;
-      color: #bbf7d0;
-      outline: none;
-      box-shadow: 0 0 14px #22c55e;
-    }
+        #trains-list .card-header {
+            background: transparent !important;
+            border-bottom: 1px solid #374151 !important;
+        }
 
-    .schedule-info {
-      margin-top: 1rem;
-      background-color: #064e3b;
-      border-radius: 0.75rem;
-      padding: 0.75rem 1.25rem;
-      color: #bbf7d0;
-      font-weight: 600;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      user-select: none;
-      box-shadow: 0 4px 10px rgb(6 95 70 / 0.6);
-    }
+        #trains-list .card-body {
+            background: transparent !important;
+        }
 
-    .footer-text {
-      font-size: 0.9rem;
-      text-align: center;
-      color: #22c55e;
-      margin-top: 1.5rem;
-      user-select: none;
-    }
+        #trains-list .card-footer {
+            background: transparent !important;
+            border-top: 1px solid #374151 !important;
+        }
 
-    .footer-text a {
-      color: #22c55e;
-      text-decoration: underline;
-    }
+        #trains-list .accordion-item {
+            background: transparent !important;
+            border: none !important;
+        }
 
-    .footer-text a:hover {
-      color: #4ade80;
-      text-decoration: underline;
-    }
+        #trains-list .accordion-button {
+            background: #1e2d40 !important;
+            color: #d1d5db !important;
+            border-radius: .5rem !important;
+        }
 
-    .train-info-row {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0px 10px 0 10px;
-    }
+        #trains-list .accordion-button:not(.collapsed) {
+            background: #1a2a3a !important;
+        }
 
-    @media (max-width: 400px) {
-      main {
-        padding: 1rem 1rem 1.5rem;
-        width: 100vw;
-        border-radius: 1rem 1rem 0 0;
-      }
+        #trains-list .accordion-body {
+            background: #1a2a3a !important;
+            color: #d1d5db !important;
+        }
 
-      .btn-schedule {
-        font-size: 1rem;
-        padding: 0.6rem 1rem;
-        margin-left: 0.5rem;
-      }
-
-      .train-type {
-        font-size: 2rem;
-        padding: 0.75rem 1.75rem;
-        margin-right: -26px;
-      }
-
-      .train-line-input {
-        font-size: 1.5rem;
-        padding-left: 0.75rem;
-      }
-    }
-
-    .leaflet-top{
-        top: 50px !important;
-    }
-  </style>
+        .leaflet-top {
+            top: 50px !important;
+        }
+    </style>
 </head>
 
 <body style="margin-bottom: 0px !important;">
     <nav class="navbar navbar-expand-md navbar-dark">
-    <div class="container-fluid px-3">
-      <a class="navbar-brand fw-bold text-light" href="#">RailSense</a>
-      <button type="button" class="btn btn-dark" onclick="location.reload(true);">Frissítés</button>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Menü megnyitása">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-         
-        <ul class="navbar-nav ms-auto fw-semibold">
-          <li class="nav-item">
-            <a class="nav-link text-light" href="/fullscreen_map">Főoldal</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light" href="/railsense">Menetrend</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light" href="/connection_error">Jelentések</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light" href="/about">Kapcsolat</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+        <div class="container-fluid px-3">
+            <a class="navbar-brand fw-bold text-light" href="#">RailSense</a>
+            <button type="button" class="btn btn-outline-light btn-sm me-1"
+                onclick="openLocationSheet()">Helyszín</button>
+            <button type="button" class="btn btn-dark btn-sm" onclick="fetchTrainData()">Frissítés</button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Menü megnyitása">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+
+                <ul class="navbar-nav ms-auto fw-semibold">
+                    <li class="nav-item">
+                        <a class="nav-link text-light active" href="/">Főoldal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/connection_error">Jelentések</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/about">Kapcsolat</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div id="map"></div>
-     <main>
-    <section class="train-info-card" role="dialog" aria-live="polite" aria-label="Érkező vonat információk">
-      <div class="train-info-row">
-        <div style="flex-grow:1;">
-          <div id="train-description" class="text-light small mb-1">{{ description }}</div>
-          <input id="train-headsign" type="text" class="train-line-input" aria-label="Vasutvonal" readonly="" value="{{ headsign }}       ">
+    <main id="train-sheet">
+        <!-- drag handle — tap to expand/collapse -->
+        <div id="sheet-handle" onclick="toggleSheet()">
+            <div class="handle-pill"></div>
         </div>
 
-        <div id="train-shortname" class="train-type" aria-label="Vonat típus IR">{{ short_name | safe }}</div>
-      </div>
-
-      <!-- accordion button -->
-      <button class="btn-schedule" type="button" id="toggle-schedule" aria-expanded="false"
-        aria-controls="schedule-info">
-        <span><i class="far fa-calendar-alt me-2"></i>Menetrend</span>
-        <i class="fas fa-chevron-down"></i>
-      </button>
-      <!-- accordion body -->
-        <div style="display: none; height: 10rem; overflow: auto; margin-top: 20px;" class="train-info-row" id="train-info">
-            <div id="accordion-content">{{ accordion_html|safe }}</div>
+        <!-- Hero: always visible, shows next train at a glance -->
+        <div id="sheet-hero">
+            <div class="d-flex align-items-center gap-2">
+                <div id="hero-badge" class="hero-badge" style="background:#3FC555;color:#fff;">✓</div>
+                <div class="flex-grow-1 overflow-hidden">
+                    <div id="hero-description" class="small text-muted text-truncate">Nincs vonat a közelben</div>
+                    <div id="hero-headsign"
+                        style="font-size:1.05rem;font-weight:700;color:#FC2F44;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                        Szabad az átkelés</div>
+                </div>
+                <div id="hero-mins" class="text-end flex-shrink-0 small fw-semibold"
+                    style="color:#9ca3af;max-width:90px;line-height:1.3;"></div>
+            </div>
+            <div id="status-bar" class="status-badge status-safe">Az átkelés biztonságos</div>
         </div>
-        <!-- only show the train info row when clicked script -->
-        <script> 
-            document.getElementById('toggle-schedule').addEventListener('click', function() {
-                const scheduleInfo = document.getElementById('train-info');
-                const isExpanded = this.getAttribute('aria-expanded') === 'true';
-                this.setAttribute('aria-expanded', !isExpanded);
-                scheduleInfo.style.display = isExpanded ? 'none' : 'block';
-            });
 
-            async function fetchTrainData() {
-                try {
-                    const response = await fetch('/api/train_info');
-                    const data = await response.json();
-
-                    document.getElementById('train-description').textContent = data.description;
-                    document.getElementById('train-headsign').value = data.headsign;
-                    document.getElementById('train-shortname').textContent = data.short_name;
-                    document.getElementById('arrival-time').textContent = data.arrival_time;
-                    document.getElementById('accordion-content').innerHTML = data.accordion_html;
-
-                    console.log("Train data updated:", data);
-                } catch (error) {
-                    console.error("Error fetching train data:", error);
-                }
-            }
-
-            // Call the function initially
-            fetchTrainData();
-
-            // Set interval to refresh data every 30 seconds (adjust as needed)
-            setInterval(fetchTrainData, 30000); // 30000 milliseconds = 30 seconds
-        </script> 
-      <div class="schedule-info" id="schedule-info">
-        <i class="far fa-clock"></i>
-        <strong id="arrival-time">{{ arrival_time }}</strong>
-      </div>
-    </section>
-  </main>
-    <!-- <div class="top-container">
-        <div id="card-container" style="min-width: 45vh; padding-bottom: 20px;">
-            {{ card_html|safe }}
+        <!-- Full list: only visible when sheet is expanded -->
+        <div id="sheet-body">
+            <div class="d-flex justify-content-between align-items-center py-2"
+                style="border-top:1px solid #374151;margin-top:.5rem;">
+                <button onclick="openLocationSheet()" class="btn btn-outline-secondary btn-sm py-1 px-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
+                    </svg>
+                    Helyszín
+                </button>
+                <span id="update-time" class="text-muted" style="font-size:.78rem;">Most frissítve</span>
+                <button onclick="fetchTrainData()" class="btn btn-outline-secondary btn-sm py-1 px-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
+                        <path fill-rule="evenodd"
+                            d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
+                    </svg>
+                    Frissítés
+                </button>
+            </div>
+            <div id="trains-list" style="overflow-y:auto;max-height:calc(75vh - 230px);padding-bottom:.5rem;"></div>
         </div>
-        <p style="text-align: center;">A program tévedhet, mindig győzödjön meg a mielőtt <a href="{{ url_for('search') }}"> átmenne!!</a></p>
-    </div> -->
-    
-
-    
+    </main>
     <div class="leaflet-bottom leaflet-right">
         <div class="leaflet-control-layers leaflet-control" aria-haspopup="true">
             <div id="trainAlert" class="train-alert show">
@@ -493,100 +455,9 @@
     <div class="leaflet-top leaflet-right" style="padding-top: 15px; padding-right: 10px; color: #000; z-index: 10;">
         <h6>RailSense v4.0</h6>
         <h6 style="text-align: right;">BETA</h6>
-       
-    </div>
-    <!-- <div class="leaflet-bottom leaflet-right">
-        <div class="leaflet-control-layers leaflet-control" aria-haspopup="true">
-            <a class="btn btn-dark text-50 btn-outline-light search-button position-absolute bottom-0 end-0 m-2"
-                style="z-index: 1;" href="{{ url_for('search') }}">
-                Vissza
-            </a>
-        </div>
-    </div> -->
-    <div class="leaflet-bottom leaflet-left" style="left: 5rem !important;">
-        <br>
-        <div style=" bottom: 0; left: 5px;">
-            <svg style="transform: scale(30); height: 1.1px;" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 10000 3050"
-                style="enable-background:new 0 0 10000 3050;" xml:space="preserve">
-                <path id="_Maps" style="fill-rule:evenodd;clip-rule:evenodd;fill:#000;"
-                    d="M1393.93,402.59  c76.49-92.42,132.26-221.49,132.26-350.56c0-17.53-1.59-35.06-4.78-49.4c-125.88,4.78-277.26,84.45-368.09,191.22  c-71.71,81.27-137.04,208.74-137.04,339.41c0,19.12,3.19,38.24,4.78,44.62c11.03,2.09,22.23,3.15,33.46,3.19  C1167.66,581.05,1309.48,504.57,1393.93,402.59z M1483.17,608.14c-189.62,0-344.19,114.73-441.39,114.73  c-105.17,0-243.8-108.36-407.93-108.36c-312.32,0-629.42,258.14-629.42,745.74c0,302.76,117.92,623.05,262.92,830.2  c124.29,175.28,232.65,318.7,388.81,318.7c154.57,0,223.09-103.58,415.89-103.58c196,0,239.02,100.39,411.12,100.39  c168.91,0,282.04-156.16,388.81-309.14c119.51-175.28,168.9-347.37,172.09-355.34c-11.15-3.19-334.63-135.44-334.63-506.72  c0-321.88,254.96-466.89,269.3-478.04C1809.83,614.52,1553.28,608.14,1483.17,608.14L1483.17,608.14z M4831.69,2491.8V192.43  h-474.86l-704.31,1754.41h-12.75L2935.46,192.43h-476.45V2491.8h371.28V860.09h11.15l664.48,1631.71h280.45l664.48-1631.71H4462  V2491.8H4831.69z M5606.56,2518.89c216.71,0,428.64-113.13,525.85-296.38h7.96v269.29h382.44V1328.57  c0-339.41-272.49-560.9-691.57-560.9c-430.24,0-699.53,226.27-717.06,541.78h368.09c25.5-140.23,145.01-231.05,333.04-231.05  c195.99,0,315.5,101.98,315.5,278.85v121.11l-446.17,25.49c-411.11,25.5-642.17,205.56-642.17,505.13  C5042.47,2313.34,5279.9,2518.89,5606.56,2518.89L5606.56,2518.89z M5726.07,2219.32c-172.09,0-286.82-87.64-286.82-226.27  c0-133.85,109.95-219.9,301.16-232.65l390.4-23.9v129.07C6130.81,2069.53,5950.75,2219.32,5726.07,2219.32z M7719.95,774.04  c-245.39,0-436.61,124.29-532.22,320.29h-7.97v-291.6h-387.21v2245.2h396.77v-836.58h7.97c92.42,189.63,283.64,307.54,529.03,307.54  c423.87,0,694.76-333.03,694.76-871.63C8421.08,1107.08,8148.59,774.04,7719.95,774.04z M7598.85,2193.82  c-246.99,0-411.12-215.11-412.71-546.56c1.59-328.25,165.72-546.56,412.71-546.56c256.54,0,415.89,213.53,415.89,546.56  C8014.74,1981.89,7855.39,2193.82,7598.85,2193.82z M8596.8,1287.14c0,250.17,162.54,409.52,486.01,481.23l280.45,62.14  c176.88,39.84,237.43,97.21,237.43,199.19c0,125.88-119.51,205.56-312.32,205.56c-200.78,0-313.91-82.87-344.19-246.99h-390.4  c31.87,326.66,293.2,537,734.59,537c414.3,0,707.5-215.12,707.5-533.82c0-245.39-135.44-380.84-486.01-458.92l-280.45-62.14  c-176.87-39.84-246.99-106.76-246.99-203.97c0-124.29,116.33-207.15,291.61-207.15c183.25,0,296.39,97.21,312.32,250.18h369.69  c-9.57-320.29-270.89-541.78-682.01-541.78C8866.1,767.67,8596.8,978.01,8596.8,1287.14L8596.8,1287.14z" />
-            </svg>
-
-
-        </div>
-        <a href="">.</a>
 
     </div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const trainLineInput = document.querySelector('.train-line-input');
-    let isPaused = false;
-    let cycleComplete = false;
-    let pauseTimeout;
-    
-    function scrollText() {
-      if (trainLineInput.value.length > 15 && !isPaused) {
-        const text = trainLineInput.value;
-        trainLineInput.value = text.substring(1) + text.charAt(0);
-        
-        // Check if we've completed one full cycle
-        if (!cycleComplete && text === trainLineInput.getAttribute('data-original-text')) {
-          isPaused = true;
-          cycleComplete = true;
-          pauseTimeout = setTimeout(() => {
-            isPaused = false;
-            cycleComplete = false;
-          }, 2000);
-        }
-      }
-    }
-
-    trainLineInput.addEventListener('input', function () {
-      // Store original text for comparison
-      const originalText = this.value;
-      trainLineInput.setAttribute('data-original-text', originalText);
-      // Add extra spaces for better scrolling effect
-      if (originalText.length > 12) {
-        this.value = originalText + "___________     " + originalText;
-      }
-    });
-
-    // Scroll continuously every 150ms 
-    setInterval(scrollText, 100);
-  });
-</script>
-
-    <script>
-        function updateTime() {
-            // Calculate the time elapsed since the notification was displayed
-            const now = new Date();
-            const elapsed = Math.floor((now - startTime) / 60000); // Elapsed time in minutes
-
-            // Determine the appropriate display text
-            let displayText;
-            if (elapsed === 0) {
-                displayText = 'most';
-            } else if (elapsed === 1) {
-                displayText = '1 perce';
-            } else {
-                displayText = `${elapsed} perce`;
-            }
-
-            // Update the time display
-            document.getElementById('time').textContent = displayText;
-        }
-
-        // Set the start time when the page loads
-        const startTime = new Date();
-
-        // Update the time when the page loads
-        updateTime();
-
-        // Update the time every minute (60000 milliseconds)
-        setInterval(updateTime, 60000);
-    </script>
     <script>
         const latitude = {{ lat }};
         const longitude = {{ lon }};
@@ -602,7 +473,7 @@
         jawgLayer.addTo(map);
 
         var stopsLayerGroup = L.layerGroup().addTo(map); // LayerGroup létrehozása a járművek tárolására
-        var userMarker = L.marker([latitude, longitude], { icon: L.icon({ iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Google_Maps_pin.svg/137px-Google_Maps_pin.svg.png', iconSize: [25, 41] }) }).addTo(map);
+        var userMarker = L.marker([latitude, longitude], { icon: L.icon({ iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Google_Maps_pin.svg/20px-Google_Maps_pin.svg.png', iconSize: [25, 41] }) }).addTo(map);
 
         // Függvény a térkép középpontjának frissítésére és járművek újra lekérésére
         function updateVehicles() {
@@ -677,45 +548,7 @@
                 .catch(error => console.error('Error fetching vehicles:', error));
         }
 
-        function getCurrentLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, handleError, {
-            enableHighAccuracy: true
-        });
-    } else {
-        alert("Geolocation is not supported by this browser.");
-    }
-}
-
-function showPosition(position) {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
-
-    // Send the location data to the backend
-    sendLocationToBackend(lat, lon);
-}
-
-function sendLocationToBackend(lat, lon) {
-    // Use Fetch API to send POST request to Flask backend
-    fetch('/railsense', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ lat: lat, lon: lon }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Location data sent successfully:', data);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-}
-
-function handleError(error) {
-    console.error('Error obtaining location:', error);
-}
+        // (duplicate geolocation functions removed — single canonical set below)
 
 
         // Függvény a távolság számításához (Haversine formula alapján)
@@ -756,17 +589,21 @@ function handleError(error) {
         function showPosition(position) {
             var lat = position.coords.latitude;
             var lon = position.coords.longitude;
-            map.setView([lat, lon], 13); // Center the map on the user's location
-            userMarker.setLatLng([lat, lon]); // Update marker position
-
-            // Reverse geocode to get the address
-            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
-                .then(response => response.json())
+            map.setView([lat, lon], 13);
+            userMarker.setLatLng([lat, lon]);
+            fetch('/api/location', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ lat: lat, lon: lon }),
+            })
+                .then(r => r.json())
                 .then(data => {
-                    var address = data.display_name;
-                    userMarker.bindPopup(`Your current location: ${address}`);
+                    if (data.ok) {
+                        userMarker.bindPopup(data.address).openPopup();
+                        fetchTrainData();
+                    }
                 })
-                .catch(error => console.error('Error fetching address:', error));
+                .catch(err => console.error('Location update error:', err));
         }
 
         function handleError(error) {
@@ -786,54 +623,265 @@ function handleError(error) {
             }
         }
 
-        function startLongPressTimer(e, latlng) {
-            pressStart = Date.now();
-            longPressTimer = setTimeout(function () {
-                onLongPress(latlng);
-            }, longPressThreshold);
-        }
-
-        function clearLongPressTimer() {
-            clearTimeout(longPressTimer);
-        }
-
-        map.on('mousedown', function (e) {
-            startLongPressTimer(e, e.latlng);
-        });
-        map.on('mouseup', clearLongPressTimer);
-        map.on('mouseout', clearLongPressTimer);
-
-        map.on('touchstart', function (e) {
-            if (e.touches.length === 1) {
-                var latlng = map.mouseEventToLatLng(e.touches[0]);
-                startLongPressTimer(e, latlng);
-            }
-        });
-        map.on('touchend', clearLongPressTimer);
-        map.on('touchcancel', clearLongPressTimer);
-
         map.on('moveend', function () {
             updateVehicles();
         });
 
         updateVehicles();
         setInterval(updateVehicles, 10000);
-
-        // Get the user's current location when the map loads
-        getCurrentLocation();
     </script>
-     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-     crossorigin="anonymous"></script>
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-     crossorigin="anonymous"></script>
-    <!-- <script>
-        setInterval(function() {
-            window.location.reload();
-        }, 30000);
-    </script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 
+    <!-- ── Train sheet JS ────────────────────────────────────── -->
+    <script>
+        // Sheet expand/collapse
+        let sheetExpanded = false;
+        function toggleSheet() {
+            sheetExpanded = !sheetExpanded;
+            document.getElementById('train-sheet').classList.toggle('expanded', sheetExpanded);
+        }
+
+        // HTML escape
+        function esc(s) {
+            return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        // Lazy-load stop list
+        function renderStops(stops, lineColor, stopSeq) {
+            if (!stops || !stops.length) return '';
+            let html = `<ul class="line line--m2" style="--line-color:#${esc(lineColor || '808080')} !important;border-color:var(--line-color);">`;
+            stops.forEach((stop, i) => {
+                const cls = i === 0 ? 'station--start' : (i === stops.length - 1 ? 'station--end2' : 'station--default');
+                const tag = cls !== 'station--default' ? 'strong' : 'span';
+                const hi = String(stop.stopseqe2) === String(stopSeq) ? ' highlight' : '';
+                html += `<li class="station ${cls}"><${tag} class="stop-name${hi}">${esc(stop.stop_name)}</${tag}><span style="float:inline-end;" class="arrival-time">${esc(stop.arrival_time)}</span></li>`;
+            });
+            return html + '</ul>';
+        }
+        function loadTripDetails(collapseEl) {
+            const tripId = collapseEl.dataset.tripId;
+            if (!tripId || collapseEl.dataset.loaded === 'true') return;
+            collapseEl.dataset.loaded = 'true';
+            const table = collapseEl.querySelector('.trip-details-wrap');
+            if (!table) return;
+            table.innerHTML = '<div class="text-center text-muted py-2"><span class="spinner-border spinner-border-sm me-2"></span>Betöltés...</div>';
+            fetch('/api/trip-details/' + encodeURIComponent(tripId))
+                .then(r => r.json())
+                .then(data => {
+                    if (!data.ok || !data.stops || !data.stops.length) {
+                        table.innerHTML = '<div class="text-muted text-center py-2 small">Menetrend nem elérhető.</div>';
+                        return;
+                    }
+                    table.innerHTML = renderStops(data.stops, collapseEl.dataset.lineColor, collapseEl.dataset.stopSequence);
+                })
+                .catch(() => {
+                    collapseEl.dataset.loaded = 'false';
+                    table.innerHTML = '<div class="text-muted text-center py-2 small">Hálózati hiba.</div>';
+                });
+        }
+        function attachTripLoaders(root) {
+            (root || document).querySelectorAll('.accordion-collapse[data-trip-id]').forEach(el => {
+                el.addEventListener('show.bs.collapse', function () { loadTripDetails(this); });
+            });
+        }
+
+        const TRAIN_SVG_SM = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 26 23" fill="none"><g clip-path="url(#clt)"><path d="M3.79883 22.9785H21.2109C23.7402 22.9785 25.0195 21.709 25.0195 19.2188V3.78906C25.0195 1.29883 23.7402 0.0292969 21.2109 0.0292969H3.79883C1.2793 0.0292969 0 1.28906 0 3.78906V19.2188C0 21.7188 1.2793 22.9785 3.79883 22.9785ZM3.66211 21.25C2.41211 21.25 1.72852 20.5859 1.72852 19.2969V7.64648C1.72852 6.34766 2.41211 5.69336 3.66211 5.69336H21.3379C22.5781 5.69336 23.2812 6.34766 23.2812 7.64648V19.2969C23.2812 20.5859 22.5781 21.25 21.3379 21.25H3.66211Z" fill="#C6C6C6"/></g><defs><clipPath id="clt"><rect width="25.3809" height="22.9785" fill="white"/></clipPath></defs></svg>`;
+        const CLOCK_SVG_SM = `<svg width="18" height="18" viewBox="0 0 22 19" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M9.0791 18.7334C10.292 18.7334 11.4697 18.4873 12.5508 18.0303C12.1377 17.582 11.8213 17.0547 11.5928 16.4922C10.8105 16.7822 9.9668 16.9492 9.0791 16.9492C5.03613 16.9492 1.79297 13.6973 1.79297 9.6543C1.79297 5.61133 5.02734 2.36816 9.07031 2.36816C12.7266 2.36816 15.7412 5.04004 16.2686 8.54688C16.8135 8.45898 17.5342 8.48535 18.0879 8.62598C17.5693 4.12598 13.6934 0.575195 9.07031 0.575195C4.0957 0.575195 0 4.68848 0 9.6543C0 14.6289 4.10449 18.7334 9.0791 18.7334ZM4.63184 10.7441H9.07031C9.46582 10.7441 9.76465 10.4365 9.76465 10.0498V4.28418C9.76465 3.89746 9.46582 3.58984 9.07031 3.58984C8.68359 3.58984 8.37598 3.89746 8.37598 4.28418V9.35547H4.63184C4.23633 9.35547 3.9375 9.6543 3.9375 10.0498C3.9375 10.4365 4.23633 10.7441 4.63184 10.7441ZM16.875 18.7773C19.3359 18.7773 21.4014 16.7207 21.4014 14.251C21.4014 11.7725 19.3535 9.7334 16.875 9.7334C14.3965 9.7334 12.3486 11.7725 12.3486 14.251C12.3486 16.7383 14.3965 18.7773 16.875 18.7773ZM16.3477 16.9229C16.1807 16.9229 15.9785 16.8525 15.8467 16.7119L14.1943 14.9014C14.1064 14.8135 14.0449 14.6377 14.0449 14.4883C14.0449 14.1104 14.335 13.8643 14.6689 13.8643C14.8711 13.8643 15.0293 13.9434 15.1436 14.0664L16.3125 15.3496L18.5537 12.2295C18.6768 12.0713 18.8613 11.957 19.0811 11.957C19.4238 11.957 19.7139 12.2295 19.7139 12.5811C19.7139 12.6865 19.6699 12.8271 19.582 12.9414L16.8662 16.6855C16.7607 16.8262 16.5586 16.9229 16.3477 16.9229Z"/></svg>`;
+
+        function renderTrainCard(train, idx) {
+            return `<div class="card" data-trip="${esc(train.route_id)}-${esc(train.headsign)}">
+  <div style="padding:0;overflow:hidden;" class="card-header">
+    <div style="float:left;padding:10px 12px;">
+      <p class="card-title text-light mb-1" style="font-size:.82rem;">${esc(train.description)}</p>
+      <h5 class="card-subtitle mb-0" style="color:#FC2F44;margin-top:3px;">${esc(train.headsign)}</h5>
+    </div>
+    <div class="viszonylatdoboz d-flex justify-content-center align-items-center" style="float:right;padding:8px;border-top-right-radius:5px;background-color:#${esc(train.color || '808080')} !important;width:78px;height:72px;">
+      <span class="shortname" style="font-weight:bold;font-size:1.1rem;color:#${esc(train.text_color || 'ffffff')};">${esc(train.short_name)}</span>
+    </div>
+  </div>
+  <div class="card-body text-light py-2">
+    <div class="accordion" id="acc-${idx}">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#col-${idx}" style="min-height:42px;font-size:.9rem;">
+            ${TRAIN_SVG_SM}<span style="padding-left:8px;">Menetrend</span>
+          </button>
+        </h2>
+        <div id="col-${idx}" class="accordion-collapse collapse"
+            data-trip-id="${esc(train.trip_id || '')}"
+            data-line-color="${esc(train.color || '808080')}"
+            data-stop-sequence="${esc(String(train.stop_sequence || ''))}"
+            data-loaded="false">
+          <div class="accordion-body py-2">
+            <div class="trip-details-wrap" id="mnt-${idx}"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer py-2" style="background-color:transparent;border-top:1px solid #374151;">
+    <div style="display:flex;align-items:center;gap:.4rem;">
+      ${CLOCK_SVG_SM}
+      <span style="font-size:.9rem;"><b>${esc(train.predicted_arrival_minutes)}</b></span>
+    </div>
+  </div>
+</div>`;
+        }
+
+        function renderHero(data) {
+            const train = data.trains && data.trains[0];
+            const badge = document.getElementById('hero-badge');
+            const desc = document.getElementById('hero-description');
+            const hsign = document.getElementById('hero-headsign');
+            const mins = document.getElementById('hero-mins');
+            const bar = document.getElementById('status-bar');
+            if (train) {
+                badge.textContent = train.short_name || '?';
+                badge.style.background = '#' + (train.color || '808080');
+                badge.style.color = '#' + (train.text_color || 'ffffff');
+                desc.textContent = train.description || '';
+                hsign.textContent = train.headsign || '';
+                mins.textContent = train.predicted_arrival_minutes || '';
+                bar.className = 'status-badge status-danger';
+                bar.textContent = 'Az átkelés veszélyes!';
+            } else {
+                badge.textContent = '✓';
+                badge.style.background = '#3FC555';
+                badge.style.color = '#fff';
+                desc.textContent = 'Nincs vonat a közelben';
+                hsign.textContent = 'Szabad az átkelés';
+                mins.textContent = '';
+                bar.className = 'status-badge status-safe';
+                bar.textContent = 'Az átkelés biztonságos';
+            }
+        }
+
+        function renderTrainList(data) {
+            const container = document.getElementById('trains-list');
+            if (!container) return;
+            container.innerHTML = (data.trains || []).map((t, i) => renderTrainCard(t, i + 1)).join('');
+            attachTripLoaders(container);
+            const ut = document.getElementById('update-time');
+            if (ut) ut.textContent = 'Most frissítve';
+        }
+
+        async function fetchTrainData() {
+            try {
+                const resp = await fetch('/api/trains');
+                const data = await resp.json();
+                renderHero(data);
+                renderTrainList(data);
+            } catch (e) { console.error('fetchTrainData:', e); }
+        }
+
+        fetchTrainData();
+        setInterval(fetchTrainData, 30000);
+    </script>
+
+    <!-- ── Location bottom sheet ────────────────────────────── -->
+    <div id="loc-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:3000;"
+        onclick="closeLocationSheet()"></div>
+    <div id="loc-sheet"
+        style="display:none;position:fixed;bottom:0;left:0;right:0;background:#1f2937;border-radius:1.5rem 1.5rem 0 0;padding:1.5rem;z-index:3001;transform:translateY(100%);transition:transform .3s ease;max-height:85vh;overflow-y:auto;">
+        <div style="text-align:center;margin-bottom:1rem;">
+            <div style="width:3rem;height:.3rem;background:#4b5563;border-radius:9999px;margin:0 auto .75rem;"></div>
+            <h5 class="text-light mb-0">Helyszín beállítása</h5>
+        </div>
+        <button class="btn btn-success w-100 mb-3" id="gps-btn" onclick="useGPS()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-geo-alt me-2" viewBox="0 0 16 16">
+                <path
+                    d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
+            </svg>
+            GPS helymeghatározás
+        </button>
+        <div class="input-group mb-2">
+            <input type="text" id="loc-search-input" class="form-control" placeholder="Keresés helyre...">
+            <button class="btn btn-outline-light" onclick="searchLocationSheet()">Keresés</button>
+        </div>
+        <div id="loc-search-results" class="mb-3"></div>
+        <div class="d-flex flex-wrap gap-2">
+            <button class="btn btn-outline-secondary btn-sm"
+                onclick="setPreset(47.047663,18.057475,'Füzfő')">Füzfő</button>
+            <button class="btn btn-outline-secondary btn-sm"
+                onclick="setPreset(46.8147826,17.5714996,'Ábrahámhegy')">Ábrahámhegy</button>
+            <button class="btn btn-outline-secondary btn-sm"
+                onclick="setPreset(46.72243,17.5186394,'Alsóbélatelep')">Alsóbélatelep</button>
+        </div>
+        <p class="text-muted small mt-3 mb-0">Vagy kattints a térképre a helyszín megadásához.</p>
+    </div>
+    <script>
+        function openLocationSheet() {
+            const sheet = document.getElementById('loc-sheet');
+            sheet.style.display = 'block';
+            document.getElementById('loc-overlay').style.display = 'block';
+            requestAnimationFrame(() => { sheet.style.transform = 'translateY(0)'; });
+        }
+        function closeLocationSheet() {
+            const sheet = document.getElementById('loc-sheet');
+            sheet.style.transform = 'translateY(100%)';
+            document.getElementById('loc-overlay').style.display = 'none';
+            setTimeout(() => { sheet.style.display = 'none'; }, 300);
+        }
+        function useGPS() {
+            const btn = document.getElementById('gps-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Helymeghatározás...';
+            if (!navigator.geolocation) { btn.disabled = false; return; }
+            navigator.geolocation.getCurrentPosition(
+                pos => { closeLocationSheet(); showPosition(pos); },
+                () => { btn.disabled = false; btn.innerHTML = 'GPS helymeghatározás'; alert('Nem sikerült a helymeghatározás.'); },
+                { enableHighAccuracy: true, timeout: 10000 }
+            );
+        }
+        function searchLocationSheet() {
+            const q = document.getElementById('loc-search-input').value.trim();
+            if (!q) return;
+            fetch('https://nominatim.openstreetmap.org/search?format=json&limit=4&q=' + encodeURIComponent(q))
+                .then(r => r.json())
+                .then(results => {
+                    const div = document.getElementById('loc-search-results');
+                    div.innerHTML = '';
+                    if (!results.length) { div.innerHTML = '<p class="text-muted small">Nincs találat.</p>'; return; }
+                    results.forEach(place => {
+                        const btn = document.createElement('button');
+                        btn.className = 'btn btn-outline-secondary w-100 mb-1 text-start text-truncate';
+                        btn.textContent = place.display_name;
+                        btn.onclick = () => updateMapLocation(parseFloat(place.lat), parseFloat(place.lon), place.display_name);
+                        div.appendChild(btn);
+                    });
+                }).catch(() => { });
+        }
+        function setPreset(lat, lon, name) { updateMapLocation(lat, lon, name); }
+        function updateMapLocation(lat, lon, address) {
+            fetch('/api/location', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ lat, lon }),
+            })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.ok) {
+                        map.setView([lat, lon], 13);
+                        userMarker.setLatLng([lat, lon]);
+                        userMarker.bindPopup(data.address || address || '').openPopup();
+                        closeLocationSheet();
+                        fetchTrainData();
+                        updateVehicles();
+                    }
+                })
+                .catch(() => { });
+        }
+        // Wire map click to show location sheet hint
+        map.on('click', function (e) {
+            updateMapLocation(e.latlng.lat, e.latlng.lng);
+        });
+    </script>
 
 </body>
 
