@@ -290,7 +290,7 @@
             }
         }
 
-        /* Cards inside the sheet match the sheet's dark palette */
+        /* kártyák */
         #trains-list .card {
             background: #243347 !important;
             border: 1px solid #374151 !important;
@@ -341,9 +341,9 @@
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container-fluid px-3">
             <a class="navbar-brand fw-bold text-light" href="#">RailSense</a>
-            <button type="button" class="btn btn-outline-light btn-sm me-1"
+            <!-- <button type="button" class="btn btn-outline-light btn-sm me-1"
                 onclick="openLocationSheet()">Helyszín</button>
-            <button type="button" class="btn btn-dark btn-sm" onclick="fetchTrainData()">Frissítés</button>
+            <button type="button" class="btn btn-dark btn-sm" onclick="fetchTrainData()">Frissítés</button> -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Menü megnyitása">
                 <span class="navbar-toggler-icon"></span>
@@ -355,7 +355,7 @@
                         <a class="nav-link text-light active" href="/">Főoldal</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="/connection_error">Jelentések</a>
+                        <a class="nav-link text-light" href="/report">Jelentések</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="/about">Kapcsolat</a>
@@ -878,9 +878,11 @@
                 .catch(() => { });
         }
         // Wire map click to show location sheet hint
-        map.on('click', function (e) {
+        /* map.on('click', function (e) {
             updateMapLocation(e.latlng.lat, e.latlng.lng);
-        });
+        }); */
+
+        getCurrentLocation()
     </script>
 
 </body>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Térkép | RailSense</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <meta name="theme-color" content="#1e1e1e">
+    <link rel="manifest" href="{{ manifest_url }}" />
+    <link rel="icon" href="{{ url_for('static', filename='img/512x512.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/menetrend.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: #0f172a; /* mély pala/sötét háttér */
+            color: #f1f5f9;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Navbar fixálva fent */
+        nav.navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+            background-color: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Weather Dashboard CSS */
+        .dashboard-container {
+            margin-top: 100px;
+            padding: 2rem 1rem 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 100px);
+        }
+
+        .weather-card {
+            background: rgba(30, 41, 59, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .weather-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(56, 189, 248, 0.15);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Ambient glow background */
+        .weather-card::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -20%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            z-index: 0;
+            pointer-events: none;
+            transition: background 0.5s ease;
+        }
+
+        .weather-header {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .location-info h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.35rem;
+            letter-spacing: -0.025em;
+        }
+
+        .location-info p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .weather-badge {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 0.4rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #10b981;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .animate-pulse-subtle {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+
+        .weather-hero {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 2.25rem 0 1.75rem;
+        }
+
+        .temp-display {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .temp-number {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #ffffff;
+            background: linear-gradient(135deg, #ffffff 40%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.05em;
+        }
+
+        .temp-desc {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #38bdf8;
+            margin-top: 0.5rem;
+        }
+
+        .weather-icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 110px;
+            height: 110px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 1.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            animation: float 6s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        .weather-icon-img {
+            width: 90px;
+            height: 90px;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+        }
+
+        .weather-details-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 1.75rem;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .metric-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.08);
+            transform: scale(1.02);
+        }
+
+        .metric-icon {
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            flex-shrink: 0;
+        }
+
+        .metric-icon.wind {
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+        }
+
+        .metric-icon.coords {
+            background: rgba(168, 85, 247, 0.1);
+            color: #c084fc;
+        }
+
+        .metric-content {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            font-weight: 700;
+        }
+
+        .metric-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-top: 0.1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @media (max-width: 640px) {
+            .weather-card {
+                padding: 1.75rem;
+            }
+            .weather-hero {
+                margin: 1.5rem 0;
+            }
+            .temp-number {
+                font-size: 3.75rem;
+            }
+            .weather-icon-container {
+                width: 90px;
+                height: 90px;
+            }
+            .weather-icon-img {
+                width: 75px;
+                height: 75px;
+            }
+            .weather-details-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .metric-card.w-100 {
+                grid-column: span 1 !important;
+            }
+        }
+    </style>
+</head>
+
+<body style="margin-bottom: 0px !important;">
+    <nav class="navbar navbar-expand-md navbar-dark">
+        <div class="container-fluid px-3">
+            <a class="navbar-brand fw-bold text-light" href="#">RailSense</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Menü megnyitása">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto fw-semibold">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/">Főoldal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light active" href="/report">Jelentések</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/about">Kapcsolat</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+        {% if weather_report %}
+        <div class="weather-card">
+            <!-- Weather Card Header -->
+            <div class="weather-header">
+                <div class="location-info">
+                    <h2>{{ address.split(',')[1] }},{{ address.split(',')[2] }}</h2>
+                    <p><i class="fa-solid fa-map-marker-alt me-1 text-danger"></i>{{ address }}</p>
+                </div>
+                <div class="weather-badge">
+                    <i class="fa-solid fa-circle-nodes text-success animate-pulse-subtle"></i> Élő
+                </div>
+            </div>
+
+            <!-- Weather Card Hero -->
+            <div class="weather-hero">
+                <div class="temp-display">
+                    <span class="temp-number">{{ weather_report.temperature }}°C</span>
+                    <span class="temp-desc">{{ weather_report.description }}</span>
+                </div>
+                <div class="weather-icon-container">
+                    <img src="https://openweathermap.org/img/wn/{{ weather_report.icon_code }}@4x.png" alt="{{ weather_report.description }}" class="weather-icon-img" />
+                </div>
+            </div>
+
+            <!-- Weather Details Grid -->
+            <div class="weather-details-grid">
+                <div class="metric-card">
+                    <div class="metric-icon feels-like">
+                        <i class="fa-solid fa-temperature-half"></i>
+                    </div>
+                    <div class="metric-content">
+                        <span class="metric-label">Hőérzet</span>
+                        <span class="metric-value">{{ weather_report.feels_like }}°C</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon wind">
+                        <i class="fa-solid fa-wind"></i>
+                    </div>
+                    <div class="metric-content">
+                        <span class="metric-label">Szélsebesség</span>
+                        <span class="metric-value">{{ weather_report.wind_speed }} km/h</span>
+                    </div>
+                </div>
+                <div class="metric-card w-100" style="grid-column: span 2;">
+                    <div class="metric-icon coords">
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
+                    <div class="metric-content">
+                        <span class="metric-label">Koordináták</span>
+                        <span class="metric-value">{{ lat | round(6) }}, {{ lon | round(6) }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="weather-card text-center py-5">
+            <div class="mb-4">
+                <i class="fa-solid fa-cloud-bounce text-muted animate-pulse-subtle" style="font-size: 4rem;"></i>
+            </div>
+            <h3 class="text-light">Időjárási adatok nem elérhetők</h3>
+            <p class="text-muted mb-4">Sikertelen kapcsolódás a meteorológiai kiszolgálóhoz a megadott koordinátákon.</p>
+            <a href="/" class="btn btn-outline-light btn-sm"><i class="fa-solid fa-arrow-left me-2"></i>Vissza a főoldalra</a>
+        </div>
+        {% endif %}
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

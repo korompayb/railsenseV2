@@ -261,10 +261,39 @@ def legacy_redirect():
 def about():
     return render_template('about.html')
 
+""" weather report
+API/TRAINS
 
-@app.route('/connection_error')
-def connection_error():
-    return render_template('connection_error.html')
+{
+  "address": "110, Balaton k\u00f6r\u00fat, Balatonkenese, Balatonalm\u00e1di j\u00e1r\u00e1s, Veszpr\u00e9m v\u00e1rmegye, K\u00f6z\u00e9p-Dun\u00e1nt\u00fal, Dun\u00e1nt\u00fal, 8174, Magyarorsz\u00e1g",
+  "message": "",
+  "result_status": 1,
+  "trains": [],
+  "weather": {
+    "description": "Tiszta \u00e9gbolt",
+    "feels_like": 16,
+    "icon_code": "01n",
+    "temperature": 17,
+    "wind_speed": 7.02
+  }
+}
+
+ """
+
+@app.route('/report')
+def report():
+    lat = float(session.get('lat', DEFAULT_LAT))
+    lon = float(session.get('lon', DEFAULT_LON))
+    address = session.get('address', DEFAULT_ADDRESS)
+    manifest_url = url_for('static', filename='manifest.json')
+
+    weather_report = get_weather_data(lat, lon)
+
+    return render_template(
+        'report.html',
+        lat=lat, lon=lon, address=address, weather_report=weather_report,
+        manifest_url=manifest_url,
+    )
 
 
 @app.route('/')
